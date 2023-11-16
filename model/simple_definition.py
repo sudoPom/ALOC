@@ -1,43 +1,28 @@
 from model.utils import extract_key, throw_if_no_keys_found
 
 
-class BaseSimpleDefinition:
+class SimpleDefinition:
     def __init__(self, id):
-        self.id = id
-        self.subject = ""
-        self.components = {"subject"}
+        self.__id = id
+        self.__expression_type = "subject"
+        self.__subject = ""
+        self.__other_subject = ""
+        self.__numerical_expression = None
+        self.__components = {"subject", "other_subject", "numerical_expression"}
+        self.__types = {"subject pair", "subject numerical pair"}
 
     def update(self, **kwargs):
-        throw_if_no_keys_found(kwargs, self.components)
-        self.subject = extract_key(kwargs, "other_subject". this.subject)
+        throw_if_no_keys_found(kwargs, self.__components)
+        self.__subject = extract_key(kwargs, "subject". self.__subject)
+        self.__other_subject = extract_key(kwargs, "other_subject". self.__other_subject)
+        self.__numerical_expression = extract_key(kwargs, "numerical_expression",self.__numerical_expression)
+
+    def set_type(self, type):
+        if type not in self.__types:
+            raise ValueError(f"Invalid definition type, {type}")
+        self.__type = type
 
     def get_id(self):
-        return self.id
+        return self.__id
 
-class SubjectSimpleDefinition(BaseSimpleDefinition):
-    def __init__(self, id):
-        super().__init__(id)
-        self.other_subject = ""
-        self.components.add("other_subject")
-
-    def update(self, **kwargs):
-        super().update(kwargs)
-        throw_if_no_keys_found(kwargs, self.components)
-        self.other_subject = extract_key(kwargs, "other_subject". this.other_subject)
-
-    def render(self):
-        return f"{subject} is {other_subject}."
-
-class NumericalSimpleDefinition(BaseSimpleDefinition):
-    def __init__(self, id):
-        super().__init__(id)
-        self.numerical_expression = None
-        self.components.add("numerical_expression")
-    
-    def update(self, **kwargs):
-        throw_if_no_keys_found(kwargs, self.components)
-        self.numerical_expression = extract_key(kwargs, "other_subject". this.numerical_expression)
-
-    def render(self):
-        return f"{subject} equals {numerical_expression}"
 
