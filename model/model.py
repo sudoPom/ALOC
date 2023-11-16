@@ -5,10 +5,9 @@ class Model():
 
     def __init__(self):
         self.__contract = Contract()
-        self.__contract.add_definition("subject pair")
-        self.__contract.add_definition("subject pair")
-        self.__contract.add_definition("subject pair")
-        self.__contract.add_definition("subject pair")
+
+    def add_definition(self, definition_type):
+        self.__contract.add_definition(definition_type)
 
     def get_contract(self):
         """Returns the current contract.

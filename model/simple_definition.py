@@ -22,6 +22,9 @@ class SimpleDefinition:
             raise ValueError(f"Invalid definition type, {type}")
         self.__type = type
 
+    def get_type(self):
+        return self.__type
+
     def get_id(self):
         return self.__id
 

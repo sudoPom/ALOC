@@ -12,7 +12,7 @@ class View(tk.Tk):
         self.controller = controller
         self.__tree_frame = ZoomPanCanvas(self)
         self.__tree_frame.pack(fill=tk.BOTH, expand=True)
-        self.__renderer = Renderer(self.__tree_frame)
+        self.__renderer = Renderer(self.__tree_frame, controller, self.update_display)
         self.update_display()
     
     def update_display(self):
