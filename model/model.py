@@ -4,15 +4,19 @@ from model.contract import Contract
 class Model():
 
     def __init__(self):
-        self.contract = Contract()
+        self.__contract = Contract()
+        self.__contract.add_definition("subject pair")
+        self.__contract.add_definition("subject pair")
+        self.__contract.add_definition("subject pair")
+        self.__contract.add_definition("subject pair")
 
-    def get_contract():
+    def get_contract(self):
         """Returns the current contract.
 
         Returns:
             The contract currently being drafted.
         """
-        return self.contract
+        return self.__contract
 
     def save_contract_file(path: str):
         """Saves the current contract.

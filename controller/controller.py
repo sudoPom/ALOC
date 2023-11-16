@@ -1,7 +1,7 @@
 class Controller:
 
     def __init__(self, model):
-        self.model = model
+        self.__model = model
 
     def get_contract(self):
-        return model.get_contract()
+        return self.__model.get_contract()
