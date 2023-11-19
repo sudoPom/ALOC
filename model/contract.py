@@ -8,10 +8,8 @@ class Contract:
     def __init__(self):
         self.__definitions = []
 
-
     def add_definition(self, definition_type):
-        new_definition = SimpleDefinition(uuid.uuid4())
-        new_definition.set_type(definition_type)
+        new_definition = SimpleDefinition(uuid.uuid4(), definition_type)
         self.__definitions.append(new_definition)
 
     def get_definitions(self):

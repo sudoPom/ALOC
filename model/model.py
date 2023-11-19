@@ -9,6 +9,9 @@ class Model():
     def add_definition(self, definition_type):
         self.__contract.add_definition(definition_type)
 
+    def change_definition_type(self, definition, definition_type):
+        definition.set_type(definition_type)
+
     def get_contract(self):
         """Returns the current contract.
 
@@ -19,7 +22,7 @@ class Model():
 
     def save_contract_file(path: str):
         """Saves the current contract.
-        
+
         Args:
             path: The file path of where the contract should be saved.
         """
@@ -27,7 +30,7 @@ class Model():
 
     def open_contract_file(path: str):
         """Loads the contract stored in the file pointed to by path.
-        
+
         Args:
             path: The file path to retrieve the contract from.
         """
