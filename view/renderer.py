@@ -2,6 +2,7 @@ from view.frames import contract_frame, simple_definition_frame
 import tkinter as tk
 
 PADDING_PX = 10
+INDENT_SIZE_PX = 20
 
 
 class Renderer:
@@ -20,7 +21,8 @@ class Renderer:
         y += contract_frame_widget.winfo_reqheight()
         for definition in contract.get_definitions():
             y += PADDING_PX
-            rendered_definition = self.render_definition(definition, x + 20, y)
+            rendered_definition = self.render_definition(
+                definition, x + INDENT_SIZE_PX, y)
             self.__frame.update()
             y += rendered_definition.winfo_reqheight()
 
