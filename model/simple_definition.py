@@ -5,9 +5,9 @@ class SimpleDefinition:
     def __init__(self, id, type):
         self.__type = type
         self.__id = id
-        self.__subject = "SUBJECT"
-        self.__other_subject = "OTHER SUBJECT"
-        self.__numerical_expression = "NUMERICAL EXPRESSION"
+        self.__subject = "NAME"
+        self.__other_subject = "DEFINITION"
+        self.__numerical_expression = "0"
         self.__components = {"subject",
                              "other_subject", "numerical_expression"}
         self.__types = {"subject pair", "subject numerical pair"}
