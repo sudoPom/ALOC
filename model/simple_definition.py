@@ -14,9 +14,9 @@ class SimpleDefinition:
 
     def update(self, **kwargs):
         throw_if_no_keys_found(kwargs, self.__components)
-        self.__subject = extract_key(kwargs, "subject". self.__subject)
+        self.__subject = extract_key(kwargs, "subject", self.__subject)
         self.__other_subject = extract_key(
-            kwargs, "other_subject". self.__other_subject)
+            kwargs, "other_subject", self.__other_subject)
         self.__numerical_expression = extract_key(
             kwargs, "numerical_expression", self.__numerical_expression)
 

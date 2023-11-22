@@ -9,8 +9,13 @@ class Model():
     def add_definition(self, definition_type):
         self.__contract.add_definition(definition_type)
 
-    def change_definition_type(self, definition, definition_type):
+    @staticmethod
+    def change_definition_type(definition, definition_type):
         definition.set_type(definition_type)
+
+    @staticmethod
+    def update_definition(definition, update_dict):
+        definition.update(**update_dict)
 
     def delete_definition(self, definition_id):
         self.__contract.delete_definition(definition_id)

@@ -31,6 +31,47 @@ class BaseFrame(tk.Frame):
         raise NotImplementedError(
             "Base class method for show_menu should be overridden")
 
-    def destruct(self):
-        self.get_controller().delete_definition(self.__definition.get_id())
-        self.trigger_re_render()
+    def show_update_form(self):
+        update_form = tk.Toplevel(self)
+        current_entries = self.get_entries()
+
+        entry_vars_and_types = []
+        entry_widgets = []
+
+        for i, (entry_name, entry_value, entry_type) in enumerate(current_entries):
+            entry_var = tk.StringVar()
+            entry_vars_and_types.append((entry_var, entry_type))
+
+            self.create_entry_label(update_form, entry_name, i)
+            entry_widget = self.create_entry_widget(
+                update_form, entry_var, entry_value, i)
+            entry_widgets.append(entry_widget)
+
+        submit_button = self.create_submit_button(
+            update_form, entry_vars_and_types)
+        submit_button.grid(row=len(current_entries), column=0, columnspan=2)
+
+        for (var, _) in entry_vars_and_types:
+            var.trace_add('write', lambda *args, btn=submit_button,
+                          vars=entry_vars_and_types: self.update_button_state(btn, vars))
+
+    @staticmethod
+    def create_entry_label(parent, text, row):
+        entry_label = tk.Label(parent, text=f"{text}:")
+        entry_label.grid(row=row, column=0)
+
+    @staticmethod
+    def create_entry_widget(parent, entry_var, entry_value, row):
+        entry_widget = tk.Entry(parent, textvariable=entry_var)
+        entry_widget.insert(0, entry_value)
+        entry_widget.grid(row=row, column=1)
+        return entry_widget
+
+    def create_submit_button(self, parent, entry_vars_and_types):
+        submit_button = tk.Button(parent, text="Submit", command=lambda: self.update(
+            [entry_var for (entry_var, entry_type) in entry_vars_and_types], parent))
+        return submit_button
+
+    def update(self, entries, update_form):
+        raise NotImplementedError(
+            "Base class method for update should be overridden")
