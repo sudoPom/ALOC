@@ -11,3 +11,6 @@ class Controller:
 
     def change_definition_type(self, definition, definition_type):
         self.__model.change_definition_type(definition, definition_type)
+
+    def delete_definition(self, definition_id):
+        self.__model.delete_definition(definition_id)

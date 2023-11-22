@@ -27,9 +27,10 @@ class BaseFrame(tk.Frame):
         raise NotImplementedError(
             "Base class method for create_widgets should be overridden")
 
-    def menu_close(self):
-        self.__menu.unpost()
-
     def show_menu(self):
         raise NotImplementedError(
             "Base class method for show_menu should be overridden")
+
+    def destruct(self):
+        self.get_controller().delete_definition(self.__definition.get_id())
+        self.trigger_re_render()

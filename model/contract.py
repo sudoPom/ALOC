@@ -21,3 +21,7 @@ class Contract:
                 definition.update(kwargs)
                 return
         raise ValueError(f"This definition does not exist! {id}")
+
+    def delete_definition(self, id):
+        self.__definitions = [
+            definition for definition in self.__definitions if definition.get_id() != id]

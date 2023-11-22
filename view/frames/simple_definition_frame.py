@@ -20,6 +20,7 @@ class SimpleDefinitionFrame(BaseFrame):
 
         self.__menu.add_cascade(
             label="Change definition type", menu=definition_type_menu)
+        self.__menu.add_command(label="Delete", command=self.destruct)
         button.bind("<Button-1>", self.show_menu)
 
         info_label = tk.Label(self, text=self.get_definition_text(), font=(
@@ -28,6 +29,10 @@ class SimpleDefinitionFrame(BaseFrame):
 
     def change_definition_type(self, type):
         self.get_controller().change_definition_type(self.__definition, type)
+        self.trigger_re_render()
+
+    def destruct(self):
+        self.get_controller().delete_definition(self.__definition.get_id())
         self.trigger_re_render()
 
     def show_menu(self, event):
@@ -56,6 +61,6 @@ class SimpleDefinitionFrame(BaseFrame):
             case "subject pair":
                 return f"{self.__definition.get_subject()} is {self.__definition.get_other_subject()}"
             case "subject numerical pair":
-                return f"{self.__definition.get_subject()} euqals {self.__definition.get_numerical_expression()}."
+                return f"{self.__definition.get_subject()} euqals {self.__definition.get_numerical_expression()}"
             case _:
                 return "Unknown Definition Type! (Fix Mr Programmer!)"

@@ -12,6 +12,9 @@ class Model():
     def change_definition_type(self, definition, definition_type):
         definition.set_type(definition_type)
 
+    def delete_definition(self, definition_id):
+        self.__contract.delete_definition(definition_id)
+
     def get_contract(self):
         """Returns the current contract.
 

@@ -17,7 +17,6 @@ class ContractFrame(BaseFrame):
                                     command=lambda: self.add_new_definition("subject numerical pair"))
         self.__menu.add_cascade(label="Add definition", menu=definition_menu)
         self.__menu.add_separator()
-        self.__menu.add_command(label="Close", command=self.menu_close)
         button.bind("<Button-1>", self.show_menu)
 
     def show_menu(self, event):
