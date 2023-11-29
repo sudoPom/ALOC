@@ -1,4 +1,4 @@
-from view.frames import contract_frame, simple_definition_frame
+from view.frames import contract_frame, simple_definition_frame, simple_statement_frame
 import tkinter as tk
 
 PADDING_PX = 10
@@ -25,6 +25,12 @@ class Renderer:
                 definition, x + INDENT_SIZE_PX, y)
             self.__frame.update()
             y += rendered_definition.winfo_reqheight()
+        for statement in contract.get_statements():
+            y += PADDING_PX
+            rendered_statement = self.render_statement(
+                statement, x + INDENT_SIZE_PX, y)
+            self.__frame.update()
+            y += rendered_statement.winfo_reqheight()
 
     def render_definition(self, definition, x, y):
         definition_frame_widget = simple_definition_frame.SimpleDefinitionFrame(
@@ -32,3 +38,10 @@ class Renderer:
         self.__frame.create_window(
             x, y, anchor=tk.NW, window=definition_frame_widget)
         return definition_frame_widget
+
+    def render_statement(self, statement, x, y):
+        statement_frame_widget = simple_statement_frame.SimpleStatementFrame(
+            self.__frame, self.__controller, statement, self.__re_render_func)
+        self.__frame.create_window(
+            x, y, anchor=tk.NW, window=statement_frame_widget)
+        return statement_frame_widget

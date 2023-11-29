@@ -1,41 +1,71 @@
-from model.utils import extract_key, throw_if_no_keys_found
+"""
+SimpleDefinition Module
+
+This module defines the SimpleDefinition class, representing a simple
+definition in the AST.
+
+Classes:
+- SimpleDefinition: Represents a simple definition in the AST.
+
+"""
+from model.base_component import BaseComponent
+from view.non_terminal_types import ContractNonTerminal
 
 
-class SimpleDefinition:
-    def __init__(self, id, type):
-        self.__type = type
-        self.__id = id
-        self.__subject = "NAME"
-        self.__other_subject = "DEFINITION"
-        self.__numerical_expression = "0"
-        self.__components = {"subject",
-                             "other_subject", "numerical_expression"}
-        self.__types = {"subject pair", "subject numerical pair"}
+class SimpleDefinition(BaseComponent):
+    """
+    Represents a simple definition in the AST.
 
-    def update(self, **kwargs):
-        throw_if_no_keys_found(kwargs, self.__components)
-        self.__subject = extract_key(kwargs, "subject", self.__subject)
-        self.__other_subject = extract_key(
-            kwargs, "other_subject", self.__other_subject)
-        self.__numerical_expression = extract_key(
-            kwargs, "numerical_expression", self.__numerical_expression)
+    Args:
+    - definition_id (str): The unique identifier of the definition.
+    - definition_type (str): The type of the definition.
 
-    def set_type(self, type):
-        if type not in self.__types:
-            raise ValueError(f"Invalid definition type, {type}")
-        self.__type = type
+    Attributes:
+    - __subject (str): The subject of the definition.
+    - __other_subject (str): The other subject of the definition.
+    - __numerical_expression (str): The numerical expression of the definition.
+    - __components (set): The set of valid component names.
 
-    def get_type(self):
-        return self.__type
+    Methods:
+    - update(**kwargs): Update the attributes of the definition with the
+    provided keyword arguments.
+    - get_subject(): Get the subject of the definition.
+    - get_other_subject(): Get the other subject of the definition.
+    - get_numerical_expression(): Get the numerical expression of the
+    definition.
+    """
 
-    def get_id(self):
-        return self.__id
+    def __init__(self, definition_id, definition_type):
+        """
+        Initialize a SimpleDefinition object.
 
-    def get_subject(self):
-        return self.__subject
+        Args:
+        - definition_id (str): The unique identifier of the definition.
+        - definition_type (str): The type of the definition.
+        """
+        components = {
+            "subject": ["NAME", ContractNonTerminal.SUBJECT],
+            "other_subject": ["DEFINITION", ContractNonTerminal.SUBJECT],
+            "numerical_expression": ["0", ContractNonTerminal.NUMERICAL_EXPRESSION]
+        }
+        valid_types = {
+            "subject pair": ["subject", "other_subject"],
+            "subject numerical pair": ["subject", "numerical_expression"]}
+        super().__init__(
+            definition_id, definition_type, valid_types, components
+        )
 
-    def get_other_subject(self):
-        return self.__other_subject
+    def get_display_text(self):
+        match self.get_type():
+            case "subject pair":
+                return f"{self._get_component_value('subject')} is {self._get_component_value('other_subject')}"
+            case "subject numerical pair":
+                return f"{self._get_component_value('subject')} is {self._get_component_value('numerical_expression')}"
+            case _:
+                raise ValueError(f"Invalid statement type: {self.__type}")
 
-    def get_numerical_expression(self):
-        return self.__numerical_expression
+    def _get_component_value(self, component_key):
+        components = self.get_components()
+        if component_key not in components:
+            raise ValueError(f"Invalid component type: {component_key}")
+        return components[component_key][0]
