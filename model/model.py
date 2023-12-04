@@ -53,7 +53,7 @@ class Model:
         self.__contract.add_definition(definition_type)
 
     @staticmethod
-    def change_type(component, component_type):
+    def change_component_type(component, component_type):
         """
         Changes the type of the component.
 

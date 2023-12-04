@@ -41,14 +41,32 @@ class BaseFrame(tk.Frame):
         Controller.change_component_type(self.__component, component_type)
         self.trigger_re_render()
 
-    def add_type_submenu(self):
+    def extend_component(self):
+        Controller.extend_component_chain(self.__component)
+        self.trigger_re_render()
+
+    def add_menu(self):
         self.__menu = tk.Menu(self, tearoff=0)
-        menu = tk.Menu(self, tearoff=0)
-        for type in self.__component.get_types():
-            menu.add_command(label=type, command=lambda: self.change_component_type(
-                self.__component, type))
+
+    def add_delete_button(self):
+        self.__menu.add_command(label="Delete", command=self.destruct)
+
+    def add_update_button(self):
+        self.__menu.add_command(label="Update", command=self.show_update_form)
+
+    def add_type_submenu(self):
+        menu = tk.Menu(self.__menu, tearoff=0)
+        for component_type in self.__component.get_types():
+            menu.add_command(
+                label=component_type, command=lambda c_type=component_type: self.change_component_type(c_type))
         self.__menu.add_cascade(
-            label="Change statement type", menu=menu)
+            label="Change component type", menu=menu)
+
+    def add_chain_options(self):
+        menu = tk.Menu(self.__menu, tearoff=0)
+        menu.add_command(label="Extend component",
+                         command=lambda: self.extend_component())
+        self.__menu.add_cascade(label="Component chain options...", menu=menu)
 
     def show_update_form(self):
         update_form = tk.Toplevel(self)
@@ -88,7 +106,7 @@ class BaseFrame(tk.Frame):
 
     def _create_entry_method(self, parent, entry_var, entry_value, entry_type, row, entries):
         match entry_type:
-            case ContractNonTerminal.HOLDS | ContractNonTerminal.VERB | ContractNonTerminal.MODAL_VERB:
+            case ContractNonTerminal.HOLDS | ContractNonTerminal.VERB | ContractNonTerminal.MODAL_VERB | ContractNonTerminal.LOGICAL_OPERATOR:
                 return self._create_option_widget(parent, entry_var, entry_value, entry_type, row)
             case ContractNonTerminal.DATE:
                 return self._create_date_widgets(parent, entry_var, entry_value, row, entries[-1][2])
@@ -100,12 +118,14 @@ class BaseFrame(tk.Frame):
         entry_label.grid(row=row, column=0)
 
     def _create_entry_widget(self, parent, entry_var, entry_value, row):
+        """Creates a basic text entry widget."""
         entry_widget = tk.Entry(parent, textvariable=entry_var)
         entry_widget.insert(0, entry_value)
         entry_widget.grid(row=row, column=1)
         return entry_widget
 
     def _create_option_widget(self, parent, entry_var, entry_value, entry_type, row):
+        """Creates a dropdown menu for the user to select from."""
         options = ContractNonTerminal.get_options(entry_type)
         entry_var.set(entry_value)
         option_widget = tk.OptionMenu(parent, entry_var, *options)
@@ -113,6 +133,10 @@ class BaseFrame(tk.Frame):
         return option_widget
 
     def _create_date_widgets(self, parent, entry_var, entry_value, row, custom_var):
+        """
+        Creates two widgets, one for selecting the type of date and the other
+        for selecting a custom date.
+        """
         options = ContractNonTerminal.get_options(ContractNonTerminal.DATE)
 
         date_widget = tk.OptionMenu(parent, entry_var, *options)
@@ -133,10 +157,20 @@ class BaseFrame(tk.Frame):
         return date_widget
 
     def update_button_state(self, button, entry_vars_and_types):
+        """Disables the submit button if any of the entries are invalid."""
         button['state'] = 'normal' if all(ContractNonTerminal.validate_entry(var.get(
         ), entry_type) for _, (_, entry_type, var) in enumerate(entry_vars_and_types)) else 'disabled'
 
     def update(self, entries, update_form):
+        """
+        Updates the component represented by this frame and destroys
+        the update form.
+
+        Args:
+        - entries: The entries that the user has entered.
+        - update_form: The update form used to enter the
+        component's sub-components.
+        """
         update_dict = dict()
         date_dict = defaultdict(lambda: ("", ""))
         for entry_name, entry_type, entry_var in entries:

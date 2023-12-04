@@ -62,10 +62,4 @@ class SimpleDefinition(BaseComponent):
             case "subject numerical pair":
                 return f"{self._get_component_value('subject')} is {self._get_component_value('numerical_expression')}"
             case _:
-                raise ValueError(f"Invalid statement type: {self.__type}")
-
-    def _get_component_value(self, component_key):
-        components = self.get_components()
-        if component_key not in components:
-            raise ValueError(f"Invalid component type: {component_key}")
-        return components[component_key][0]
+                raise ValueError(f"Invalid statement type: {self.get_type()}")

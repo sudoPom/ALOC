@@ -69,8 +69,8 @@ class BaseComponent:
         - type (str): The new type of the component.
         """
         if component_type not in self.__types:
-            raise ValueError(f"Invalid component type, {type}")
-        self.__type = type
+            raise ValueError(f"Invalid component type, {component_type}")
+        self.__type = component_type
 
     def get_current_components(self):
         """
@@ -125,14 +125,11 @@ class BaseComponent:
     def _get_component_value(self, component_key):
         if component_key not in self.__components:
             raise ValueError(f"Invalid component type: {component_key}")
+        if self.__components[component_key][1] == ContractNonTerminal.DATE:
+            return self._get_component_date(component_key)
         return self.__components[component_key][0]
 
     def _get_component_date(self, date_key):
-        if date_key not in self.__components:
-            raise ValueError(f"Invalid component type: {date_key}")
         date_component = self.__components[date_key]
-        if (date_component[1] != ContractNonTerminal.DATE):
-            raise ValueError(
-                f"Component {date_key} is not a date. It is a {date_component[1]}")
         date = date_component[0]
         return date[0] if date[0] != "custom date" else date[1]

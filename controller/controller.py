@@ -115,3 +115,14 @@ class Controller:
         - statement_id: The ID of the statement to be deleted.
         """
         self.__model.delete_statement(statement_id)
+
+    @staticmethod
+    def extend_component_chain(component):
+        component.add_next()
+
+    def set_logic_operator(self, component, operator):
+        component.set_logic_operator(operator)
+
+    @staticmethod
+    def delete_next_component_from_chain(component):
+        component.delete_next_component()

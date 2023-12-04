@@ -1,6 +1,5 @@
 import tkinter as tk
 from view.frames.base_frame import BaseFrame
-from controller.controller import Controller
 from view.non_terminal_types import ContractNonTerminal
 
 
@@ -13,10 +12,11 @@ class SimpleStatementFrame(BaseFrame):
     def create_widgets(self):
         button = tk.Button(self, text=self.get_text(), bg=self.get_bg_colour())
         button.pack()
+        self.add_menu()
         self.add_type_submenu()
-        menu = self.get_menu()
-        menu.add_command(label="Update", command=self.show_update_form)
-        menu.add_command(label="Delete", command=self.destruct)
+        self.add_chain_options()
+        self.add_update_button()
+        self.add_delete_button()
         button.bind("<Button-1>", self.show_menu)
 
         info_label = tk.Label(self, text=self.__statement.get_display_text(), font=(
