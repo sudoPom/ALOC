@@ -49,9 +49,9 @@ class SimpleStatement(BaseComponent, BaseChain):
             "logical_operator": ["and", ContractNonTerminal.LOGICAL_OPERATOR],
         }
         valid_types = {
-            "subject modal": components.keys(),
-            "subject date": components.keys(),
-            "date subject": components.keys(),
+            "subject modal": set(components.keys()),
+            "subject date": set(components.keys()),
+            "date subject": set(components.keys()),
         }
         valid_operators = {"and", "or"}
         BaseComponent.__init__(
