@@ -9,8 +9,8 @@ Classes:
 
 """
 
-from model.base_component import BaseComponent
 from model.base_chain import BaseChain
+from model.base_component import BaseComponent
 from view.non_terminal_types import ContractNonTerminal
 
 
@@ -46,29 +46,18 @@ class SimpleStatement(BaseComponent, BaseChain):
             "verb": ["pay", ContractNonTerminal.VERB],
             "object": ["$0", ContractNonTerminal.OBJECT],
             "date": [("on a date", "on the 27 January 2002"), ContractNonTerminal.DATE],
-            "logical_operator": ["and", ContractNonTerminal.LOGICAL_OPERATOR]
+            "logical_operator": ["and", ContractNonTerminal.LOGICAL_OPERATOR],
         }
         valid_types = {
             "subject modal": components.keys(),
             "subject date": components.keys(),
-            "date subject": components.keys()
+            "date subject": components.keys(),
         }
-        valid_operators = {
-            "and",
-            "or"
-        }
+        valid_operators = {"and", "or"}
         BaseComponent.__init__(
-            self,
-            statement_id,
-            statement_type,
-            valid_types,
-            components
+            self, statement_id, statement_type, valid_types, components
         )
-        BaseChain.__init__(
-            self,
-            valid_operators,
-            SimpleStatement
-        )
+        BaseChain.__init__(self, valid_operators, SimpleStatement)
 
     def get_display_text(self):
         match self.get_type():
@@ -80,6 +69,6 @@ class SimpleStatement(BaseComponent, BaseChain):
                 out_text = f"{self._get_component_value('holds')} {self._get_component_value('date')} {self._get_component_value('subject')} {self._get_component_value('modal_verb')} {self._get_component_value('verb')} {self._get_component_value('object')}"
             case _:
                 raise ValueError(f"Invalid statement type: {self.__type}")
-        if self._next:
+        if self.get_next():
             return f"{out_text} {self._get_component_value('logical_operator')}"
         return out_text

@@ -8,10 +8,10 @@ Classes:
 - SimpleCondition: Represents a simple definition in the AST.
 
 """
-from model.base_component import BaseComponent
-from view.non_terminal_types import ContractNonTerminal
-from model.boolean_expression import BooleanExpression
 from model.base_chain import BaseChain
+from model.base_component import BaseComponent
+from model.boolean_expression import BooleanExpression
+from view.non_terminal_types import ContractNonTerminal
 
 
 class SimpleCondition(BaseComponent, BaseChain):
@@ -36,20 +36,41 @@ class SimpleCondition(BaseComponent, BaseChain):
             "modal_verb": ["shall", ContractNonTerminal.MODAL_VERB],
             "verb": ["pay", ContractNonTerminal.VERB],
             "numerical_expression": ["0", ContractNonTerminal.NUMERICAL_EXPRESSION],
-            "logical_operator": ["and", ContractNonTerminal.LOGICAL_OPERATOR]
+            "logical_operator": ["and", ContractNonTerminal.LOGICAL_OPERATOR],
+            "comparison": ["more than", ContractNonTerminal.COMPARISON],
+            "other_subject": ["some thing", ContractNonTerminal.SUBJECT],
         }
         valid_types = {
-            "subject pair": ["subject", "other_subject"],
-            "subject numerical pair": ["subject", "numerical_expression"]}
-        valid_operators = {
-            "and",
-            "or"
+            "subject verb status": [
+                "holds",
+                "subject",
+                "verb_status",
+                "object",
+                "date",
+            ],
+            "subject date": ["holds", "subject", "date", "verb_status", "object"],
+            "date subject": ["holds", "date", "subject", "verb_status", "object"],
+            "subject modal verb": [
+                "holds",
+                "subject",
+                "modal_verb",
+                "verb",
+                "object",
+                "date",
+            ],
+            "boolean expression": [
+                "holds",
+                "subject",
+                "verb_status",
+                "comparison",
+                "other_subject",
+            ],
         }
-        BaseComponent.__init__(self,
-                               condition_id, condition_type, valid_types, components
-                               )
-        BaseChain.__init__(self, {valid_operators, SimpleCondition})
-        self._boolean_expression = BooleanExpression(0, "subject_verb")
+        valid_operators = {"and", "or"}
+        BaseComponent.__init__(
+            self, condition_id, condition_type, valid_types, components
+        )
+        BaseChain.__init__(self, valid_operators, SimpleCondition)
         self._logic_operator = "and"
         self._next = None
 
@@ -64,7 +85,7 @@ class SimpleCondition(BaseComponent, BaseChain):
             case "subject modal verb":
                 out_text = f'{self._get_component_value("holds")} {self._get_component_value("subject")} {self._get_component_value("modal_verb")} {self._get_component_value("verb")} {self._get_component_value("object")} {self._get_component_value("date")}'
             case "boolean expression":
-                out_text = f'{self._get_component_value("holds")} {self._boolean_expression.get_display_text()}'
+                out_text = f'{self._get_component_value("holds")} {self._get_component_value("subject")} {self._get_component_value("verb_status")} {self._get_component_value("comparison")} {self._get_component_value("other_subject")} '
             case _:
                 raise ValueError(f"Invalid condition type: {self.get_type()}")
         if self._next:

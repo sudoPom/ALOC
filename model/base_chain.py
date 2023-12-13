@@ -11,30 +11,31 @@ Classes:
 
 
 class BaseChain:
-
     def __init__(self, valid_operators, chain_type):
-        self._valid_operators = valid_operators
-        self._next = None
-        self._chain_type = chain_type
+        self.__valid_operators = valid_operators
+        self.__next = None
+        self.__chain_type = chain_type
 
-    def add_next(self):
-        old_next = self._next
-        self._next = self._chain_type(
-            self.get_id() + 1, self.get_type())
-        self._next.set_next(old_next)
+    def add_next(self, id, component_type):
+        old_next = self.__next
+        self.__next = self.__chain_type(id + 1, component_type)
+        self.__next.set_next(old_next)
 
     def set_next(self, next):
-        self._next = next
+        self.__next = next
+
+    def get_next(self):
+        return self.__next
 
     def delete_next_condition(self):
-        if not self._next:
+        if not self.__next:
             return
-        self._next = self._next.get_next_component()
+        self.__next = self.__next.get__next_component()
 
     def get_next_component(self):
-        return self._next
+        return self.__next
 
     def set_logic_operator(self, operator):
-        if operator not in {"and", "or"}:
+        if operator not in self.__valid_operators:
             raise ValueError(f"Invalid operator: {operator}")
         self._logic_operator = operator

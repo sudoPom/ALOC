@@ -1,4 +1,3 @@
-
 """
 Controller Module
 
@@ -48,6 +47,15 @@ class Controller:
         controller.
         """
         self.__model = model
+
+    def get_contract_path(self):
+        return self.__model.get_contract().get_path()
+
+    def save_contract(self, path):
+        self.__model.save_contract_file(path)
+
+    def load_contract(self, path):
+        self.__model.open_contract_file(path)
 
     def get_contract(self):
         """
@@ -107,18 +115,36 @@ class Controller:
         """
         self.__model.add_statement(statement_type)
 
-    def delete_statement(self, statement_id):
+    def add_new_conditional_statement(self, conditional_statement_type):
+        """
+        Adds a new conditional statement to the contract through the model.
+
+        Args:
+        - conditional_statement_type: The type of the new conditional statement.
+        """
+        self.__model.add_conditional_statement(conditional_statement_type)
+
+    def add_new_conditional_definition(self, conditional_definition_type):
+        """
+        Adds a new conditional statement to the contract through the model.
+
+        Args:
+        - conditional_statement_type: The type of the new conditional statement.
+        """
+        self.__model.add_conditional_definition(conditional_definition_type)
+
+    def delete_non_definition_component(self, statement_id):
         """
         Deletes a statement from the contract through the model.
 
         Args:
         - statement_id: The ID of the statement to be deleted.
         """
-        self.__model.delete_statement(statement_id)
+        self.__model.delete_non_definition_component(statement_id)
 
     @staticmethod
     def extend_component_chain(component):
-        component.add_next()
+        component.add_next(component.get_id(), component.get_type())
 
     def set_logic_operator(self, component, operator):
         component.set_logic_operator(operator)

@@ -1,25 +1,39 @@
 import tkinter as tk
+from tkinter import filedialog
 
 from controller.controller import Controller
 from model.contract import Contract
-from view.zoom_pan_canvas import ZoomPanCanvas
 from view.renderer import Renderer
+from view.scroll_canvas import ScrollCanvas
 
 
 class View(tk.Tk):
-
     def __init__(self, controller):
         super().__init__()
-        self.controller = controller
-        self.__tree_frame = ZoomPanCanvas(self)
+        self.__controller = controller
+
+        toolbar = tk.Frame(self)
+        toolbar.pack(side="top", fill="x")
+
+        # Add a "Save" button to the toolbar
+        save_button = tk.Button(
+            toolbar, text="Save Contract", command=self.save_contract
+        )
+        save_button.pack(side="left")
+        load_button = tk.Button(
+            toolbar, text="Open Contract", command=self.load_contract
+        )
+        load_button.pack(side="left")
+
+        self.__tree_frame = ScrollCanvas(self)
         self.__tree_frame.pack(fill=tk.BOTH, expand=True)
-        self.__renderer = Renderer(
-            self.__tree_frame, controller, self.update_display)
+        self.__renderer = Renderer(self.__tree_frame, controller, self.update_display)
+
         self.update_display()
 
     def update_display(self):
         """Re-draws the display with the contract that is currently stored."""
-        contract = self.controller.get_contract()
+        contract = self.__controller.get_contract()
         self.render_contract(contract)
 
     def render_contract(self, contract: Contract, x=10, y=10):
@@ -29,3 +43,24 @@ class View(tk.Tk):
             The contract to be rendered.
         """
         self.__renderer.render_contract(x, y, contract)
+
+    def save_contract(self):
+        file_path = self.__controller.get_contract_path()
+        if file_path is None:
+            file_path = filedialog.asksaveasfilename(
+                defaultextension=".cola",
+                filetypes=[("Cola files", "*.cola")],
+            )
+        if file_path:
+            self.__controller.save_contract(file_path)
+            print(f"Contract saved to: {file_path}")
+
+    def load_contract(self):
+        file_path = filedialog.askopenfilename(
+            defaultextension=".cola",
+            filetypes=[("Cola files", "*.cola")],
+        )
+        if file_path:
+            self.__controller.load_contract(file_path)
+            self.update_display()
+            print(f"Contract loaded from: {file_path}")

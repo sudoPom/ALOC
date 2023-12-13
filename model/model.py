@@ -1,4 +1,3 @@
-
 """
 Model Module
 
@@ -9,6 +8,8 @@ Classes:
 - Model: Wraps the Contract class, exposing commonly used contract operations.
 
 """
+
+import pickle
 
 from model.contract import Contract
 
@@ -92,14 +93,32 @@ class Model:
         """
         self.__contract.add_statement(statement_type)
 
-    def delete_statement(self, statement_id):
+    def add_conditional_statement(self, conditional_statement_type):
+        """
+        Adds an empty statement to the current contract.
+
+        Args:
+        - statement_type: The type of the new statement.
+        """
+        self.__contract.add_conditional_statement(conditional_statement_type)
+
+    def add_conditional_definition(self, conditional_definition_type):
+        """
+        Adds an empty statement to the current contract.
+
+        Args:
+        - statement_type: The type of the new statement.
+        """
+        self.__contract.add_conditional_definition(conditional_definition_type)
+
+    def delete_non_definition_component(self, component_id):
         """
         Deletes a statement from the current contract.
 
         Args:
         - statement_id: The ID of the statement to be deleted.
         """
-        self.__contract.delete_statement(statement_id)
+        self.__contract.delete_non_definition_component(component_id)
 
     def get_contract(self):
         """
@@ -117,7 +136,11 @@ class Model:
         Args:
         - path (str): The file path of where the contract should be saved.
         """
-        # Implementation for saving the contract goes here
+        contract_data = pickle.dumps(self.__contract, protocol=pickle.HIGHEST_PROTOCOL)
+        with open(path, "wb") as file:
+            file.write(contract_data)
+        print(f"Contract saved to: {path}")
+        self.__contract.set_path(path)
 
     def open_contract_file(self, path: str):
         """
@@ -126,4 +149,10 @@ class Model:
         Args:
         - path (str): The file path to retrieve the contract from.
         """
-        # Implementation for opening and loading the contract goes here
+        try:
+            with open(path, "rb") as file:
+                contract_data = file.read()
+                self.__contract = pickle.loads(contract_data)
+                print(f"Contract loaded from: {path}")
+        except Exception as e:
+            print(f"Error loading contract: {e}")

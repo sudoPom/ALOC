@@ -1,4 +1,3 @@
-
 """
 ContractNonTerminal Enum
 
@@ -135,6 +134,17 @@ class ContractNonTerminal(Enum):
         return True
 
     @classmethod
+    def is_optional(cls, entry_type):
+        return entry_type in {
+            cls.HOLDS,
+            cls.VERB,
+            cls.MODAL_VERB,
+            cls.DATE,
+            cls.LOGICAL_OPERATOR,
+            cls.COMPARISON,
+        }
+
+    @classmethod
     def validate_entry(cls, entry, entry_type):
         """
         Validates an entry based on its type.
@@ -184,16 +194,16 @@ class ContractNonTerminal(Enum):
         """
         match entry_type:
             case cls.HOLDS:
-                return ["it is the case that", "it is not the case that", ""]
+                return ["it is the case that ", "it is not the case that ", ""]
             case cls.VERB:
                 return ["deliver", "pay", "charge"]
             case cls.MODAL_VERB:
                 return ["shall", "must", "may", "is forbidden to"]
             case cls.DATE:
-                return ["on a date", "on the date", "on any date",
-                        "custom date"]
+                return ["on a date", "on the date", "on any date", "custom date"]
             case cls.LOGICAL_OPERATOR:
                 return ["and", "or"]
+            case cls.COMPARISON:
+                return ["less than", "equal to", "more than"]
             case _:
-                raise ValueError(
-                    f"Type '{entry_type}' does not support option entry.")
+                raise ValueError(f"Type '{entry_type}' does not support option entry.")

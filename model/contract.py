@@ -8,6 +8,8 @@ Classes:
 
 """
 
+from model.conditional_definition import ConditionalDefinition
+from model.conditional_statement import ConditionalStatement
 from model.simple_definition import SimpleDefinition
 from model.simple_statement import SimpleStatement
 
@@ -38,7 +40,8 @@ class Contract:
         """
         self.__id_counter = 0
         self.__definitions = []
-        self.__statements = []
+        self.__other_components = []
+        self.__path = None
 
     def add_definition(self, definition_type):
         """
@@ -47,8 +50,7 @@ class Contract:
         Args:
         - definition_type (str): The type of the new definition.
         """
-        new_definition = SimpleDefinition(
-            self.get_and_increment_id(), definition_type)
+        new_definition = SimpleDefinition(self.get_and_increment_id(), definition_type)
         self.__definitions.append(new_definition)
 
     def add_statement(self, statement_type):
@@ -58,9 +60,32 @@ class Contract:
         Args:
         - statement_type (str): The type of the new statement.
         """
-        new_statement = SimpleStatement(
-            self.get_and_increment_id(), statement_type)
-        self.__statements.append(new_statement)
+        new_statement = SimpleStatement(self.get_and_increment_id(), statement_type)
+        self.__other_components.append(new_statement)
+
+    def add_conditional_statement(self, conditional_statement_type):
+        """
+        Add a new conditional statement to the contract.
+
+        Args:
+        - conditional_type (str): The type of the new conditional statement.
+        """
+        new_conditional_statement = ConditionalStatement(
+            self.get_and_increment_id(), conditional_statement_type
+        )
+        self.__other_components.append(new_conditional_statement)
+
+    def add_conditional_definition(self, conditional_definition_type):
+        """
+        Add a new conditional statement to the contract.
+
+        Args:
+        - conditional_type (str): The type of the new conditional definition.
+        """
+        new_conditional_statement = ConditionalDefinition(
+            self.get_and_increment_id(), conditional_definition_type
+        )
+        self.__other_components.append(new_conditional_statement)
 
     def get_definitions(self):
         """
@@ -71,14 +96,14 @@ class Contract:
         """
         return self.__definitions
 
-    def get_statements(self):
+    def get_other_components(self):
         """
-        Get the list of statements in the contract.
+        Get the list of non definition components in the contract.
 
         Returns:
-        - list: List of statements in the contract.
+        - list: List of non definition components in the contract.
         """
-        return self.__statements
+        return self.__other_components
 
     def update_definition(self, definition_id, **kwargs):
         """
@@ -94,7 +119,7 @@ class Contract:
                 return
         raise ValueError(f"This definition does not exist! {id}")
 
-    def update_statement(self, statement_id, **kwargs):
+    def update_non_definition_component(self, statement_id, **kwargs):
         """
         Update the attributes of a statement in the contract.
 
@@ -102,9 +127,9 @@ class Contract:
         - id (str): The ID of the statement to update.
         - **kwargs: Keyword arguments representing the updated attributes.
         """
-        for statement in self.__statements:
-            if statement.get_id() == statement_id:
-                statement.update(kwargs)
+        for component in self.__other_components:
+            if component.get_id() == statement_id:
+                component.update(kwargs)
                 return
         raise ValueError(f"This statement does not exist! {id}")
 
@@ -121,17 +146,17 @@ class Contract:
             if definition.get_id() != definition_id
         ]
 
-    def delete_statement(self, definition_id):
+    def delete_non_definition_component(self, component_id):
         """
         Delete a statement from the contract.
 
         Args:
         - id (str): The ID of the statement to delete.
         """
-        self.__statements = [
-            statement
-            for statement in self.__statements
-            if statement.get_id() != definition_id
+        self.__other_components = [
+            component
+            for component in self.__other_components
+            if component.get_id() != component_id
         ]
 
     def get_and_increment_id(self):
@@ -144,3 +169,9 @@ class Contract:
         out = self.__id_counter
         self.__id_counter += 1
         return out
+
+    def get_path(self):
+        return self.__path
+
+    def set_path(self, path):
+        self.__path = path
