@@ -62,11 +62,11 @@ class SimpleStatement(BaseComponent, BaseChain):
     def get_display_text(self):
         match self.get_type():
             case "subject modal":
-                out_text = f"{self._get_component_value('holds')} {self._get_component_value('subject')} {self._get_component_value('modal_verb')} {self._get_component_value('verb')} {self._get_component_value('object')} {self._get_component_value('date')}"
+                out_text = f"[{self.get_id()}] {self._get_component_value('holds')} {self._get_component_value('subject')} {self._get_component_value('modal_verb')} {self._get_component_value('verb')} {self._get_component_value('object')} {self._get_component_value('date')}"
             case "subject date":
-                out_text = f"{self._get_component_value('holds')} {self._get_component_value('subject')} {self._get_component_value('date')} {self._get_component_value('modal_verb')} {self._get_component_value('verb')} {self._get_component_value('object')}"
+                out_text = f"[{self.get_id()}] {self._get_component_value('holds')} {self._get_component_value('subject')} {self._get_component_value('date')} {self._get_component_value('modal_verb')} {self._get_component_value('verb')} {self._get_component_value('object')}"
             case "date subject":
-                out_text = f"{self._get_component_value('holds')} {self._get_component_value('date')} {self._get_component_value('subject')} {self._get_component_value('modal_verb')} {self._get_component_value('verb')} {self._get_component_value('object')}"
+                out_text = f"[{self.get_id()}] {self._get_component_value('holds')} {self._get_component_value('date')} {self._get_component_value('subject')} {self._get_component_value('modal_verb')} {self._get_component_value('verb')} {self._get_component_value('object')}"
             case _:
                 raise ValueError(f"Invalid statement type: {self.__type}")
         if self.get_next():

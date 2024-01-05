@@ -175,3 +175,6 @@ class Contract:
 
     def set_path(self, path):
         self.__path = path
+
+    def to_cola(self):
+        out = ""
