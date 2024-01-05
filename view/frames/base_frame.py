@@ -167,12 +167,13 @@ class BaseFrame(tk.Frame):
         for selecting a custom date.
         """
         options = ContractNonTerminal.get_options(ContractNonTerminal.DATE)
-
+        entry_var.set(entry_value[0])
         date_widget = tk.OptionMenu(parent, entry_var, *options)
         date_widget.grid(row=row, column=1)
 
         custom_entry = tk.Entry(parent, textvariable=custom_var)
         custom_entry.grid(row=row, column=2)
+        custom_entry.insert(0, entry_value[1])
 
         def handle_option_change(event):
             selected_option = entry_var.get()

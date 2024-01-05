@@ -28,6 +28,7 @@ Expression entry.
 """
 
 from enum import Enum
+from parsers.base_parser import BaseParser
 
 
 class ContractNonTerminal(Enum):
@@ -66,7 +67,7 @@ class ContractNonTerminal(Enum):
         Returns:
         - bool: True if the entry is valid, False otherwise.
         """
-        return numerical_expression.isnumeric()
+        return BaseParser("numerical_expression").parse(numerical_expression)
 
     @staticmethod
     def validate_modal_verb(modal_verb):
@@ -105,7 +106,9 @@ class ContractNonTerminal(Enum):
         Returns:
         - bool: True if the entry is valid, False otherwise.
         """
-        return True
+        if date == "custom date":
+            return True
+        return BaseParser("date").parse(date)
 
     @staticmethod
     def validate_object(object):
@@ -118,7 +121,7 @@ class ContractNonTerminal(Enum):
         Returns:
         - bool: True if the entry is valid, False otherwise.
         """
-        return True
+        return BaseParser("object").parse(object)
 
     @staticmethod
     def validate_holds(holds):
@@ -131,7 +134,7 @@ class ContractNonTerminal(Enum):
         Returns:
         - bool: True if the entry is valid, False otherwise.
         """
-        return True
+        return BaseParser("holds").parse(holds)
 
     @classmethod
     def is_optional(cls, entry_type):
@@ -159,15 +162,13 @@ class ContractNonTerminal(Enum):
         Raises:
         - ValueError: If the entry_type is not supported.
         """
+        if cls.is_optional(entry_type) and entry_type is not cls.DATE:
+            return True
         match entry_type:
             case cls.SUBJECT:
                 return cls.validate_subject(entry)
             case cls.NUMERICAL_EXPRESSION:
                 return cls.validate_numerical_expression(entry)
-            case cls.MODAL_VERB:
-                return cls.validate_modal_verb(entry)
-            case cls.VERB:
-                return cls.validate_verb(entry)
             case cls.DATE:
                 return cls.validate_date(entry)
             case cls.OBJECT:
