@@ -44,8 +44,8 @@ class SimpleStatement(BaseComponent, BaseChain):
             "subject": ["NAME", ContractNonTerminal.SUBJECT],
             "modal_verb": ["shall", ContractNonTerminal.MODAL_VERB],
             "verb": ["pay", ContractNonTerminal.VERB],
-            "object": ["$0", ContractNonTerminal.OBJECT],
-            "date": [("on a date", "on the 27 January 2002"), ContractNonTerminal.DATE],
+            "object": ["GBP 0", ContractNonTerminal.OBJECT],
+            "date": [("on ADATE", "on the 27 January 2002"), ContractNonTerminal.DATE],
             "logical_operator": ["and", ContractNonTerminal.LOGICAL_OPERATOR],
         }
         valid_types = {

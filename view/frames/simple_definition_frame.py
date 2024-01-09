@@ -61,3 +61,6 @@ class SimpleDefinitionFrame(BaseFrame):
                 return "Subject Numerical Definition"
             case _:
                 return "Unknown Definition Type"
+
+    def render(self):
+        pass

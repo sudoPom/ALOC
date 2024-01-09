@@ -141,6 +141,7 @@ class ContractNonTerminal(Enum):
         return entry_type in {
             cls.HOLDS,
             cls.VERB,
+            cls.VERB_STATUS,
             cls.MODAL_VERB,
             cls.DATE,
             cls.LOGICAL_OPERATOR,
@@ -176,8 +177,7 @@ class ContractNonTerminal(Enum):
             case cls.HOLDS:
                 return cls.validate_holds(entry)
             case _:
-                print(f"Missing type {entry_type}, skipping validation.")
-                return True
+                raise ValueError(f"Invalid entry type: {entry_type}")
 
     @classmethod
     def get_options(cls, entry_type):
@@ -201,10 +201,12 @@ class ContractNonTerminal(Enum):
             case cls.MODAL_VERB:
                 return ["shall", "must", "may", "is forbidden to"]
             case cls.DATE:
-                return ["on a date", "on the date", "on any date", "custom date"]
+                return ["on ADATE", "on THEDATE", "on ANYDATE", "custom date"]
             case cls.LOGICAL_OPERATOR:
                 return ["and", "or"]
             case cls.COMPARISON:
                 return ["less than", "equal to", "more than"]
+            case cls.VERB_STATUS:
+                return ["delivered", "paid", "charged"]
             case _:
                 raise ValueError(f"Type '{entry_type}' does not support option entry.")
