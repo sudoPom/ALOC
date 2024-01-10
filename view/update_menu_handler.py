@@ -7,6 +7,7 @@ from view.non_terminal_types import ContractNonTerminal
 class UpdateFormHandler:
     def create_update_form(self, root, component, re_render_func, controller):
         update_form = tk.Toplevel(root)
+        update_form.geometry("1000x600")
         current_components = component.get_current_components()
 
         entries = self._create_entry_widgets(update_form, current_components)
@@ -14,12 +15,15 @@ class UpdateFormHandler:
         submit_button = self._create_submit_button(
             update_form, entries, component, re_render_func, controller
         )
-        submit_button.grid(row=len(current_components), column=0, columnspan=2)
+        current_row = len(current_components)
+        error_var = self.create_error_text(update_form, current_row)
+        current_row += 1
+        submit_button.grid(row=current_row, column=0, columnspan=2)
 
         for _, _, var in entries:
             var.trace_add(
                 "write",
-                lambda *_: self.update_button_state(submit_button, entries),
+                lambda *_: self.update_button_state(submit_button, entries, error_var),
             )
 
     def _create_submit_button(
@@ -51,12 +55,20 @@ class UpdateFormHandler:
                         custom_date_entry_var,
                     )
                 )
-            self._create_entry_label(update_form, entry_name, i)
+            self._create_entry_label(update_form, entry_name.replace("_", " "), i)
             self._create_entry_method(
                 update_form, entry_var, entry_value, entry_type, i, entries
             )
 
         return entries
+
+    def create_error_text(self, parent, row):
+        error_val = tk.StringVar()
+        error_label = tk.Label(
+            parent, textvariable=error_val, fg="red", wraplength=600, justify=tk.LEFT
+        )
+        error_label.grid(row=row, columnspan=2)
+        return error_val
 
     def _create_entry_method(
         self, parent, entry_var, entry_value, entry_type, row, entries
@@ -72,7 +84,7 @@ class UpdateFormHandler:
         return self._create_entry_widget(parent, entry_var, entry_value, row)
 
     def _create_entry_label(self, parent, text, row):
-        entry_label = tk.Label(parent, text=f"{text}:")
+        entry_label = tk.Label(parent, text=f"{text}:", justify=tk.RIGHT)
         entry_label.grid(row=row, column=0)
 
     @staticmethod
@@ -119,16 +131,15 @@ class UpdateFormHandler:
         return date_widget
 
     @staticmethod
-    def update_button_state(button, entry_vars_and_types):
+    def update_button_state(button, entry_vars_and_types, error_variable):
         """Disables the submit button if any of the entries are invalid."""
-        button["state"] = (
-            "normal"
-            if all(
-                ContractNonTerminal.validate_entry(var.get(), entry_type)
-                for _, (_, entry_type, var) in enumerate(entry_vars_and_types)
-            )
-            else "disabled"
-        )
+        for _, (_, entry_type, var) in enumerate(entry_vars_and_types):
+            if not ContractNonTerminal.validate_entry(var.get(), entry_type):
+                button["state"] = "disabled"
+                error_variable.set(ContractNonTerminal.error_explanation(entry_type))
+                return
+        error_variable.set("")
+        button["state"] = "normal"
 
     @staticmethod
     def _update(entries, update_form, component, controller, re_render_func):

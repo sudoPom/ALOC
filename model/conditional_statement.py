@@ -18,19 +18,19 @@ class ConditionalStatement(BaseComponent):
     Represents a simple condition in the AST.
     """
 
-    def __init__(self, condition_id, condition_type):
+    def __init__(self, conditional_id, condition_type, condition_id, statement_id):
         """
         Initialize a ConditionalStatement object.
 
         Args:
-        - condition_id (int): The unique identifier of the condition.
+        - conditional_id (int): The unique identifier of the conditional statement.
         - condition_type (str): The type of the condition.
         """
         components = {}
         valid_types = {"if", "if_then"}
-        super().__init__(condition_id, condition_type, valid_types, components)
-        self.__statement = SimpleStatement(0, "subject modal")
-        self.__condition = SimpleCondition(0, "subject verb status")
+        super().__init__(conditional_id, condition_type, valid_types, components)
+        self.__statement = SimpleStatement(statement_id, "subject modal")
+        self.__condition = SimpleCondition(condition_id, "subject verb status")
 
     def get_display_text(self):
         match self.get_type():

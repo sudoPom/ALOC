@@ -18,7 +18,7 @@ class ConditionalDefinition(BaseComponent):
     Represents a conditional definition in the AST.
     """
 
-    def __init__(self, condition_id, condition_type):
+    def __init__(self, conditional_id, conditional_type, definition_id, condition_id):
         """
         Initialize a ConditionalDefinition object.
 
@@ -28,9 +28,9 @@ class ConditionalDefinition(BaseComponent):
         """
         components = {}
         valid_types = {"if", "if_then"}
-        super().__init__(condition_id, condition_type, valid_types, components)
-        self.__definition = SimpleDefinition(0, "subject pair")
-        self.__condition = SimpleCondition(0, "subject verb status")
+        super().__init__(conditional_id, conditional_type, valid_types, components)
+        self.__definition = SimpleDefinition(definition_id, "subject pair")
+        self.__condition = SimpleCondition(condition_id, "subject verb status")
 
     def get_display_text(self):
         match self.get_type():

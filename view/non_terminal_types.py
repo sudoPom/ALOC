@@ -28,6 +28,7 @@ Expression entry.
 """
 
 from enum import Enum
+
 from parsers.base_parser import BaseParser
 
 
@@ -54,7 +55,7 @@ class ContractNonTerminal(Enum):
         Returns:
         - bool: True if the entry is valid, False otherwise.
         """
-        return len(subject) > 0
+        return BaseParser("subject").parse(subject)
 
     @staticmethod
     def validate_numerical_expression(numerical_expression):
@@ -70,32 +71,6 @@ class ContractNonTerminal(Enum):
         return BaseParser("numerical_expression").parse(numerical_expression)
 
     @staticmethod
-    def validate_modal_verb(modal_verb):
-        """
-        Validates a Modal Verb entry.
-
-        Args:
-        - modal_verb (str): The Modal Verb entry.
-
-        Returns:
-        - bool: True if the entry is valid, False otherwise.
-        """
-        return True
-
-    @staticmethod
-    def validate_verb(verb):
-        """
-        Validates a Verb entry.
-
-        Args:
-        - verb (str): The Verb entry.
-
-        Returns:
-        - bool: True if the entry is valid, False otherwise.
-        """
-        return True
-
-    @staticmethod
     def validate_date(date):
         """
         Validates a Date entry.
@@ -106,9 +81,10 @@ class ContractNonTerminal(Enum):
         Returns:
         - bool: True if the entry is valid, False otherwise.
         """
-        if date == "custom date":
+        print(date)
+        if date in ContractNonTerminal.get_options(ContractNonTerminal.DATE):
             return True
-        return BaseParser("date").parse(date)
+        return BaseParser("date").parse(f"on the {date}")
 
     @staticmethod
     def validate_object(object):
@@ -210,3 +186,17 @@ class ContractNonTerminal(Enum):
                 return ["delivered", "paid", "charged"]
             case _:
                 raise ValueError(f"Type '{entry_type}' does not support option entry.")
+
+    @classmethod
+    def error_explanation(cls, entry_type):
+        match entry_type:
+            case cls.DATE:
+                return "Custom dates must be of the form:\n'number month number'"
+            case cls.OBJECT:
+                return "Objects must be of the form: 'GBP/USD/SOMECURRENCY number' or\n'REPORT/SOMECURRENCY/NAMEDOBJECT/OTHEROBJECT text'"
+            case cls.NUMERICAL_EXPRESSION:
+                return "Numerical expressions must be of the form:\n'number OPERATOR number OPERATOR number...'"
+            case cls.SUBJECT:
+                return "Subjects must only contain non numerical characters and spaces."
+            case _:
+                raise ValueError(f"No error provided for entry type:{entry_type}")

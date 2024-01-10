@@ -138,10 +138,8 @@ class Renderer:
     def _render_if_conditional(self, component, condition, x, y):
         if isinstance(component, SimpleDefinition):
             y += self.render_definition(component, x, y)
-            print(y)
         else:
-            y += self.render_statement(component, x, y)
-            print(y)
+            y = self.render_statement(component, x, y)
         y += self.create_text_and_get_height("if", x, y)
         y = self.render_condition(condition, x, y)
         return y

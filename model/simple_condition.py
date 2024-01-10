@@ -32,7 +32,7 @@ class SimpleCondition(BaseComponent, BaseChain):
             "subject": ["NAME", ContractNonTerminal.SUBJECT],
             "verb_status": ["delivered", ContractNonTerminal.VERB_STATUS],
             "object": ["GBP 0", ContractNonTerminal.OBJECT],
-            "date": [("on ADATE", "on the 27 January 2002"), ContractNonTerminal.DATE],
+            "date": [("on ADATE", "27 January 2002"), ContractNonTerminal.DATE],
             "modal_verb": ["shall", ContractNonTerminal.MODAL_VERB],
             "verb": ["pay", ContractNonTerminal.VERB],
             "numerical_expression": ["0", ContractNonTerminal.NUMERICAL_EXPRESSION],
@@ -77,15 +77,15 @@ class SimpleCondition(BaseComponent, BaseChain):
     def get_display_text(self):
         match self.get_type():
             case "subject verb status":
-                out_text = f'{self._get_component_value("holds")} {self._get_component_value("subject")} {self._get_component_value("verb_status")} {self._get_component_value("object")} {self._get_component_value("date")}'
+                out_text = f'[{self.get_id()}] {self._get_component_value("holds")} {self._get_component_value("subject")} {self._get_component_value("verb_status")} {self._get_component_value("object")} {self._get_component_value("date")}'
             case "subject date":
-                out_text = f'{self._get_component_value("holds")} {self._get_component_value("subject")} {self._get_component_value("date")} {self._get_component_value("verb_status")} {self._get_component_value("object")}'
+                out_text = f'[{self.get_id()}] {self._get_component_value("holds")} {self._get_component_value("subject")} {self._get_component_value("date")} {self._get_component_value("verb_status")} {self._get_component_value("object")}'
             case "date subject":
-                out_text = f'{self._get_component_value("holds")} {self._get_component_value("date")} {self._get_component_value("subject")} {self._get_component_value("verb_status")} {self._get_component_value("object")}'
+                out_text = f'[{self.get_id()}] {self._get_component_value("holds")} {self._get_component_value("date")} {self._get_component_value("subject")} {self._get_component_value("verb_status")} {self._get_component_value("object")}'
             case "subject modal verb":
-                out_text = f'{self._get_component_value("holds")} {self._get_component_value("subject")} {self._get_component_value("modal_verb")} {self._get_component_value("verb")} {self._get_component_value("object")} {self._get_component_value("date")}'
+                out_text = f'[{self.get_id()}] {self._get_component_value("holds")} {self._get_component_value("subject")} {self._get_component_value("modal_verb")} {self._get_component_value("verb")} {self._get_component_value("object")} {self._get_component_value("date")}'
             case "boolean expression":
-                out_text = f'{self._get_component_value("holds")} {self._get_component_value("subject")} {self._get_component_value("verb_status")} {self._get_component_value("comparison")} {self._get_component_value("other_subject")} '
+                out_text = f'[{self.get_id()}] {self._get_component_value("holds")} {self._get_component_value("subject")} {self._get_component_value("verb_status")} {self._get_component_value("comparison")} {self._get_component_value("other_subject")} '
             case _:
                 raise ValueError(f"Invalid condition type: {self.get_type()}")
         if self._next:

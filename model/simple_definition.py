@@ -46,20 +46,19 @@ class SimpleDefinition(BaseComponent):
         components = {
             "subject": ["NAME", ContractNonTerminal.SUBJECT],
             "other_subject": ["DEFINITION", ContractNonTerminal.SUBJECT],
-            "numerical_expression": ["0", ContractNonTerminal.NUMERICAL_EXPRESSION]
+            "numerical_expression": ["0", ContractNonTerminal.NUMERICAL_EXPRESSION],
         }
         valid_types = {
             "subject pair": ["subject", "other_subject"],
-            "subject numerical pair": ["subject", "numerical_expression"]}
-        super().__init__(
-            definition_id, definition_type, valid_types, components
-        )
+            "subject numerical pair": ["subject", "numerical_expression"],
+        }
+        super().__init__(definition_id, definition_type, valid_types, components)
 
     def get_display_text(self):
         match self.get_type():
             case "subject pair":
-                return f"{self._get_component_value('subject')} is {self._get_component_value('other_subject')}"
+                return f"[{self.get_id()}] {self._get_component_value('subject')} is {self._get_component_value('other_subject')}"
             case "subject numerical pair":
-                return f"{self._get_component_value('subject')} is {self._get_component_value('numerical_expression')}"
+                return f"[{self.get_id()}] {self._get_component_value('subject')} is {self._get_component_value('numerical_expression')}"
             case _:
                 raise ValueError(f"Invalid statement type: {self.get_type()}")

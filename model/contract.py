@@ -71,7 +71,10 @@ class Contract:
         - conditional_type (str): The type of the new conditional statement.
         """
         new_conditional_statement = ConditionalStatement(
-            self.get_and_increment_id(), conditional_statement_type
+            self.get_and_increment_id(),
+            conditional_statement_type,
+            self.get_and_increment_id(),
+            self.get_and_increment_id(),
         )
         self.__other_components.append(new_conditional_statement)
 
@@ -83,7 +86,10 @@ class Contract:
         - conditional_type (str): The type of the new conditional definition.
         """
         new_conditional_statement = ConditionalDefinition(
-            self.get_and_increment_id(), conditional_definition_type
+            self.get_and_increment_id(),
+            conditional_definition_type,
+            self.get_and_increment_id(),
+            self.get_and_increment_id(),
         )
         self.__other_components.append(new_conditional_statement)
 

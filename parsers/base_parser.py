@@ -56,7 +56,7 @@ COLA_GRAMMAR = """
     modal_verb: obligation
         | permission
         | prohibition
-    date: "on the" num month num
+    date: "on the " num " " month " " num
         | "on ANYDATE"
         | "on ADATE"
         | "on THEDATE"
@@ -74,18 +74,19 @@ COLA_GRAMMAR = """
         | "December"
     object: numerical_object
         | nonnumerical_object
-    numerical_object: pounds num
-        | dollars num
-        | euros num
+    numerical_object: pounds " " num
+        | dollars " " num
+        | euros " " num
         | amount subject
-    nonnumerical_object: "SOMECURRENCY" string
-        | "REPORT" string
-        | "NAMEDOBJECT" string
-        | "OTHEROBJECT" string
+    nonnumerical_object: "SOMECURRENCY " string
+        | "REPORT " string
+        | "NAMEDOBJECT " string
+        | "OTHEROBJECT " string
     string: char
         | char string
     char: "a".."z"
         | "A".."Z"
+        | " "
     num: digit
         | digit num
     digit: "0".."9"
@@ -121,16 +122,14 @@ COLA_GRAMMAR = """
     divide: "/"
         | "DIVIDE"
     amount: "AMOUNT"
-    %import common.WS
-    %ignore WS
-""" 
+"""
+
 
 class BaseParser:
-
     def __init__(self, start_from: str):
         self.__parser = Lark(COLA_GRAMMAR, start=start_from)
 
-    def parse(self, input_string:str):
+    def parse(self, input_string: str):
         try:
             self.__parser.parse(input_string)
             return True

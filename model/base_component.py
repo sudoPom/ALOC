@@ -9,6 +9,7 @@ Classes:
 
 """
 from view.non_terminal_types import ContractNonTerminal
+
 COMPONENT_VALUE_INDEX = 0
 
 
@@ -58,7 +59,8 @@ class BaseComponent:
         for key in kwargs:
             if key not in self.__components:
                 raise ValueError(
-                    f"Invalid key for component: {key}, expected any from {self.__components.keys()}")
+                    f"Invalid key for component: {key}, expected any from {self.__components.keys()}"
+                )
             self.__components[key][COMPONENT_VALUE_INDEX] = kwargs[key]
 
     def set_type(self, component_type):
@@ -132,4 +134,4 @@ class BaseComponent:
     def _get_component_date(self, date_key):
         date_component = self.__components[date_key]
         date = date_component[0]
-        return date[0] if date[0] != "custom date" else date[1]
+        return date[0] if date[0] != "custom date" else f"on the {date[1]}"

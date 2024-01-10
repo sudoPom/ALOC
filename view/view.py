@@ -11,6 +11,7 @@ class View(tk.Tk):
     def __init__(self, controller):
         super().__init__()
         self.__controller = controller
+        self.geometry("1000x1000")
 
         toolbar = tk.Frame(self)
         toolbar.pack(side="top", fill="x")

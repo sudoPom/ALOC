@@ -26,14 +26,13 @@ class SimpleConditionFrame(BaseFrame):
         button.bind("<Button-1>", self.show_menu)
 
     def destruct(self):
-        self.get_controller().delete_condition(self.__condition.get_id())
+        self.get_controller().delete_non_definition_component(self.__condition.get_id())
         self.trigger_re_render()
 
     def get_bg_colour(self):
         return "teal"
 
     def get_button_text(self):
-        print(self.__condition.get_type())
         match self.__condition.get_type():
             case "subject verb status":
                 return "Subject verb status condition"

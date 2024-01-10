@@ -19,7 +19,7 @@ class ScrollCanvas(tk.Frame):
 
         self.canvas_frame.bind("<Configure>", self.on_canvas_configure)
 
-    def on_canvas_configure(self, event):
+    def on_canvas_configure(self, _):
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
     def get_canvas(self):
