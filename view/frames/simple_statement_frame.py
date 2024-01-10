@@ -45,7 +45,6 @@ class SimpleStatementFrame(BaseFrame):
                 return "grey"
 
     def get_button_text(self):
-        print(self.__statement.get_type())
         match self.__statement.get_type():
             case "subject modal":
                 return "Subject Modal Statement"
