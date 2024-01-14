@@ -15,7 +15,7 @@ COLA_GRAMMAR = """
         | id subject "EQUALS" numerical_expression
     numerical_expression: num
         | numerical_object
-        | numerical_expression operator numerical_expression
+        | numerical_expression " " operator " " numerical_expression
     operator: plus
         | minus
         | times
@@ -78,10 +78,11 @@ COLA_GRAMMAR = """
         | dollars " " num
         | euros " " num
         | amount subject
-    nonnumerical_object: "SOMECURRENCY " string
-        | "REPORT " string
-        | "NAMEDOBJECT " string
-        | "OTHEROBJECT " string
+    nonnumerical_object: "SOMECURRENCY " quoted_string
+        | "REPORT " quoted_string
+        | "NAMEDOBJECT " quoted_string
+        | "OTHEROBJECT " quoted_string
+    quoted_string : /"[a-zA-Z ]*"/
     string: char
         | char string
     char: "a".."z"

@@ -191,11 +191,11 @@ class ContractNonTerminal(Enum):
     def error_explanation(cls, entry_type):
         match entry_type:
             case cls.DATE:
-                return "Custom dates must be of the form:\n'number month number'"
+                return "Custom dates must be of the form:\nnumber month number"
             case cls.OBJECT:
-                return "Objects must be of the form: 'GBP/USD/SOMECURRENCY number' or\n'REPORT/SOMECURRENCY/NAMEDOBJECT/OTHEROBJECT text'"
+                return 'Objects must be of the form: GBP/USD/SOMECURRENCY number or\nREPORT/SOMECURRENCY/NAMEDOBJECT/OTHEROBJECT "text"'
             case cls.NUMERICAL_EXPRESSION:
-                return "Numerical expressions must be of the form:\n'number OPERATOR number OPERATOR number...'"
+                return "Numerical expressions must be of the form:\n'number OPERATOR number OPERATOR number...'\nOPERATOR can be either:\nPLUS, MINUS, TIMES or DIVIDE"
             case cls.SUBJECT:
                 return "Subjects must only contain non numerical characters and spaces."
             case _:

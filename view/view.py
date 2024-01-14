@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
 
-from controller.controller import Controller
 from model.contract import Contract
 from view.renderer import Renderer
 from view.scroll_canvas import ScrollCanvas
@@ -16,7 +15,10 @@ class View(tk.Tk):
         toolbar = tk.Frame(self)
         toolbar.pack(side="top", fill="x")
 
-        # Add a "Save" button to the toolbar
+        new_button = tk.Button(
+            toolbar, text="Create New Contract", command=self.new_contract
+        )
+        new_button.pack(side="left")
         save_button = tk.Button(
             toolbar, text="Save Contract", command=self.save_contract
         )
@@ -65,3 +67,7 @@ class View(tk.Tk):
             self.__controller.load_contract(file_path)
             self.update_display()
             print(f"Contract loaded from: {file_path}")
+
+    def new_contract(self):
+        self.__controller.create_new_contract()
+        self.update_display()

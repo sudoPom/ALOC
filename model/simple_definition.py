@@ -19,20 +19,6 @@ class SimpleDefinition(BaseComponent):
     Args:
     - definition_id (str): The unique identifier of the definition.
     - definition_type (str): The type of the definition.
-
-    Attributes:
-    - __subject (str): The subject of the definition.
-    - __other_subject (str): The other subject of the definition.
-    - __numerical_expression (str): The numerical expression of the definition.
-    - __components (set): The set of valid component names.
-
-    Methods:
-    - update(**kwargs): Update the attributes of the definition with the
-    provided keyword arguments.
-    - get_subject(): Get the subject of the definition.
-    - get_other_subject(): Get the other subject of the definition.
-    - get_numerical_expression(): Get the numerical expression of the
-    definition.
     """
 
     def __init__(self, definition_id, definition_type):
@@ -62,3 +48,6 @@ class SimpleDefinition(BaseComponent):
                 return f"[{self.get_id()}] {self._get_component_value('subject')} is {self._get_component_value('numerical_expression')}"
             case _:
                 raise ValueError(f"Invalid statement type: {self.get_type()}")
+
+    def to_cola(self):
+        return self.get_display_text()

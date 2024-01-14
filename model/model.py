@@ -156,3 +156,6 @@ class Model:
                 print(f"Contract loaded from: {path}")
         except Exception as e:
             print(f"Error loading contract: {e}")
+
+    def create_new_contract(self):
+        self.__contract = Contract()

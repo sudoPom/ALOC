@@ -52,6 +52,7 @@ class Contract:
         """
         new_definition = SimpleDefinition(self.get_and_increment_id(), definition_type)
         self.__definitions.append(new_definition)
+        self.to_cola()
 
     def add_statement(self, statement_type):
         """
@@ -183,4 +184,8 @@ class Contract:
         self.__path = path
 
     def to_cola(self):
-        out = ""
+        all_text = [definition.get_display_text() for definition in self.__definitions]
+        all_text.extend(
+            [component.get_display_text() for component in self.__other_components]
+        )
+        print(" C-AND ".join(all_text))

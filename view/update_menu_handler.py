@@ -20,20 +20,20 @@ class UpdateFormHandler:
         current_row += 1
         submit_button.grid(row=current_row, column=0, columnspan=2)
 
-        for _, _, var in entries:
-            var.trace_add(
+        for entry in entries:
+            entry.get_var().trace_add(
                 "write",
                 lambda *_: self.update_button_state(submit_button, entries, error_var),
             )
 
     def _create_submit_button(
-        self, parent, entry_vars_and_types, component, re_render_func, controller
+        self, parent, entries, component, re_render_func, controller
     ):
         submit_button = tk.Button(
             parent,
             text="Submit",
             command=lambda: self._update(
-                entry_vars_and_types, parent, component, controller, re_render_func
+                entries, parent, component, controller, re_render_func
             ),
         )
         return submit_button
@@ -44,20 +44,19 @@ class UpdateFormHandler:
         for i, (entry_name, [entry_value, entry_type]) in enumerate(
             current_components.items()
         ):
-            entry_var = tk.StringVar()
-            entries.append((entry_name, entry_type, entry_var))
+            entry = UpdateFormEntry(entry_name, entry_type)
+            entries.append(entry)
             if entry_type == ContractNonTerminal.DATE:
-                custom_date_entry_var = tk.StringVar()
-                entries.append(
-                    (
-                        f"{entry_name}_custom",
-                        ContractNonTerminal.DATE,
-                        custom_date_entry_var,
-                    )
-                )
+                custom_date_entry = UpdateFormEntry(f"{entry_name}_custom", entry_type)
+                entries.append(custom_date_entry)
             self._create_entry_label(update_form, entry_name.replace("_", " "), i)
             self._create_entry_method(
-                update_form, entry_var, entry_value, entry_type, i, entries
+                update_form,
+                entry.get_var(),
+                entry_value,
+                entry.get_type(),
+                i,
+                entries,
             )
 
         return entries
@@ -75,7 +74,7 @@ class UpdateFormHandler:
     ):
         if entry_type == ContractNonTerminal.DATE:
             return self._create_date_widgets(
-                parent, entry_var, entry_value, row, entries[-1][2]
+                parent, entry_var, entry_value, row, entries[-1].get_var()
             )
         if ContractNonTerminal.is_optional(entry_type):
             return self._create_option_widget(
@@ -131,12 +130,16 @@ class UpdateFormHandler:
         return date_widget
 
     @staticmethod
-    def update_button_state(button, entry_vars_and_types, error_variable):
+    def update_button_state(button, entries, error_variable):
         """Disables the submit button if any of the entries are invalid."""
-        for _, (_, entry_type, var) in enumerate(entry_vars_and_types):
-            if not ContractNonTerminal.validate_entry(var.get(), entry_type):
+        for entry in entries:
+            if not ContractNonTerminal.validate_entry(
+                entry.get_value(), entry.get_type()
+            ):
                 button["state"] = "disabled"
-                error_variable.set(ContractNonTerminal.error_explanation(entry_type))
+                error_variable.set(
+                    ContractNonTerminal.error_explanation(entry.get_type())
+                )
                 return
         error_variable.set("")
         button["state"] = "normal"
@@ -155,11 +158,13 @@ class UpdateFormHandler:
         """
         update_dict = dict()
         date_dict = defaultdict(lambda: ("", ""))
-        for entry_name, entry_type, entry_var in entries:
-            if entry_type == ContractNonTerminal.DATE:
-                UpdateFormHandler._handle_date(entry_name, entry_var, date_dict)
+        for entry in entries:
+            if entry.get_type() == ContractNonTerminal.DATE:
+                UpdateFormHandler._handle_date(
+                    entry.get_name(), entry.get_var(), date_dict
+                )
             else:
-                update_dict[entry_name] = entry_var.get()
+                update_dict[entry.get_name()] = entry.get_value()
         for date_name, date in date_dict.items():
             update_dict[date_name] = date
         controller.update_component(component, update_dict)
@@ -175,3 +180,25 @@ class UpdateFormHandler:
         else:
             current_date_value = date_dict[entry_name]
             date_dict[entry_name] = (entry_var.get(), current_date_value[1])
+
+
+class UpdateFormEntry:
+    def __init__(self, entry_name: str, entry_type):
+        self.name = entry_name
+        self.entry_type = entry_type
+        self.var = tk.StringVar()
+
+    def set_value(self, entry_value: str):
+        self.var.set(entry_value)
+
+    def get_var(self):
+        return self.var
+
+    def get_value(self):
+        return self.var.get()
+
+    def get_type(self):
+        return self.entry_type
+
+    def get_name(self):
+        return self.name

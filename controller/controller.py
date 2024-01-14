@@ -57,6 +57,9 @@ class Controller:
     def load_contract(self, path):
         self.__model.open_contract_file(path)
 
+    def create_new_contract(self):
+        self.__model.create_new_contract()
+
     def get_contract(self):
         """
         Retrieves the current contract from the model.
