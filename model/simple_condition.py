@@ -10,7 +10,6 @@ Classes:
 """
 from model.base_chain import BaseChain
 from model.base_component import BaseComponent
-from model.boolean_expression import BooleanExpression
 from view.non_terminal_types import ContractNonTerminal
 
 

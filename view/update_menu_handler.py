@@ -47,14 +47,16 @@ class UpdateFormHandler:
             entry = UpdateFormEntry(entry_name, entry_type)
             entries.append(entry)
             if entry_type == ContractNonTerminal.DATE:
+                entry.set_value(entry_value[0])
                 custom_date_entry = UpdateFormEntry(f"{entry_name}_custom", entry_type)
+                custom_date_entry.set_value(entry_value[1])
                 entries.append(custom_date_entry)
+            else:
+                entry.set_value(entry_value)
             self._create_entry_label(update_form, entry_name.replace("_", " "), i)
             self._create_entry_method(
                 update_form,
-                entry.get_var(),
-                entry_value,
-                entry.get_type(),
+                entry,
                 i,
                 entries,
             )
@@ -69,60 +71,52 @@ class UpdateFormHandler:
         error_label.grid(row=row, columnspan=2)
         return error_val
 
-    def _create_entry_method(
-        self, parent, entry_var, entry_value, entry_type, row, entries
-    ):
+    def _create_entry_method(self, parent, entry, row, entries):
+        entry_type = entry.get_type()
         if entry_type == ContractNonTerminal.DATE:
-            return self._create_date_widgets(
-                parent, entry_var, entry_value, row, entries[-1].get_var()
-            )
+            return self._create_date_widgets(parent, entry, row, entries[-1].get_var())
         if ContractNonTerminal.is_optional(entry_type):
-            return self._create_option_widget(
-                parent, entry_var, entry_value, entry_type, row
-            )
-        return self._create_entry_widget(parent, entry_var, entry_value, row)
+            return self._create_option_widget(parent, entry, row)
+        return self._create_entry_widget(parent, entry, row)
 
     def _create_entry_label(self, parent, text, row):
         entry_label = tk.Label(parent, text=f"{text}:", justify=tk.RIGHT)
         entry_label.grid(row=row, column=0)
 
     @staticmethod
-    def _create_entry_widget(parent, entry_var, entry_value, row):
+    def _create_entry_widget(parent, entry, row):
         """Creates a basic text entry widget."""
-        entry_widget = tk.Entry(parent, textvariable=entry_var)
-        entry_widget.insert(0, entry_value)
+        entry_widget = tk.Entry(parent, textvariable=entry.get_var())
         entry_widget.grid(row=row, column=1)
         return entry_widget
 
     @staticmethod
-    def _create_option_widget(parent, entry_var, entry_value, entry_type, row):
+    def _create_option_widget(parent, entry, row):
         """Creates a dropdown menu for the user to select from."""
-        options = ContractNonTerminal.get_options(entry_type)
-        entry_var.set(entry_value)
-        option_widget = tk.OptionMenu(parent, entry_var, *options)
+        options = ContractNonTerminal.get_options(entry.get_type())
+        option_widget = tk.OptionMenu(parent, entry.get_var(), *options)
         option_widget.grid(row=row, column=1)
         return option_widget
 
     @staticmethod
-    def _create_date_widgets(parent, entry_var, entry_value, row, custom_var):
+    def _create_date_widgets(parent, entry, row, custom_var):
         """
         Creates two widgets, one for selecting the type of date and the other
         for selecting a custom date.
         """
         options = ContractNonTerminal.get_options(ContractNonTerminal.DATE)
-        entry_var.set(entry_value[0])
-        date_widget = tk.OptionMenu(parent, entry_var, *options)
+        date_widget = tk.OptionMenu(parent, entry.get_var(), *options)
         date_widget.grid(row=row, column=1)
 
         custom_entry = tk.Entry(parent, textvariable=custom_var)
         custom_entry.grid(row=row, column=2)
-        custom_entry.insert(0, entry_value[1])
 
         def handle_option_change(_):
-            selected_option = entry_var.get()
+            selected_option = entry.get_value()
             if selected_option == "custom date":
                 custom_entry.grid(row=row, column=2)
             else:
+                custom_var.set("27 January 2002")
                 custom_entry.grid_forget()
 
         date_widget.bind("<Configure>", handle_option_change)
