@@ -1,21 +1,21 @@
 import tkinter as tk
 from collections import defaultdict
 
-from view.non_terminal_types import ContractNonTerminal
+from view.terminal_types import Terminal
 
 
 class UpdateFormHandler:
     def create_update_form(self, root, component, re_render_func, controller):
         update_form = tk.Toplevel(root)
         update_form.geometry("1000x600")
-        current_components = component.get_current_components()
+        current_attributes = component.get_current_attributes()
 
-        entries = self._create_entry_widgets(update_form, current_components)
+        entries = self._create_entry_widgets(update_form, current_attributes)
 
         submit_button = self._create_submit_button(
             update_form, entries, component, re_render_func, controller
         )
-        current_row = len(current_components)
+        current_row = len(current_attributes)
         error_var = self.create_error_text(update_form, current_row)
         current_row += 1
         submit_button.grid(row=current_row, column=0, columnspan=2)
@@ -38,22 +38,25 @@ class UpdateFormHandler:
         )
         return submit_button
 
-    def _create_entry_widgets(self, update_form, current_components):
+    def _create_entry_widgets(self, update_form, current_attributes):
         entries = []
 
-        for i, (entry_name, [entry_value, entry_type]) in enumerate(
-            current_components.items()
-        ):
-            entry = UpdateFormEntry(entry_name, entry_type)
+        print(len(current_attributes))
+        for i, attribute in enumerate(current_attributes):
+            attribute_type = attribute.get_type()
+            attribute_name = attribute.get_name()
+            entry = UpdateFormEntry(attribute_name, attribute_type)
             entries.append(entry)
-            if entry_type == ContractNonTerminal.DATE:
-                entry.set_value(entry_value[0])
-                custom_date_entry = UpdateFormEntry(f"{entry_name}_custom", entry_type)
-                custom_date_entry.set_value(entry_value[1])
+            if attribute_type == Terminal.DATE:
+                entry.set_value(attribute.get_value()[0])
+                custom_date_entry = UpdateFormEntry(
+                    f"{attribute_name}_custom", attribute_type
+                )
+                custom_date_entry.set_value(attribute.get_value()[1])
                 entries.append(custom_date_entry)
             else:
-                entry.set_value(entry_value)
-            self._create_entry_label(update_form, entry_name.replace("_", " "), i)
+                entry.set_value(attribute.get_value())
+            self._create_entry_label(update_form, attribute_name.replace("_", " "), i)
             self._create_entry_method(
                 update_form,
                 entry,
@@ -73,9 +76,9 @@ class UpdateFormHandler:
 
     def _create_entry_method(self, parent, entry, row, entries):
         entry_type = entry.get_type()
-        if entry_type == ContractNonTerminal.DATE:
+        if entry_type == Terminal.DATE:
             return self._create_date_widgets(parent, entry, row, entries[-1].get_var())
-        if ContractNonTerminal.is_optional(entry_type):
+        if Terminal.is_optional(entry_type):
             return self._create_option_widget(parent, entry, row)
         return self._create_entry_widget(parent, entry, row)
 
@@ -93,7 +96,7 @@ class UpdateFormHandler:
     @staticmethod
     def _create_option_widget(parent, entry, row):
         """Creates a dropdown menu for the user to select from."""
-        options = ContractNonTerminal.get_options(entry.get_type())
+        options = Terminal.get_options(entry.get_type())
         option_widget = tk.OptionMenu(parent, entry.get_var(), *options)
         option_widget.grid(row=row, column=1)
         return option_widget
@@ -104,7 +107,7 @@ class UpdateFormHandler:
         Creates two widgets, one for selecting the type of date and the other
         for selecting a custom date.
         """
-        options = ContractNonTerminal.get_options(ContractNonTerminal.DATE)
+        options = Terminal.get_options(Terminal.DATE)
         date_widget = tk.OptionMenu(parent, entry.get_var(), *options)
         date_widget.grid(row=row, column=1)
 
@@ -127,12 +130,12 @@ class UpdateFormHandler:
     def update_button_state(button, entries, error_variable):
         """Disables the submit button if any of the entries are invalid."""
         for entry in entries:
-            if not ContractNonTerminal.validate_entry(
+            if not Terminal.validate_entry(
                 entry.get_value(), entry.get_type()
             ):
                 button["state"] = "disabled"
                 error_variable.set(
-                    ContractNonTerminal.error_explanation(entry.get_type())
+                    Terminal.error_explanation(entry.get_type())
                 )
                 return
         error_variable.set("")
@@ -153,7 +156,7 @@ class UpdateFormHandler:
         update_dict = dict()
         date_dict = defaultdict(lambda: ("", ""))
         for entry in entries:
-            if entry.get_type() == ContractNonTerminal.DATE:
+            if entry.get_type() == Terminal.DATE:
                 UpdateFormHandler._handle_date(
                     entry.get_name(), entry.get_var(), date_dict
                 )

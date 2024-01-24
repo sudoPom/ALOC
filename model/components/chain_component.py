@@ -9,16 +9,18 @@ Classes:
 
 """
 
+from model.components.simple_component import SimpleComponent
 
-class BaseChain:
-    def __init__(self, valid_operators, chain_type):
-        self.__valid_operators = valid_operators
+
+class ChainComponent(SimpleComponent):
+    def __init__(self, component_id, component_spec):
+        super().__init__(component_id, component_spec)
+        self.__component_spec = component_spec
         self.__next = None
-        self.__chain_type = chain_type
 
     def add_next(self, id, component_type):
         old_next = self.__next
-        self.__next = self.__chain_type(id + 1, component_type)
+        self.__next = ChainComponent(id + 1, self.__component_spec)
         self.__next.set_next(old_next)
 
     def set_next(self, next):
@@ -35,7 +37,10 @@ class BaseChain:
     def get_next_component(self):
         return self.__next
 
-    def set_logic_operator(self, operator):
-        if operator not in self.__valid_operators:
-            raise ValueError(f"Invalid operator: {operator}")
-        self._logic_operator = operator
+    def get_display_text(self):
+        text = super().get_display_text()
+        print(text)
+        if not self.__next:
+            text = " ".join(text.split(" ")[:-1])
+        print(text)
+        return text

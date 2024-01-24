@@ -1,8 +1,8 @@
 class ComponentAttribute:
-    def __init__(self, name: str, attribute_type, default_value: str):
+    def __init__(self, name: str, attribute_type):
         self.__name = name
         self.__attribute_type = attribute_type
-        self.__value = default_value
+        self.__value = attribute_type.value
 
     def get_name(self):
         return self.__name

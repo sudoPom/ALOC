@@ -9,7 +9,12 @@ Classes:
 
 """
 
+from model.component_attribute import ComponentAttribute
+from model.component_specifications.conditional_component_spec import ConditionalComponentSpec
 from model.model import Model
+from model.component_specifications.simple_component_spec import SimpleComponentSpec
+from model.type_spec import TypeSpec
+from view.terminal_types import Terminal
 
 
 class Controller:
@@ -47,6 +52,206 @@ class Controller:
         controller.
         """
         self.__model = model
+        definition_spec = SimpleComponentSpec(
+            "definition",
+            [
+                TypeSpec(
+                    "subject pair",
+                    "[{}] {} IS {} {}",
+                    ["subject", "other_subject", "logical_operator"],
+                    "Subject-Pair Definition",
+                ),
+                TypeSpec(
+                    "subject numerical pair",
+                    "[{}] {} EQUALS {} {}",
+                    ["subject", "numerical_expression", "logical_operator"],
+                    "Numerical Definition",
+                ),
+            ],
+            [
+                ComponentAttribute("subject", Terminal.SUBJECT),
+                ComponentAttribute("other_subject", Terminal.SUBJECT),
+                ComponentAttribute(
+                    "numerical_expression", Terminal.NUMERICAL_EXPRESSION
+                ),
+                ComponentAttribute("logical_operator", Terminal.LOGICAL_AND),
+            ],
+            "definitions",
+            "base_chain",
+        )
+        statement_spec = SimpleComponentSpec(
+            "statement",
+            [
+                TypeSpec(
+                    "subject modal",
+                    "[{}] {} {} {} {} {} {} {}",
+                    [
+                        "holds",
+                        "subject",
+                        "modal_verb",
+                        "verb",
+                        "object",
+                        "date",
+                        "logical_operator",
+                    ],
+                    "Subject-Modal Statement",
+                ),
+                TypeSpec(
+                    "subject date",
+                    "[{}] {} {} {} {} {} {}",
+                    [
+                        "holds",
+                        "subject",
+                        "modal_verb",
+                        "verb",
+                        "object",
+                        "date",
+                        "logical_operator",
+                    ],
+                    "Subject-Date Statement",
+                ),
+                TypeSpec(
+                    "date subject",
+                    "[{}] {} {} {} {} {} {}",
+                    [
+                        "holds",
+                        "subject",
+                        "modal_verb",
+                        "verb",
+                        "object",
+                        "date",
+                        "logical_operator",
+                    ],
+                    "Date-Subject Statement",
+                ),
+            ],
+            [
+                ComponentAttribute("holds", Terminal.HOLDS),
+                ComponentAttribute("subject", Terminal.SUBJECT),
+                ComponentAttribute("modal_verb", Terminal.MODAL_VERB),
+                ComponentAttribute("verb", Terminal.VERB),
+                ComponentAttribute("object", Terminal.OBJECT),
+                ComponentAttribute("date", Terminal.DATE),
+                ComponentAttribute(
+                    "logical_operator", Terminal.LOGICAL_OPERATOR
+                ),
+            ],
+            "other_components",
+            "base_chain",
+        )
+
+        condition_spec = SimpleComponentSpec(
+            "condition",
+            [
+                TypeSpec(
+                    "subject verb_status",
+                    "[{}] {} {} {} {} {} {}",
+                    [
+                        "holds",
+                        "subject",
+                        "verb_status",
+                        "object",
+                        "date",
+                        "logical_operator",
+                    ],
+                    "Subject-Verb-Status Condition",
+                ),
+                TypeSpec(
+                    "subject verb_status",
+                    "[{}] {} {} {} {} {} {}",
+                    [
+                        "holds",
+                        "subject",
+                        "date",
+                        "verb_status",
+                        "object",
+                        "logical_operator",
+                    ],
+                    "Subject-Date Condition",
+                ),
+                TypeSpec(
+                    "subject verb_status",
+                    "[{}] {} {} {} {} {} {}",
+                    [
+                        "holds",
+                        "date",
+                        "subject",
+                        "verb_status",
+                        "object",
+                        "logical_operator",
+                    ],
+                    "Date-Subject Condition",
+                ),
+                TypeSpec(
+                    "subject verb_status",
+                    "[{}] {} {} {} {} {} {}",
+                    [
+                        "holds",
+                        "subject",
+                        "modal_verb",
+                        "verb," "object",
+                        "date",
+                        "logical_operator",
+                    ],
+                    "Subject-Modal-Verb Condition",
+                ),
+                TypeSpec(
+                    "subject verb_status",
+                    "[{}] {} {} {} {} {} {}",
+                    [
+                        "holds",
+                        "subject",
+                        "verb_status",
+                        "comparison",
+                        "other_subject",
+                        "logical_operator",
+                    ],
+                    "Boolean-Expression Condition",
+                ),
+            ],
+            [
+                ComponentAttribute("holds", Terminal.HOLDS),
+                ComponentAttribute("subject", Terminal.SUBJECT),
+                ComponentAttribute("verb_status", Terminal.VERB_STATUS),
+                ComponentAttribute("object", Terminal.OBJECT),
+                ComponentAttribute("date", Terminal.DATE),
+                ComponentAttribute("modal_verb", Terminal.MODAL_VERB),
+                ComponentAttribute("comparison", Terminal.COMPARISON),
+                ComponentAttribute("other_subject", Terminal.SUBJECT),
+                ComponentAttribute(
+                    "logical_operator", Terminal.LOGICAL_OPERATOR
+                ),
+            ],
+            "nowhere",
+            "base_chain",
+        )
+
+        self.__component_dict = {
+            "definition": definition_spec,
+            "statement": statement_spec,
+            "conditional_definition": ConditionalComponentSpec(
+                "conditional_definition",
+                [
+                    TypeSpec("if", "", "", "If Conditional"),
+                    TypeSpec("if then", "", "", "If-Then Conditional"),
+                ],
+                "other_components",
+                "conditional",
+                condition_spec,
+                definition_spec,
+            ),
+            "conditional_statement": ConditionalComponentSpec(
+                "conditional_statement",
+                [
+                    TypeSpec("if", "", "", "If Conditional"),
+                    TypeSpec("if then", "", "", "If-Then Conditional"),
+                ],
+                "other_components",
+                "conditional",
+                condition_spec,
+                statement_spec,
+            ),
+        }
 
     def get_contract_path(self):
         return self.__model.get_contract().get_path()
@@ -69,14 +274,12 @@ class Controller:
         """
         return self.__model.get_contract()
 
-    def add_new_definition(self, definition_type):
-        """
-        Adds a new definition to the contract through the model.
+    def add_new_component(self, component):
+        component_spec = self.__component_dict[component]
+        self.__model.add_component(component_spec)
 
-        Args:
-        - definition_type: The type of the new definition.
-        """
-        self.__model.add_definition(definition_type)
+    def delete_component(self, component_id):
+        self.__model.delete_component(component_id)
 
     @staticmethod
     def change_component_type(component, component_type):
@@ -99,15 +302,6 @@ class Controller:
         - update_dict: The key-value pairs of the new definition.
         """
         Model.update_component(component, update_dict)
-
-    def delete_definition(self, definition_id):
-        """
-        Deletes a definition from the contract through the model.
-
-        Args:
-        - definition_id: The ID of the definition to be deleted.
-        """
-        self.__model.delete_definition(definition_id)
 
     def add_new_statement(self, statement_type):
         """
@@ -135,15 +329,6 @@ class Controller:
         - conditional_statement_type: The type of the new conditional statement.
         """
         self.__model.add_conditional_definition(conditional_definition_type)
-
-    def delete_non_definition_component(self, statement_id):
-        """
-        Deletes a statement from the contract through the model.
-
-        Args:
-        - statement_id: The ID of the statement to be deleted.
-        """
-        self.__model.delete_non_definition_component(statement_id)
 
     @staticmethod
     def extend_component_chain(component):

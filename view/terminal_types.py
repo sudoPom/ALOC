@@ -32,17 +32,18 @@ from enum import Enum
 from parsers.base_parser import BaseParser
 
 
-class ContractNonTerminal(Enum):
-    SUBJECT = "Subject"
-    NUMERICAL_EXPRESSION = "Numerical Expression"
-    DATE = "Date"
-    VERB = "Verb"
-    VERB_STATUS = "Verb Status"
-    MODAL_VERB = "Modal Verb"
-    OBJECT = "Object"
-    HOLDS = "Holds"
-    COMPARISON = "Comparison"
-    LOGICAL_OPERATOR = "Logical Operator"
+class Terminal(Enum):
+    SUBJECT = "SUBJECT"
+    NUMERICAL_EXPRESSION = "0"
+    DATE = ("on ADATE", "27 January 2002")
+    VERB = "pay"
+    VERB_STATUS = "paid"
+    MODAL_VERB = "shall"
+    OBJECT = "GBP 0"
+    HOLDS = "it is the case that"
+    COMPARISON = "equal to"
+    LOGICAL_OPERATOR = "or"
+    LOGICAL_AND = "and"
 
     @staticmethod
     def validate_subject(subject):
@@ -82,7 +83,7 @@ class ContractNonTerminal(Enum):
         - bool: True if the entry is valid, False otherwise.
         """
         print(date)
-        if date in ContractNonTerminal.get_options(ContractNonTerminal.DATE):
+        if date in Terminal.get_options(Terminal.DATE):
             return True
         return BaseParser("date").parse(f"on the {date}")
 
@@ -122,6 +123,7 @@ class ContractNonTerminal(Enum):
             cls.DATE,
             cls.LOGICAL_OPERATOR,
             cls.COMPARISON,
+            cls.LOGICAL_AND,
         }
 
     @classmethod
@@ -180,6 +182,8 @@ class ContractNonTerminal(Enum):
                 return ["on ADATE", "on THEDATE", "on ANYDATE", "custom date"]
             case cls.LOGICAL_OPERATOR:
                 return ["and", "or"]
+            case cls.LOGICAL_AND:
+                return ["and"]
             case cls.COMPARISON:
                 return ["less than", "equal to", "more than"]
             case cls.VERB_STATUS:

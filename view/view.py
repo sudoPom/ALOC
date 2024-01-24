@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 
-from model.contract import Contract
+from model.components.contract import Contract
 from view.renderer import Renderer
 from view.scroll_canvas import ScrollCanvas
 
@@ -45,7 +45,7 @@ class View(tk.Tk):
         Args:
             The contract to be rendered.
         """
-        self.__renderer.render_contract(x, y, contract)
+        self.__renderer.render(x, y, contract)
 
     def save_contract(self):
         file_path = self.__controller.get_contract_path()

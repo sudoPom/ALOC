@@ -11,31 +11,11 @@ Classes:
 
 import pickle
 
-from model.contract import Contract
+from model.components.contract import Contract
 
 
 class Model:
     """
-    Model wraps the Contract class, exposing commonly used contract operations.
-
-    Methods:
-    - __init__(): Initialize a Model object.
-    - add_definition(definition_type): Adds an empty definition to the current
-    contract.
-    - change_component_type(definition, definition_type): Changes the type of
-    the definition.
-    - update_component(definition, update_dict): Updates a definition's
-    components.
-    - delete_definition(definition_id): Deletes a definition from the contract.
-    - add_statement(statement_type): Adds an empty statement to the current
-    contract.
-    - delete_statement(statement_id): Deletes a statement from the current
-    contract.
-    - get_contract(): Returns the current contract.
-    - save_contract_file(path): Saves the current contract.
-    - open_contract_file(path): Loads the contract stored in the file pointed
-    to by path.
-
     """
 
     def __init__(self):
@@ -75,14 +55,11 @@ class Model:
         """
         definition.update(**update_dict)
 
-    def delete_definition(self, definition_id):
-        """
-        Deletes a definition from the contract.
+    def delete_component(self, component_id):
+        self.__contract.delete_component(component_id)
 
-        Args:
-        - definition_id: The ID of the definition to be deleted.
-        """
-        self.__contract.delete_definition(definition_id)
+    def add_component(self, component_spec):
+        self.__contract.add_component(component_spec)
 
     def add_statement(self, statement_type):
         """
@@ -110,15 +87,6 @@ class Model:
         - statement_type: The type of the new statement.
         """
         self.__contract.add_conditional_definition(conditional_definition_type)
-
-    def delete_non_definition_component(self, component_id):
-        """
-        Deletes a statement from the current contract.
-
-        Args:
-        - statement_id: The ID of the statement to be deleted.
-        """
-        self.__contract.delete_non_definition_component(component_id)
 
     def get_contract(self):
         """
