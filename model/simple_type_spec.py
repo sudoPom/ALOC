@@ -14,11 +14,14 @@ class SimpleTypeSpec(TypeSpec):
         return self.__expected_attributes
 
     @classmethod
-    def from_json(cls, json):
-        return cls(
+    def from_json(cls, json) -> "SimpleTypeSpec":
+        return SimpleTypeSpec(
             json["type_name"],
             json["format_string"],
             json["attributes"],
             json["display_name"],
             super().get_colour_from_json(json),
         )
+
+    def to_type_spec(self) -> TypeSpec:
+        pass

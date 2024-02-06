@@ -3,6 +3,7 @@ from typing import List, Self
 from model.component_attribute import ComponentAttribute
 from model.component_specifications.simple_component_spec import \
     SimpleComponentSpec
+from model.simple_type_spec import SimpleTypeSpec
 from model.type_spec import TypeSpec
 
 
@@ -23,7 +24,7 @@ class ChainComponentSpec(SimpleComponentSpec):
     def __init__(
         self,
         name: str,
-        types: List[TypeSpec],
+        types: List[SimpleTypeSpec],
         attributes: List[ComponentAttribute],
         location: str,
         component_type: str,

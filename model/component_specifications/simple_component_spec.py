@@ -1,4 +1,4 @@
-from typing import List, Self
+from typing import List
 
 from model.component_attribute import ComponentAttribute
 from model.component_specifications.component_spec import ComponentSpec
@@ -23,7 +23,14 @@ class SimpleComponentSpec(ComponentSpec):
     - Inherits all attributes from the ComponentSpec class.
     """
 
-    def __init__(self, name, types, attributes, location, component_type) -> None:
+    def __init__(
+        self,
+        name: str,
+        types: List[SimpleTypeSpec],
+        attributes: List[ComponentAttribute],
+        location: str,
+        component_type: str,
+    ) -> None:
         """
         Initializes a SimpleComponentSpec object.
 
@@ -60,7 +67,7 @@ class SimpleComponentSpec(ComponentSpec):
         raise ValueError(f"Invalid Attribute: {attribute_name}")
 
     @classmethod
-    def from_json(cls, json, _) -> Self:
+    def from_json(cls, json, constructed_component_specs) -> "SimpleComponentSpec":
         """
         Constructs a SimpleComponentSpec object from JSON data.
 

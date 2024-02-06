@@ -1,9 +1,12 @@
-from typing import List
+from abc import ABC, abstractmethod
+from typing import List, TypeVar
 
 from model.type_spec import TypeSpec
 
+T = TypeVar("T", bound=TypeSpec)
 
-class ComponentSpec:
+
+class ComponentSpec(ABC):
     """
     ComponentSpec class represents the specifications of a component.
 
@@ -26,7 +29,7 @@ class ComponentSpec:
     def __init__(
         self,
         name: str,
-        types: List[TypeSpec],
+        types: List[T],
         location: str,
         component_type: str,
     ) -> None:
@@ -44,11 +47,16 @@ class ComponentSpec:
         self.__location = location
         self.__component_type = component_type
 
+    @classmethod
+    @abstractmethod
+    def from_json(cls, json, constructed_component_specs) -> "ComponentSpec":
+        pass
+
     def get_name(self) -> str:
         """Retrieves the name of the component specification."""
         return self.__name
 
-    def get_types(self) -> List[TypeSpec]:
+    def get_types(self) -> List[T]:
         """Retrieves the list of type specifications associated with the component."""
         return self.__types
 
@@ -63,16 +71,3 @@ class ComponentSpec:
     def get_location(self) -> str:
         """Retrieves the location of the component."""
         return self.__location
-
-    @staticmethod
-    def types_from_json(json) -> List[TypeSpec]:
-        """
-        Converts JSON data into a list of TypeSpec objects.
-
-        Args:
-        - json: JSON data representing the type specifications.
-
-        Returns:
-        - List[TypeSpec]: A list of TypeSpec objects parsed from the JSON data.
-        """
-        return [TypeSpec.from_json(type_spec) for type_spec in json]

@@ -1,4 +1,4 @@
-from typing import List, Self
+from typing import List
 
 from model.component_specifications.component_spec import ComponentSpec
 from model.component_specifications.simple_component_spec import \
@@ -27,7 +27,7 @@ class ConditionalComponentSpec(ComponentSpec):
         return self.__condition_spec
 
     @classmethod
-    def from_json(cls, json, constructed_component_specs) -> Self:
+    def from_json(cls, json, constructed_component_specs) -> "ConditionalComponentSpec":
         type_specs = [TypeSpec.from_json(type_spec) for type_spec in json["type_specs"]]
         result_spec = constructed_component_specs[json["result"]]
         condition_spec = constructed_component_specs[json["condition"]]
