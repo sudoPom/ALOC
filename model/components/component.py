@@ -31,16 +31,15 @@ class Component:
     none of the expected keys are found in kwargs.
     """
 
-    def __init__(self, component_id, component_spec):
+    def __init__(self, component_spec):
         """
         Initialize a BaseComponent object.
 
         Args:
-        - id (str): The unique identifier of the component.
         - component_type (str): The type of the component.
         - component_types (set): The set of valid component types.
         """
-        self.__id = component_id
+        self.__id = None
         self.__types = component_spec.get_types()
         self.__type = self.__types[0]
         self.__component_type = component_spec.get_component_type()
@@ -83,6 +82,9 @@ class Component:
         - str: The unique identifier of the component.
         """
         return self.__id
+
+    def set_id(self, id):
+        self.__id = id
 
     def _get_type_spec(self, component_type):
         for type_spec in self.__types:

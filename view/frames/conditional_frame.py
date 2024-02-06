@@ -24,6 +24,7 @@ class ConditionalFrame(BaseFrame):
 
     def render(self, x, y):
         y += super().render(x, y)
+        x += Constants.PADDING_PX
         conditional_type = self.get_component().get_type().get_name()
         if conditional_type == "if":
             y = self.__result.render(x, y)

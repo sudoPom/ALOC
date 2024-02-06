@@ -1,14 +1,16 @@
-import tkinter as tk
-
 from controller.controller import Controller
+from model.aloc_spec import ALOCSpec
 from model.model import Model
 from view.view import View
 
 
 class App:
     def __init__(self):
-        self.model = Model()
-        self.controller = Controller(self.model)
+        spec_reader = ALOCSpec("aloc_spec.json")
+        self.model = Model(
+            spec_reader.get_contract_collections(), spec_reader.get_component_types()
+        )
+        self.controller = Controller(self.model, spec_reader.get_component_specs())
         self.view = View(self.controller)
 
     def main_loop(self):
@@ -16,6 +18,5 @@ class App:
 
 
 if __name__ == "__main__":
-
     app = App()
     app.main_loop()

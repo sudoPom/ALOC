@@ -8,11 +8,6 @@ Classes:
 
 """
 
-from model.components.chain_component import ChainComponent
-from model.component_collection import ComponentCollection
-from model.components.conditional_component import ConditionalComponent
-from model.components.simple_component import SimpleComponent
-
 
 class Contract:
     """
@@ -34,26 +29,19 @@ class Contract:
 
     """
 
-    def __init__(self):
+    def __init__(self, component_collections, component_types):
         """
         Initialize a Contract object.
         """
-        self.__id_counter = 0
-        self.__component_collections = [
-            ComponentCollection("definitions"),
-            ComponentCollection("other_components"),
-        ]
-        self.__component_types_dict = {
-            "base_chain": ChainComponent,
-            "base_component": SimpleComponent,
-            "conditional": ConditionalComponent,
-        }
+        self.__component_collections = component_collections
+        self.__component_types = component_types
         self.__path = None
 
     def delete_component(self, component_id):
         for component_collection in self.__component_collections:
             if component_collection.contains_component(component_id):
                 component_collection.delete_component(component_id)
+        self.reset_ids()
 
     def update_component(self, component_id, **kwargs):
         for component_collection in self.__component_collections:
@@ -65,11 +53,10 @@ class Contract:
 
     def add_component(self, component_spec):
         component_collection = self._get_component_collection(component_spec)
-        component_type = self.__component_types_dict[
-            component_spec.get_component_type()
-        ]
-        component = component_type(self.get_and_increment_id(), component_spec)
+        component_type = self.__component_types[component_spec.get_component_type()]
+        component = component_type(component_spec)
         component_collection.add_component(component)
+        self.reset_ids()
 
     def get_component_collections(self):
         return self.__component_collections
@@ -81,19 +68,14 @@ class Contract:
                 return component_collection
         raise ValueError(f"This collection doesn't exist! {component_collection_name}")
 
-    def get_and_increment_id(self):
-        """
-        Get the current ID counter and increment it.
-
-        Returns:
-        - int: The current value of the ID counter.
-        """
-        out = self.__id_counter
-        self.__id_counter += 1
-        return out
-
     def get_path(self):
         return self.__path
 
     def set_path(self, path):
         self.__path = path
+
+    def reset_ids(self):
+        current_id = 0
+        for component_collection in self.__component_collections:
+            for component in component_collection.get_components():
+                current_id = component.reset_id(current_id)

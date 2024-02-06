@@ -15,23 +15,15 @@ from model.components.contract import Contract
 
 
 class Model:
-    """
-    """
+    """ """
 
-    def __init__(self):
+    def __init__(self, component_collections, component_spec_pairs):
         """
         Initialize a Model object.
         """
-        self.__contract = Contract()
-
-    def add_definition(self, definition_type):
-        """
-        Adds an empty definition to the current contract.
-
-        Args:
-        - definition_type: The type of the new definition.
-        """
-        self.__contract.add_definition(definition_type)
+        self.__component_collections = component_collections
+        self.__component_spec_pairs = component_spec_pairs
+        self.__contract = self.create_new_contract()
 
     @staticmethod
     def change_component_type(component, component_type):
@@ -45,7 +37,7 @@ class Model:
         component.set_type(component_type)
 
     @staticmethod
-    def update_component(definition, update_dict):
+    def update_component(component, update_dict):
         """
         Updates a definition's components.
 
@@ -53,7 +45,7 @@ class Model:
         - definition: The definition to be updated.
         - update_dict: The key-value pairs of the new definition.
         """
-        definition.update(**update_dict)
+        component.update(**update_dict)
 
     def delete_component(self, component_id):
         self.__contract.delete_component(component_id)
@@ -61,32 +53,10 @@ class Model:
     def add_component(self, component_spec):
         self.__contract.add_component(component_spec)
 
-    def add_statement(self, statement_type):
-        """
-        Adds an empty statement to the current contract.
+    def extend_chain_component(self, component):
+        component.add_next()
 
-        Args:
-        - statement_type: The type of the new statement.
-        """
-        self.__contract.add_statement(statement_type)
-
-    def add_conditional_statement(self, conditional_statement_type):
-        """
-        Adds an empty statement to the current contract.
-
-        Args:
-        - statement_type: The type of the new statement.
-        """
-        self.__contract.add_conditional_statement(conditional_statement_type)
-
-    def add_conditional_definition(self, conditional_definition_type):
-        """
-        Adds an empty statement to the current contract.
-
-        Args:
-        - statement_type: The type of the new statement.
-        """
-        self.__contract.add_conditional_definition(conditional_definition_type)
+        self.__contract.reset_ids()
 
     def get_contract(self):
         """
@@ -126,4 +96,4 @@ class Model:
             print(f"Error loading contract: {e}")
 
     def create_new_contract(self):
-        self.__contract = Contract()
+        return Contract(self.__component_collections, self.__component_spec_pairs)

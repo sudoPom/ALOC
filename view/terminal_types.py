@@ -204,3 +204,31 @@ class Terminal(Enum):
                 return "Subjects must only contain non numerical characters and spaces."
             case _:
                 raise ValueError(f"No error provided for entry type:{entry_type}")
+
+    @classmethod
+    def from_string(cls, string):
+        match string:
+            case "subject":
+                return cls.SUBJECT
+            case "numerical_expression":
+                return cls.NUMERICAL_EXPRESSION
+            case "date":
+                return cls.DATE
+            case "object":
+                return cls.OBJECT
+            case "logical_and":
+                return cls.LOGICAL_AND
+            case "logical_operator":
+                return cls.LOGICAL_OPERATOR
+            case "verb":
+                return cls.VERB
+            case "modal_verb":
+                return cls.MODAL_VERB
+            case "verb_status":
+                return cls.VERB_STATUS
+            case "holds":
+                return cls.HOLDS
+            case "comparison":
+                return cls.COMPARISON
+            case _:
+                raise ValueError(f"Invalid terminal type {string}")

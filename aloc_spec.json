@@ -1,0 +1,279 @@
+{
+  "contract": {
+    "collections": [
+      "definitions",
+      "other_components"
+    ]
+  },
+  "simple_components": [],
+  "chain_components": [
+    {
+      "component_name": "definition",
+      "type_specs": [
+        {
+          "type_name": "subject pair",
+          "format_string": "[{}] {} IS {} {}",
+          "attributes": [
+            "subject",
+            "other_subject",
+            "logical_operator"
+          ],
+          "display_name": "Subject-Pair Definition",
+          "colour": "skyblue"
+        },
+        {
+          "type_name": "subject numerical pair",
+          "format_string": "[{}] {} EQUALS {} {}",
+          "attributes": [
+            "subject",
+            "numerical_expression",
+            "logical_operator"
+          ],
+          "display_name": "Numerical Definition"
+        }
+      ],
+      "attributes": [
+        {
+          "name": "subject",
+          "type": "subject"
+        },
+        {
+          "name": "other_subject",
+          "type": "subject"
+        },
+        {
+          "name": "numerical_expression",
+          "type": "numerical_expression"
+        },
+        {
+          "name": "logical_operator",
+          "type": "logical_and"
+        }
+      ],
+      "collection_location": "definitions"
+    },
+    {
+      "component_name": "statement",
+      "type_specs": [
+        {
+          "type_name": "subject modal",
+          "format_string": "[{}] {} {} {} {} {} {} {}",
+          "attributes": [
+            "holds",
+            "subject",
+            "modal_verb",
+            "verb",
+            "object",
+            "date",
+            "logical_operator"
+          ],
+          "display_name": "Subject-Modal Statement"
+        },
+        {
+          "type_name": "subject date",
+          "format_string": "[{}] {} {} {} {} {} {} {}",
+          "attributes": [
+            "holds",
+            "subject",
+            "date",
+            "modal_verb",
+            "verb",
+            "object",
+            "logical_operator"
+          ],
+          "display_name": "Subject-Date Statement"
+        },
+        {
+          "type_name": "date subject",
+          "format_string": "[{}] {} {} {} {} {} {} {}",
+          "attributes": [
+            "holds",
+            "date",
+            "subject",
+            "modal_verb",
+            "verb",
+            "object",
+            "logical_operator"
+          ],
+          "display_name": "Date-Subject Statement"
+        }
+      ],
+      "attributes": [
+        {
+          "name": "holds",
+          "type": "holds"
+        },
+        {
+          "name": "subject",
+          "type": "subject"
+        },
+        {
+          "name": "modal_verb",
+          "type": "modal_verb"
+        },
+        {
+          "name": "verb",
+          "type": "verb"
+        },
+        {
+          "name": "object",
+          "type": "object"
+        },
+        {
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "name": "logical_operator",
+          "type": "logical_operator"
+        }
+      ],
+      "collection_location": "other_components"
+    },
+    {
+      "component_name": "condition",
+      "type_specs": [
+        {
+          "type_name": "subject verb_status",
+          "format_string": "[{}] {} {} {} {} {} {}",
+          "attributes": [
+            "holds",
+            "subject",
+            "verb_status",
+            "object",
+            "date",
+            "logical_operator"
+          ],
+          "display_name": "Subject-Verb-Status Condition"
+        },
+        {
+          "type_name": "subject date",
+          "format_string": "[{}] {} {} {} {} {} {}",
+          "attributes": [
+            "holds",
+            "subject",
+            "date",
+            "verb_status",
+            "object",
+            "logical_operator"
+          ],
+          "display_name": "Subject-Date Condition"
+        },
+        {
+          "type_name": "date subject",
+          "format_string": "[{}] {} {} {} {} {} {}",
+          "attributes": [
+            "holds",
+            "date",
+            "subject",
+            "verb_status",
+            "object",
+            "logical_operator"
+          ],
+          "display_name": "Date-Subject Condition"
+        },
+        {
+          "type_name": "subject modal verb",
+          "format_string": "[{}] {} {} {} {} {} {}",
+          "attributes": [
+            "holds",
+            "subject",
+            "modal_verb",
+            "verb,",
+            "object",
+            "date",
+            "logical_operator"
+          ],
+          "display_name": "Subject-Modal-Verb Condition"
+        },
+        {
+          "type_name": "boolean expression",
+          "format_string": "[{}] {} {} {} {} {} {}",
+          "attributes": [
+            "holds",
+            "subject",
+            "verb_status",
+            "comparison",
+            "other_subject",
+            "logical_operator"
+          ],
+          "display_name": "Boolean-Expression Condition"
+        }
+      ],
+      "attributes": [
+        {
+          "name": "holds",
+          "type": "holds"
+        },
+        {
+          "name": "subject",
+          "type": "subject"
+        },
+        {
+          "name": "verb_status",
+          "type": "verb_status"
+        },
+        {
+          "name": "object",
+          "type": "object"
+        },
+        {
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "name": "modal_verb",
+          "type": "modal_verb"
+        },
+        {
+          "name": "comparison",
+          "type": "comparison"
+        },
+        {
+          "name": "other_subject",
+          "type": "subject"
+        },
+        {
+          "name": "logical_operator",
+          "type": "logical_operator"
+        }
+      ],
+      "collection_location": "none"
+    }
+  ],
+  "conditional_components": [
+    {
+      "component_name": "conditional_definition",
+      "type_specs": [
+        {
+          "colour": "forestgreen",
+          "type_name": "if",
+          "display_name": "If Conditional Definition"
+        },
+        {
+          "type_name": "if then",
+          "display_name": "If-Then Conditional Definition"
+        }
+      ],
+      "condition": "condition",
+      "result": "definition",
+      "collection_location": "other_components"
+    },
+    {
+      "component_name": "conditional_statement",
+      "type_specs": [
+        {
+          "type_name": "if",
+          "display_name": "If Conditional Statement"
+        },
+        {
+          "type_name": "if then",
+          "display_name": "If-Then Conditional Statement"
+        }
+      ],
+      "condition": "condition",
+      "result": "statement",
+      "collection_location": "other_components"
+    }
+  ]
+}

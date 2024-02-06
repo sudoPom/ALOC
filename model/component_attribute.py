@@ -1,3 +1,6 @@
+from view.terminal_types import Terminal
+
+
 class ComponentAttribute:
     def __init__(self, name: str, attribute_type):
         self.__name = name
@@ -15,3 +18,8 @@ class ComponentAttribute:
 
     def set_value(self, value: str):
         self.__value = value
+
+    @classmethod
+    def from_json(cls, json):
+        attribute_type = Terminal.from_string(json["type"])
+        return cls(json["name"], attribute_type)

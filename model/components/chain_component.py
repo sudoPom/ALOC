@@ -13,14 +13,14 @@ from model.components.simple_component import SimpleComponent
 
 
 class ChainComponent(SimpleComponent):
-    def __init__(self, component_id, component_spec):
-        super().__init__(component_id, component_spec)
+    def __init__(self, component_spec):
+        super().__init__(component_spec)
         self.__component_spec = component_spec
         self.__next = None
 
-    def add_next(self, id, component_type):
+    def add_next(self):
         old_next = self.__next
-        self.__next = ChainComponent(id + 1, self.__component_spec)
+        self.__next = ChainComponent(self.__component_spec)
         self.__next.set_next(old_next)
 
     def set_next(self, next):
@@ -39,8 +39,13 @@ class ChainComponent(SimpleComponent):
 
     def get_display_text(self):
         text = super().get_display_text()
-        print(text)
         if not self.__next:
             text = " ".join(text.split(" ")[:-1])
-        print(text)
         return text
+
+    def reset_id(self, id):
+        self.set_id(id)
+        id += 1
+        if self.__next:
+            return self.__next.reset_id(id)
+        return id

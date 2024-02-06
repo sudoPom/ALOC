@@ -1,4 +1,6 @@
 from model.component_specifications.component_spec import ComponentSpec
+from model.components.conditional_component import ConditionalComponent
+from model.type_spec import TypeSpec
 
 
 class ConditionalComponentSpec(ComponentSpec):
@@ -20,3 +22,17 @@ class ConditionalComponentSpec(ComponentSpec):
 
     def get_condition_spec(self):
         return self.__condition_spec
+
+    @classmethod
+    def from_json(cls, json, constructed_component_specs):
+        type_specs = [TypeSpec.from_json(type_spec) for type_spec in json["type_specs"]]
+        result_spec = constructed_component_specs[json["result"]]
+        condition_spec = constructed_component_specs[json["condition"]]
+        return cls(
+            json["component_name"],
+            type_specs,
+            json["collection_location"],
+            "conditional_component",
+            condition_spec,
+            result_spec,
+        )

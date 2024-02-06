@@ -33,7 +33,7 @@ class SimpleComponent(Component):
     none of the expected keys are found in kwargs.
     """
 
-    def __init__(self, component_id, component_spec):
+    def __init__(self, component_spec):
         """
         Initialize a BaseComponent object.
 
@@ -42,7 +42,7 @@ class SimpleComponent(Component):
         - component_type (str): The type of the component.
         - component_types (set): The set of valid component types.
         """
-        super().__init__(component_id, component_spec)
+        super().__init__(component_spec)
         self.__attributes = component_spec.get_attributes()
 
     def update(self, **kwargs):
@@ -115,3 +115,7 @@ class SimpleComponent(Component):
         ]
         format_params.insert(0, self.get_id())
         return format_string.format(*format_params)
+
+    def reset_id(self, id):
+        self.set_id(id)
+        return id + 1

@@ -1,3 +1,7 @@
+from model.components.component import Component
+from model.type_spec import TypeSpec
+
+
 class ComponentSpec:
     def __init__(self, name, types, location, component_type):
         self.__name = name
@@ -19,3 +23,7 @@ class ComponentSpec:
 
     def get_location(self):
         return self.__location
+
+    @staticmethod
+    def types_from_json(json):
+        return [TypeSpec.from_json(type_spec) for type_spec in json]

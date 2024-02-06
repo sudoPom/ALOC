@@ -67,7 +67,7 @@ class BaseFrame(tk.Frame):
         self.trigger_re_render()
 
     def extend_component(self):
-        Controller.extend_component_chain(self.__component)
+        self.__controller.extend_chain_component(self.__component)
         self.trigger_re_render()
 
     def add_delete_button(self):
