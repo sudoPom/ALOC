@@ -1,5 +1,5 @@
 import json
-from typing import Dict, List
+from typing import Dict, List, Type
 
 from model.component_collection import ComponentCollection
 from model.component_specifications.chain_component_spec import \
@@ -82,7 +82,7 @@ class ALOCSpec:
         """
         return self.__component_specs
 
-    def get_component_types(self) -> Dict[str, Component]:
+    def get_component_types(self) -> Dict[str, Type[Component]]:
         """
         Retrieves the types of components defined in the ALOC file.
 
