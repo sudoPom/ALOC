@@ -2,7 +2,6 @@ from tkinter import Canvas
 from typing import Callable
 
 from controller.controller import Controller
-from model.component_collection import ComponentCollection
 from model.components.component import Component
 from model.components.contract import Contract
 from view.constants import Constants
