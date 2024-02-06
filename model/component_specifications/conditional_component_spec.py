@@ -1,10 +1,7 @@
 from typing import Dict, List
 
-from model.component_specifications.chain_component_spec import \
-    ChainComponentSpec
+from model.component_specifications.chain_component_spec import ChainComponentSpec
 from model.component_specifications.component_spec import ComponentSpec
-from model.component_specifications.simple_component_spec import \
-    SimpleComponentSpec
 from model.type_spec import TypeSpec
 
 
@@ -15,17 +12,17 @@ class ConditionalComponentSpec(ComponentSpec):
         types: List[TypeSpec],
         location: str,
         component_type: str,
-        condition_spec: SimpleComponentSpec,
-        result_spec: SimpleComponentSpec,
+        condition_spec: ChainComponentSpec,
+        result_spec: ChainComponentSpec,
     ) -> None:
         super().__init__(name, types, location, component_type)
         self.__condition_spec = condition_spec
         self.__result_spec = result_spec
 
-    def get_result_spec(self) -> SimpleComponentSpec:
+    def get_result_spec(self) -> ChainComponentSpec:
         return self.__result_spec
 
-    def get_condition_spec(self) -> SimpleComponentSpec:
+    def get_condition_spec(self) -> ChainComponentSpec:
         return self.__condition_spec
 
     @classmethod
