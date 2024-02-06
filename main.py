@@ -5,7 +5,7 @@ from view.view import View
 
 
 class App:
-    def __init__(self):
+    def __init__(self) -> None:
         spec_reader = ALOCSpec("aloc_spec.json")
         self.model = Model(
             spec_reader.get_contract_collections(), spec_reader.get_component_types()
@@ -13,7 +13,7 @@ class App:
         self.controller = Controller(self.model, spec_reader.get_component_specs())
         self.view = View(self.controller)
 
-    def main_loop(self):
+    def main_loop(self) -> None:
         self.view.mainloop()
 
 

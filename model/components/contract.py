@@ -35,7 +35,7 @@ class Contract:
         """
         self.__component_collections = component_collections
         self.__component_types = component_types
-        self.__path = None
+        self.__path = ""
 
     def delete_component(self, component_id):
         for component_collection in self.__component_collections:
@@ -68,7 +68,7 @@ class Contract:
                 return component_collection
         raise ValueError(f"This collection doesn't exist! {component_collection_name}")
 
-    def get_path(self):
+    def get_path(self) -> str:
         return self.__path
 
     def set_path(self, path):

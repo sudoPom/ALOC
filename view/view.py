@@ -7,7 +7,25 @@ from view.scroll_canvas import ScrollCanvas
 
 
 class View(tk.Tk):
-    def __init__(self, controller):
+    """
+    View class represents the GUI view of the MVC architecture.
+
+    Methods:
+    - __init__(controller): Initializes a View object.
+    - update_display(): Re-draws the display with the current contract.
+    - render_contract(contract, x=10, y=10): Renders the given contract on the display.
+    - _save_contract(): Saves the current contract to a file.
+    - _load_contract(): Loads a contract from a file.
+    - _new_contract(): Creates a new contract.
+    """
+
+    def __init__(self, controller) -> None:
+        """
+        Initializes a View object.
+
+        Args:
+        - controller: The controller object to interact with the model.
+        """
         super().__init__()
         self.__controller = controller
         self.geometry("1000x1000")
@@ -16,15 +34,15 @@ class View(tk.Tk):
         toolbar.pack(side="top", fill="x")
 
         new_button = tk.Button(
-            toolbar, text="Create New Contract", command=self.new_contract
+            toolbar, text="Create New Contract", command=self._new_contract
         )
         new_button.pack(side="left")
         save_button = tk.Button(
-            toolbar, text="Save Contract", command=self.save_contract
+            toolbar, text="Save Contract", command=self._save_contract
         )
         save_button.pack(side="left")
         load_button = tk.Button(
-            toolbar, text="Open Contract", command=self.load_contract
+            toolbar, text="Open Contract", command=self._load_contract
         )
         load_button.pack(side="left")
 
@@ -34,22 +52,26 @@ class View(tk.Tk):
 
         self.update_display()
 
-    def update_display(self):
+    def update_display(self) -> None:
         """Re-draws the display with the contract that is currently stored."""
         contract = self.__controller.get_contract()
         self.render_contract(contract)
 
     def render_contract(self, contract: Contract, x=10, y=10):
-        """Renders the contract
+        """
+        Renders the given contract on the display.
 
         Args:
-            The contract to be rendered.
+        - contract (Contract): The contract to be rendered.
+        - x (int): The x-coordinate of the contract's rendering.
+        - y (int): The y-coordinate of the contract's rendering.
         """
         self.__renderer.render(x, y, contract)
 
-    def save_contract(self):
+    def _save_contract(self) -> None:
+        """Saves the current contract to a file."""
         file_path = self.__controller.get_contract_path()
-        if file_path is None:
+        if file_path == "":
             file_path = filedialog.asksaveasfilename(
                 defaultextension=".cola",
                 filetypes=[("Cola files", "*.cola")],
@@ -58,7 +80,8 @@ class View(tk.Tk):
             self.__controller.save_contract(file_path)
             print(f"Contract saved to: {file_path}")
 
-    def load_contract(self):
+    def _load_contract(self) -> None:
+        """Loads a contract from a file."""
         file_path = filedialog.askopenfilename(
             defaultextension=".cola",
             filetypes=[("Cola files", "*.cola")],
@@ -68,6 +91,7 @@ class View(tk.Tk):
             self.update_display()
             print(f"Contract loaded from: {file_path}")
 
-    def new_contract(self):
+    def _new_contract(self) -> None:
+        """Creates a new contract."""
         self.__controller.create_new_contract()
         self.update_display()
