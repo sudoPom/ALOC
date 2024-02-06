@@ -1,4 +1,4 @@
-from typing import List
+from typing import Dict, List
 
 from model.component_attribute import ComponentAttribute
 from model.component_specifications.component_spec import ComponentSpec
@@ -48,7 +48,7 @@ class SimpleComponentSpec(ComponentSpec):
         """Retrieves the attributes of the simple component."""
         return self.__attributes
 
-    def get_attribute(self, attribute_name) -> ComponentAttribute:
+    def get_attribute(self, attribute_name: str) -> ComponentAttribute:
         """
         Retrieves a specific attribute of the simple component.
 
@@ -67,7 +67,9 @@ class SimpleComponentSpec(ComponentSpec):
         raise ValueError(f"Invalid Attribute: {attribute_name}")
 
     @classmethod
-    def from_json(cls, json, constructed_component_specs) -> "SimpleComponentSpec":
+    def from_json(
+        cls, json: Dict, constructed_component_specs
+    ) -> "SimpleComponentSpec":
         """
         Constructs a SimpleComponentSpec object from JSON data.
 
@@ -92,7 +94,7 @@ class SimpleComponentSpec(ComponentSpec):
         )
 
     @staticmethod
-    def attributes_from_json(json) -> List[ComponentAttribute]:
+    def attributes_from_json(json: Dict) -> List[ComponentAttribute]:
         """
         Parses JSON data to create ComponentAttribute objects.
 

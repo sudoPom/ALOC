@@ -22,6 +22,3 @@ class SimpleTypeSpec(TypeSpec):
             json["display_name"],
             super().get_colour_from_json(json),
         )
-
-    def to_type_spec(self) -> TypeSpec:
-        pass

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, TypeVar
+from typing import Dict, List, TypeVar
 
 from model.type_spec import TypeSpec
 
@@ -49,7 +49,9 @@ class ComponentSpec(ABC):
 
     @classmethod
     @abstractmethod
-    def from_json(cls, json, constructed_component_specs) -> "ComponentSpec":
+    def from_json(
+        cls, json: Dict, constructed_component_specs: Dict
+    ) -> "ComponentSpec":
         pass
 
     def get_name(self) -> str:

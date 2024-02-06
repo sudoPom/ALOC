@@ -42,7 +42,7 @@ class ChainComponentSpec(SimpleComponentSpec):
         super().__init__(name, types, attributes, location, component_type)
 
     @classmethod
-    def from_json(cls, json, _) -> Self:
+    def from_json(cls, json: Dict, constructed_component_specs) -> "ChainComponentSpec":
         """
         Constructs a ChainComponentSpec object from JSON data.
 
