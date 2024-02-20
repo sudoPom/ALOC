@@ -13,6 +13,10 @@ from model.components.chain_component import ChainComponent
 from model.components.component import Component
 from model.components.conditional_component import ConditionalComponent
 from model.components.simple_component import SimpleComponent
+from model.terminal_types.date_terminal import DateTerminal
+from model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
+from model.terminal_types.terminal import TerminalTypeNames
+from model.terminal_types.text_terminal import TextTerminal
 
 
 class ALOCSpec:
@@ -45,6 +49,8 @@ class ALOCSpec:
             "simple_component": SimpleComponent,
             "conditional_component": ConditionalComponent,
         }
+        self.__terminal_types = {"text", "date", "multi-choice"}
+        self.__terminal_types_to_objects = dict()
         self.__contract_collections = []
         self.__component_specs = dict()
         self._initialise_spec()
@@ -53,6 +59,7 @@ class ALOCSpec:
         """
         Initializes the ALOCSpec object by parsing the data from the ALOC file and constructing component collections and component specifications.
         """
+        self._initialise_terminals()
         for collection in self.__data["contract"]["collections"]:
             self.__contract_collections.append(ComponentCollection(collection))
         for component_type in self.__component_to_spec.keys():
@@ -60,9 +67,44 @@ class ALOCSpec:
             component_spec_class = self.__component_to_spec[component_type]
             for component in components:
                 component_spec = component_spec_class.from_json(
-                    component, self.__component_specs
+                    component, self.__component_specs, self.__terminal_types_to_objects
                 )
                 self.__component_specs[component["component_name"]] = component_spec
+
+    def _initialise_terminals(self):
+        for terminal_type in self.__terminal_types:
+            terminals = self.__data["terminal_types"][terminal_type]
+            for terminal in terminals:
+                self.__terminal_types_to_objects[
+                    terminal["name"]
+                ] = self._initialise_terminal(terminal, terminal_type)
+
+    def _initialise_terminal(self, terminal, terminal_type: str):
+        match (terminal_type):
+            case TerminalTypeNames.TEXT.value:
+                return TextTerminal(
+                    terminal["name"],
+                    terminal["default"],
+                    terminal["parse_root"],
+                    terminal["explanation"],
+                )
+            case TerminalTypeNames.MULTI_CHOICE.value:
+                return MultiChoiceTerminal(
+                    terminal["name"], terminal["default"], terminal["choices"]
+                )
+            case TerminalTypeNames.DATE.value:
+                return DateTerminal(
+                    terminal["name"],
+                    terminal["default_option"],
+                    terminal["default_date"],
+                    terminal["parse_root"],
+                    terminal["explanation"],
+                    terminal["choices"],
+                )
+            case _:
+                raise ValueError(
+                    f"Unsupported terminal type specified in ALOC sepc: {terminal_type}"
+                )
 
     def get_contract_collections(self) -> List[ComponentCollection]:
         """

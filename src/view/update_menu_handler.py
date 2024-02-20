@@ -4,7 +4,7 @@ from typing import Callable
 
 from controller.controller import Controller
 from model.components.simple_component import SimpleComponent
-from view.terminal_types import Terminal
+from model.terminal_types.terminal import Terminal, TerminalTypeNames
 
 
 class UpdateFormEntry:
@@ -20,7 +20,7 @@ class UpdateFormEntry:
     - get_name(): Returns the name of the entry.
     """
 
-    def __init__(self, entry_name: str, entry_type):
+    def __init__(self, entry_name: str, terminal):
         """
         Initializes an UpdateFormEntry object.
 
@@ -28,9 +28,9 @@ class UpdateFormEntry:
         - entry_name (str): The name of the entry.
         - entry_type: The type of the entry.
         """
-        self.name = entry_name
-        self.entry_type = entry_type
-        self.var = tk.StringVar()
+        self.__name = entry_name
+        self.__terminal = terminal
+        self.__var = tk.StringVar()
 
     def set_value(self, entry_value: str) -> None:
         """
@@ -39,23 +39,23 @@ class UpdateFormEntry:
         Args:
         - entry_value (str): The value to set.
         """
-        self.var.set(entry_value)
+        self.__var.set(entry_value)
 
     def get_var(self) -> tk.StringVar:
         """Returns the variable of the entry."""
-        return self.var
+        return self.__var
 
     def get_value(self) -> str:
         """Returns the value of the entry."""
-        return self.var.get()
+        return self.__var.get()
 
-    def get_type(self):
+    def get_terminal(self):
         """Returns the type of the entry."""
-        return self.entry_type
+        return self.__terminal
 
     def get_name(self) -> str:
         """Returns the name of the entry."""
-        return self.name
+        return self.__name
 
 
 class UpdateFormHandler:
@@ -159,8 +159,22 @@ class UpdateFormHandler:
         entries = []
 
         for i, attribute in enumerate(current_attributes):
-            entry = UpdateFormEntry(attribute.get_name(), attribute.get_type())
+            entry = UpdateFormEntry(attribute.get_name(), attribute.get_terminal())
             entries.append(entry)
+            attribute_type = attribute.get_terminal().get_type()
+            match attribute_type:
+                case TerminalTypeNames.TEXT | TerminalTypeNames.MULTI_CHOICE:
+                    entry.set_value(attribute.get_value())
+                case TerminalTypeNames.DATE:
+                    entry.set_value(attribute.get_value()[0])
+                    custom_date_entry = UpdateFormEntry(
+                        f"{attribute.get_name()}_custom", attribute.get_terminal()
+                    )
+                    custom_date_entry.set_value(attribute.get_value()[1])
+                    entries.append(custom_date_entry)
+                case _:
+                    raise ValueError(f"Unsupported terminal type {attribute_type}")
+            """
             if attribute.get_type() == Terminal.DATE:
                 entry.set_value(attribute.get_value()[0])
                 custom_date_entry = UpdateFormEntry(
@@ -170,6 +184,7 @@ class UpdateFormHandler:
                 entries.append(custom_date_entry)
             else:
                 entry.set_value(attribute.get_value())
+            """
             self._create_entry_label(
                 update_form, attribute.get_name().replace("_", " "), i
             )
@@ -215,12 +230,19 @@ class UpdateFormHandler:
         - row (int): The row number for placing the entry.
         - entries (list): The list of entry widgets.
         """
-        entry_type = entry.get_type()
-        if entry_type == Terminal.DATE:
-            return self._create_date_widgets(parent, entry, row, entries[-1].get_var())
-        if Terminal.is_optional(entry_type):
-            return self._create_option_widget(parent, entry, row)
-        return self._create_entry_widget(parent, entry, row)
+        terminal = entry.get_terminal()
+        terminal_type = terminal.get_type()
+        match terminal_type:
+            case TerminalTypeNames.DATE:
+                return self._create_date_widgets(
+                    parent, entry, row, entries[-1].get_var()
+                )
+            case TerminalTypeNames.TEXT:
+                return self._create_entry_widget(parent, entry, row)
+            case TerminalTypeNames.MULTI_CHOICE:
+                return self._create_option_widget(parent, entry, row)
+            case _:
+                raise ValueError(f"Invalid terminal type {terminal_type}")
 
     def _create_entry_label(self, parent: tk.Toplevel, text: str, row: int) -> None:
         """
@@ -268,7 +290,7 @@ class UpdateFormHandler:
         Returns:
         - tk.OptionMenu: The dropdown menu widget.
         """
-        options = Terminal.get_options(entry.get_type())
+        options = entry.get_terminal().get_choices()
         option_widget = tk.OptionMenu(parent, entry.get_var(), *options)
         option_widget.grid(row=row, column=1)
         return option_widget
@@ -292,7 +314,8 @@ class UpdateFormHandler:
         Returns:
         - tk.OptionMenu: The date selection widget.
         """
-        options = Terminal.get_options(Terminal.DATE)
+        terminal = entry.get_terminal()
+        options = terminal.get_choices()
         date_widget = tk.OptionMenu(parent, entry.get_var(), *options)
         date_widget.grid(row=row, column=1)
 
@@ -301,10 +324,11 @@ class UpdateFormHandler:
 
         def handle_option_change(_):
             selected_option = entry.get_value()
+            print(selected_option)
             if selected_option == "custom date":
                 custom_entry.grid(row=row, column=2)
             else:
-                custom_var.set("27 January 2002")
+                custom_var.set(terminal.get_default()[1])
                 custom_entry.grid_forget()
 
         date_widget.bind("<Configure>", handle_option_change)
@@ -324,9 +348,12 @@ class UpdateFormHandler:
         - error_variable (tk.StringVar): The variable for error messages.
         """
         for entry in entries:
-            if not Terminal.validate_entry(entry.get_value(), entry.get_type()):
+            terminal = entry.get_terminal()
+            if terminal.get_type() == TerminalTypeNames.MULTI_CHOICE:
+                continue
+            if not terminal.validate(entry.get_value()):
                 button["state"] = "disabled"
-                error_variable.set(Terminal.error_explanation(entry.get_type()))
+                error_variable.set(terminal.get_explanation())
                 return
         error_variable.set("")
         button["state"] = "normal"
@@ -352,7 +379,8 @@ class UpdateFormHandler:
         update_dict = dict()
         date_dict = defaultdict(lambda: ("", ""))
         for entry in entries:
-            if entry.get_type() == Terminal.DATE:
+            terminal = entry.get_terminal()
+            if terminal.get_type() == TerminalTypeNames.DATE:
                 UpdateFormHandler._handle_date(
                     entry.get_name(), entry.get_var(), date_dict
                 )

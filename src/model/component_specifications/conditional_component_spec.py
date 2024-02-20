@@ -1,6 +1,7 @@
 from typing import Dict, List
 
-from model.component_specifications.chain_component_spec import ChainComponentSpec
+from model.component_specifications.chain_component_spec import \
+    ChainComponentSpec
 from model.component_specifications.component_spec import ComponentSpec
 from model.type_spec import TypeSpec
 
@@ -27,7 +28,7 @@ class ConditionalComponentSpec(ComponentSpec):
 
     @classmethod
     def from_json(
-        cls, json: Dict, constructed_component_specs
+        cls, json: Dict, constructed_component_specs, terminals
     ) -> "ConditionalComponentSpec":
         type_specs = [TypeSpec.from_json(type_spec) for type_spec in json["type_specs"]]
         result_spec = constructed_component_specs[json["result"]]

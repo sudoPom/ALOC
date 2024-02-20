@@ -30,6 +30,17 @@
             "logical_operator"
           ],
           "display_name": "Numerical Definition"
+        },
+        {
+          "type_name": "event definition",
+          "format_string": "[{}] {} IS {} {} {}",
+          "attributes": [
+            "subject",
+            "relative_time",
+            "date",
+            "logical_operator"
+          ],
+          "display_name": "Event Definition"
         }
       ],
       "attributes": [
@@ -48,6 +59,14 @@
         {
           "name": "logical_operator",
           "type": "logical_and"
+        },
+        {
+          "name": "relative_time",
+          "type": "relative_time"
+        },
+        {
+          "name": "date",
+          "type": "date"
         }
       ],
       "collection_location": "definitions"
@@ -337,6 +356,15 @@
           "paid",
           "delivered",
           "changed"
+        ]
+      },
+      {
+        "name": "relative_time",
+        "default": "before",
+        "choices": [
+          "before",
+          "after",
+          "at the same time as"
         ]
       }
     ],

@@ -68,7 +68,7 @@ class SimpleComponentSpec(ComponentSpec):
 
     @classmethod
     def from_json(
-        cls, json: Dict, constructed_component_specs
+        cls, json: Dict, constructed_component_specs, terminals
     ) -> "SimpleComponentSpec":
         """
         Constructs a SimpleComponentSpec object from JSON data.
@@ -80,7 +80,7 @@ class SimpleComponentSpec(ComponentSpec):
         Returns:
         - SimpleComponentSpec: A SimpleComponentSpec object constructed from the JSON data.
         """
-        attributes = cls.attributes_from_json(json)
+        attributes = cls.attributes_from_json(json, terminals)
         type_specs = cls.type_specs_from_json(json)
         type_specs = [
             SimpleTypeSpec.from_json(type_spec) for type_spec in json["type_specs"]
@@ -94,7 +94,7 @@ class SimpleComponentSpec(ComponentSpec):
         )
 
     @staticmethod
-    def attributes_from_json(json: Dict) -> List[ComponentAttribute]:
+    def attributes_from_json(json: Dict, terminals) -> List[ComponentAttribute]:
         """
         Parses JSON data to create ComponentAttribute objects.
 
@@ -105,7 +105,8 @@ class SimpleComponentSpec(ComponentSpec):
         - List[ComponentAttribute]: A list of ComponentAttribute objects parsed from the JSON data.
         """
         return [
-            ComponentAttribute.from_json(attribute) for attribute in json["attributes"]
+            ComponentAttribute.from_json(attribute, terminals)
+            for attribute in json["attributes"]
         ]
 
     @staticmethod

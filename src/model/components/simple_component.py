@@ -1,9 +1,11 @@
 from typing import Any, Dict, List, Tuple
 
 from model.component_attribute import ComponentAttribute
-from model.component_specifications.simple_component_spec import SimpleComponentSpec
+from model.component_specifications.simple_component_spec import \
+    SimpleComponentSpec
 from model.components.component import Component
 from model.simple_type_spec import SimpleTypeSpec
+from model.terminal_types.terminal import TerminalTypeNames
 from view.terminal_types import Terminal
 
 
@@ -112,7 +114,7 @@ class SimpleComponent(Component):
         - Any: The value of the component.
         """
         attribute = self._get_attribute(component_key)
-        if attribute.get_type() == Terminal.DATE:
+        if attribute.get_terminal().get_type() == TerminalTypeNames.DATE:
             return self._get_component_date(attribute)
         return attribute.get_value()
 

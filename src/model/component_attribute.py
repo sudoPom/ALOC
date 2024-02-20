@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from view.terminal_types import Terminal
+from model.terminal_types.terminal import Terminal
 
 
 class ComponentAttribute:
@@ -16,7 +16,7 @@ class ComponentAttribute:
     - from_json(json): Constructs a ComponentAttribute object from JSON data.
     """
 
-    def __init__(self, name: str, attribute_type: Terminal) -> None:
+    def __init__(self, name: str, terminal: Terminal) -> None:
         """
         Initializes a ComponentAttribute object.
 
@@ -25,30 +25,30 @@ class ComponentAttribute:
         - attribute_type (Terminal): The type of the attribute.
         """
         self.__name: str = name
-        self.__attribute_type: Terminal = attribute_type
-        self.__value: str | Tuple = attribute_type.value
+        self.__terminal: Terminal = terminal
+        self.__value: str | Tuple = terminal.get_default()
 
     def get_name(self) -> str:
         """Retrieves the name of the attribute."""
         return self.__name
 
-    def get_type(self) -> Terminal:
+    def get_terminal(self) -> Terminal:
         """Retrieves the type of the attribute."""
-        return self.__attribute_type
+        return self.__terminal
 
     def get_value(self) -> str | Tuple:
         """Retrieves the value of the attribute."""
         return self.__value
 
     def create_blank(self):
-        return ComponentAttribute(self.__name, self.__attribute_type)
+        return ComponentAttribute(self.__name, self.__terminal)
 
     def set_value(self, value: str) -> None:
         """Sets the value of the attribute."""
         self.__value = value
 
     @classmethod
-    def from_json(cls, json: dict) -> "ComponentAttribute":
+    def from_json(cls, json: dict, terminals) -> "ComponentAttribute":
         """
         Constructs a ComponentAttribute object from JSON data.
 
@@ -58,5 +58,7 @@ class ComponentAttribute:
         Returns:
         - ComponentAttribute: A ComponentAttribute object constructed from the JSON data.
         """
-        attribute_type: Terminal = Terminal.from_string(json["type"])
-        return cls(json["name"], attribute_type)
+
+        terminal_type = json["type"]
+        terminal = terminals[terminal_type]
+        return cls(json["name"], terminal)

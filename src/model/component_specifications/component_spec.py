@@ -50,7 +50,7 @@ class ComponentSpec(ABC):
     @classmethod
     @abstractmethod
     def from_json(
-        cls, json: Dict, constructed_component_specs: Dict
+        cls, json: Dict, constructed_component_specs: Dict, terminals: Dict
     ) -> "ComponentSpec":
         pass
 

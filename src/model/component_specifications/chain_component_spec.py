@@ -52,7 +52,9 @@ class ChainComponentSpec(SimpleComponentSpec):
         return new_spec
 
     @classmethod
-    def from_json(cls, json: Dict, constructed_component_specs) -> "ChainComponentSpec":
+    def from_json(
+        cls, json: Dict, constructed_component_specs, terminals
+    ) -> "ChainComponentSpec":
         """
         Constructs a ChainComponentSpec object from JSON data.
 
@@ -63,7 +65,7 @@ class ChainComponentSpec(SimpleComponentSpec):
         Returns:
         - ChainComponentSpec: A ChainComponentSpec object constructed from the JSON data.
         """
-        attributes = cls.attributes_from_json(json)
+        attributes = cls.attributes_from_json(json, terminals)
         type_specs = cls.type_specs_from_json(json)
         return cls(
             json["component_name"],
