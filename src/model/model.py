@@ -69,6 +69,7 @@ class Model:
         - component_id: The ID of the component to be deleted.
         """
         self.__contract.delete_component(component_id)
+        self.__contract.reset_ids()
 
     def add_component(self, component_spec):
         """
@@ -78,6 +79,7 @@ class Model:
         - component_spec: The component specification to be added.
         """
         self.__contract.add_component(component_spec)
+        self.__contract.reset_ids()
 
     def extend_chain_component(self, component):
         """
@@ -134,3 +136,6 @@ class Model:
         - Contract: The newly created contract.
         """
         return Contract(self.__component_collections, self.__component_spec_pairs)
+
+    def reset_ids(self):
+        self.__contract.reset_ids()

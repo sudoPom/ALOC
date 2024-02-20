@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 from model.component_attribute import ComponentAttribute
 from model.component_specifications.simple_component_spec import SimpleComponentSpec
@@ -87,7 +87,7 @@ class SimpleComponent(Component):
         format_params.insert(0, self.get_id())
         return format_string.format(*format_params)
 
-    def reset_id(self, id: int) -> int:
+    def reset_id(self, id: int, internal_id: int) -> Tuple[int, int]:
         """
         Reset the ID of the component.
 
@@ -98,7 +98,8 @@ class SimpleComponent(Component):
         - int: The updated ID.
         """
         self.set_id(id)
-        return id + 1
+        self.set_internal_id(internal_id)
+        return id + 1, internal_id + 1
 
     def _get_component_value(self, component_key: str) -> Any:
         """

@@ -1,11 +1,12 @@
 from typing import Dict, List, Type
 
+from model.chain_parent import ChainParent
 from model.component_collection import ComponentCollection
 from model.component_specifications.component_spec import ComponentSpec
 from model.components.component import Component
 
 
-class Contract:
+class Contract(ChainParent):
     """
     Represents a contract in the AST.
 
@@ -32,16 +33,16 @@ class Contract:
         - component_collections (List[ComponentCollection]): List of component collections in the contract.
         - component_types (Dict[str, ComponentType]): Dictionary of component types.
         """
+        ChainParent.__init__(self, True)
         self.__component_collections: List[ComponentCollection] = component_collections
         self.__component_types: Dict[str, Type[Component]] = component_types
         self.__path: str = ""
 
-    def delete_component(self, component_id: str) -> None:
+    def delete_component(self, component_id: int) -> None:
         """Delete a component from the contract."""
         for component_collection in self.__component_collections:
             if component_collection.contains_component(component_id):
                 component_collection.delete_component(component_id)
-        self.reset_ids()
 
     def update_component(self, component_id: str, **kwargs) -> None:
         """Update the attributes of a component in the contract."""
@@ -54,21 +55,25 @@ class Contract:
 
     def add_component(self, component_spec: ComponentSpec) -> None:
         """Add a new component to the contract."""
-        component_collection = self._get_component_collection(component_spec)
+        component_collection = self._get_component_collection(
+            component_spec.get_location()
+        )
         component_type = self.__component_types[component_spec.get_component_type()]
-        component = component_type(component_spec)
+        if component_spec.get_component_type() == "chain_component":
+            component = component_type(component_spec, self)
+            self.add_child(component)
+        else:
+            component = component_type(component_spec)
         component_collection.add_component(component)
-        self.reset_ids()
 
     def get_component_collections(self) -> List[ComponentCollection]:
         """Get the list of component collections in the contract."""
         return self.__component_collections
 
     def _get_component_collection(
-        self, component_spec: ComponentSpec
+        self, component_collection_name: str
     ) -> ComponentCollection:
         """Get the component collection for the given component specification."""
-        component_collection_name = component_spec.get_location()
         for component_collection in self.__component_collections:
             if component_collection.get_name() == component_collection_name:
                 return component_collection
@@ -85,6 +90,20 @@ class Contract:
     def reset_ids(self) -> None:
         """Reset the IDs of all components in the contract."""
         current_id = 0
+        current_internal_id = 0
         for component_collection in self.__component_collections:
             for component in component_collection.get_components():
-                current_id = component.reset_id(current_id)
+                current_id, current_internal_id = component.reset_id(
+                    current_id, current_internal_id
+                )
+
+    def delete_chain_component(self, id):
+        new_first_element = super().delete_chain_component(id)
+        if new_first_element:
+            component_collection_name = new_first_element.get_location()
+            component_collection = self._get_component_collection(
+                component_collection_name
+            )
+            component_collection.replace_component(new_first_element, id)
+        else:
+            self.delete_component(id)

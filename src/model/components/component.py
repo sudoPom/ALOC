@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, TypeVar
+from typing import List, Tuple, TypeVar
 
 from model.component_specifications.component_spec import ComponentSpec
 from model.type_spec import TypeSpec
@@ -31,9 +31,11 @@ class Component(ABC):
         - component_spec (ComponentSpec): The specification of the component.
         """
         self.__id: int = 0
+        self.__internal_id = 0
         self.__types: List[TypeSpec] = component_spec.get_types()
         self.__type: TypeSpec = self.__types[0]
         self.__component_type: str = component_spec.get_component_type()
+        self.__component_location = component_spec.get_location()
 
     def set_type(self, component_type: str) -> None:
         """
@@ -80,6 +82,21 @@ class Component(ABC):
         """
         return self.__id
 
+    def get_internal_id(self) -> int:
+        """
+        Get the unique internal identifier of the component.
+
+        Returns:
+        - str: The unique identifier of the component.
+        """
+        return self.__internal_id
+
+    def set_internal_id(self, id) -> None:
+        """
+        Set the unique internal identifier of the component.
+        """
+        self.__internal_id = id
+
     def set_id(self, id: int) -> None:
         """
         Set the unique identifier of the component.
@@ -107,6 +124,9 @@ class Component(ABC):
                 return type_spec
         raise ValueError("Invalid type name.")
 
+    def get_location(self):
+        return self.__component_location
+
     @abstractmethod
     def get_display_text(self) -> str:
         """
@@ -114,5 +134,15 @@ class Component(ABC):
 
         Returns:
         - str: The display text of the component.
+        """
+        pass
+
+    @abstractmethod
+    def reset_id(self, id: int, internal_id: int) -> Tuple[int, int]:
+        """
+        Resets the id (internal and non internal) of the component.
+
+        Returns:
+         - int: The next values of the next available unique id and internal id.
         """
         pass

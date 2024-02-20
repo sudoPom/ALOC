@@ -40,6 +40,9 @@ class ComponentAttribute:
         """Retrieves the value of the attribute."""
         return self.__value
 
+    def create_blank(self):
+        return ComponentAttribute(self.__name, self.__attribute_type)
+
     def set_value(self, value: str) -> None:
         """Sets the value of the attribute."""
         self.__value = value

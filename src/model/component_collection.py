@@ -26,34 +26,40 @@ class ComponentCollection:
         """
         self.__name: str = name
         self.__components: List[Component] = []
-        self.__component_ids: Set[int] = set()
 
     def add_component(self, component: Component) -> None:
         """Adds a component to the collection."""
         self.__components.append(component)
-        self.__component_ids.add(component.get_id())
 
     def delete_component(self, component_id: int) -> None:
         """Deletes a component from the collection."""
         self.__components = [
             component
             for component in self.__components
-            if component.get_id() != component_id
+            if component.get_internal_id() != component_id
         ]
-        self.__component_ids.remove(component_id)
+
+    def replace_component(self, component_to_replace_with, replace_id):
+        self.__components = [
+            component
+            if component.get_internal_id() != replace_id
+            else component_to_replace_with
+            for component in self.__components
+        ]
 
     def get_name(self) -> str:
         """Retrieves the name of the collection."""
         return self.__name
 
-    def contains_component(self, component_id: str) -> bool:
+    def contains_component(self, component_id: int) -> bool:
         """Checks if the collection contains a component with the given ID."""
-        return component_id in self.__component_ids
+        component_ids = [component.get_internal_id() for component in self.__components]
+        return component_id in component_ids
 
     def get_component(self, component_id: str) -> Component:
         """Retrieves a component from the collection by its ID."""
         for component in self.__components:
-            if component.get_id() == component_id:
+            if component.get_internal_id() == component_id:
                 return component
         raise ValueError("Component not found")
 

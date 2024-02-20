@@ -1,3 +1,6 @@
+from typing import Tuple
+
+from model.chain_parent import ChainParent
 from model.component_specifications.chain_component_spec import ChainComponentSpec
 from model.components.simple_component import SimpleComponent
 
@@ -22,7 +25,7 @@ class ChainComponent(SimpleComponent):
     - Inherits all attributes from the SimpleComponent class.
     """
 
-    def __init__(self, component_spec: ChainComponentSpec) -> None:
+    def __init__(self, component_spec: ChainComponentSpec, parent: ChainParent) -> None:
         """
         Initializes a ChainComponent object.
 
@@ -31,13 +34,15 @@ class ChainComponent(SimpleComponent):
         """
         super().__init__(component_spec)
         self.__component_spec: ChainComponentSpec = component_spec
-        self.__next: ChainComponent | None = None
+        self.__next = None
+        self.__parent: ChainParent = parent
 
     def add_next(self) -> None:
         """Adds a next component to the chain."""
         old_next = self.__next
-        self.__next = ChainComponent(self.__component_spec)
-        self.__next.set_next(old_next)
+        new_next = ChainComponent(self.__component_spec.create_blank(), self.__parent)
+        self.set_next(new_next)
+        new_next.set_next(old_next)
 
     def set_next(self, next_component: "ChainComponent | None") -> None:
         """
@@ -52,15 +57,18 @@ class ChainComponent(SimpleComponent):
         """Retrieves the next component in the chain."""
         return self.__next
 
-    def delete_next_condition(self) -> None:
-        """Deletes the condition of the next component in the chain."""
-        if self.__next is None:
-            return
-        self.__next = self.__next.get_next_component()
+    def delete(self) -> None:
+        self.__parent.delete_chain_component(self.get_internal_id())
 
-    def get_next_component(self) -> "ChainComponent | None":
-        """Retrieves the next component in the chain."""
-        return self.__next
+    def get_chain_component(
+        self, internal_id: int, prev_component: "ChainComponent | None" = None
+    ):
+        if internal_id == self.get_internal_id():
+            return prev_component, self
+        next_component = self.get_next()
+        if next_component:
+            return next_component.get_chain_component(internal_id, self)
+        return self, None
 
     def get_display_text(self) -> str:
         """Retrieves the display text of the component."""
@@ -69,7 +77,7 @@ class ChainComponent(SimpleComponent):
             text = " ".join(text.split(" ")[:-1])
         return text
 
-    def reset_id(self, id: int) -> int:
+    def reset_id(self, id: int, internal_id: int) -> Tuple[int, int]:
         """
         Resets the ID of the component and its subsequent components in the chain.
 
@@ -80,7 +88,9 @@ class ChainComponent(SimpleComponent):
         - int: The updated ID.
         """
         self.set_id(id)
+        self.set_internal_id(internal_id)
         id += 1
+        internal_id += 1
         if self.__next:
-            return self.__next.reset_id(id)
-        return id
+            return self.__next.reset_id(id, internal_id)
+        return id, internal_id

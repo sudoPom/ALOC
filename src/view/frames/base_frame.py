@@ -169,7 +169,7 @@ class BaseFrame(tk.Frame):
         """
         Deletes the associated component.
         """
-        self.__controller.delete_component(self.__component.get_id())
+        self.__controller.delete_component(self.__component.get_internal_id())
         self.trigger_re_render()
 
     def add_update_button(self):

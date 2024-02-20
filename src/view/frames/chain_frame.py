@@ -56,16 +56,19 @@ class ChainFrame(BaseFrame):
         Returns:
         - int: The y-coordinate after rendering.
         """
-        current_component: ChainComponent = self.get_component()
+        current_component = self.get_component()
         y += super().render(x, y)
-        current_component = current_component.get_next_component()
-        while current_component:
-            y += BaseFrame(
+        next_component = current_component.get_next()
+        if next_component:
+            return ChainFrame(
                 self.get_parent(),
                 self.get_controller(),
                 self.get_re_render_func(),
-                current_component,
-                {"updatable", "multi-typed", "deletable", "chain_component"},
+                next_component,
             ).render(x, y)
-            current_component = current_component.get_next_component()
         return y
+
+    def destruct(self):
+        self.get_component().delete()
+        self.get_controller().reset_ids()
+        self.trigger_re_render()

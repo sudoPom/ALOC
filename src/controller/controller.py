@@ -150,3 +150,6 @@ class Controller:
         - component: The chain component to be extended.
         """
         self.__model.extend_chain_component(component)
+
+    def reset_ids(self):
+        self.__model.reset_ids()

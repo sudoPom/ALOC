@@ -1,3 +1,6 @@
+from typing import Tuple
+
+from model.chain_parent import ChainParent
 from model.component_specifications.conditional_component_spec import (
     ConditionalComponentSpec,
 )
@@ -5,7 +8,7 @@ from model.components.chain_component import ChainComponent
 from model.components.component import Component
 
 
-class ConditionalComponent(Component):
+class ConditionalComponent(Component, ChainParent):
     """
     ConditionalComponent class represents a conditional component.
 
@@ -29,14 +32,17 @@ class ConditionalComponent(Component):
         Args:
         - conditional_component_spec (ConditionalComponentSpec): The specification of the conditional component.
         """
-        super().__init__(conditional_component_spec)
+        Component.__init__(self, conditional_component_spec)
+        ChainParent.__init__(self, False)
 
         self.__condition_component: ChainComponent = ChainComponent(
-            conditional_component_spec.get_condition_spec()
+            conditional_component_spec.get_condition_spec(), self
         )
         self.__result_component: ChainComponent = ChainComponent(
-            conditional_component_spec.get_result_spec()
+            conditional_component_spec.get_result_spec(), self
         )
+        self.add_child(self.__condition_component)
+        self.add_child(self.__result_component)
 
     def get_result(self) -> ChainComponent:
         """Retrieves the result component."""
@@ -50,7 +56,7 @@ class ConditionalComponent(Component):
         """Retrieves the display text of the component."""
         return ""
 
-    def reset_id(self, id: int) -> int:
+    def reset_id(self, id: int, internal_id: int) -> Tuple[int, int]:
         """
         Resets the ID of the component and its subsequent components in the chain.
 
@@ -60,12 +66,17 @@ class ConditionalComponent(Component):
         Returns:
         - int: The updated ID.
         """
+        self.set_internal_id(internal_id)
+        internal_id += 1
         current_type = self.get_type().get_name()
         if current_type == "if":
-            id = self.__result_component.reset_id(id)
-            return self.__condition_component.reset_id(id)
+            id, internal_id = self.__result_component.reset_id(id, internal_id)
+            return self.__condition_component.reset_id(id, internal_id)
         elif current_type == "if then":
-            id = self.__condition_component.reset_id(id)
-            return self.__result_component.reset_id(id)
+            id, internal_id = self.__condition_component.reset_id(id, internal_id)
+            return self.__result_component.reset_id(id, internal_id)
         else:
             raise ValueError(f"Conditional component has invalid type: {current_type}")
+
+    def delete_chain_component(self, id):
+        super().delete_chain_component(id)
