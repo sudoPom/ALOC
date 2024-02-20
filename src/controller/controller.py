@@ -18,7 +18,7 @@ from model.model import Model
 
 class Controller:
     """
-    Controller serves as the controller in the MVC architecture.
+    Controller serves as the controller in the MVC architecture, sending control messages between the view and the model.
 
     Methods:
     - __init__(model, component_specs): Initializes a Controller object.
@@ -152,4 +152,7 @@ class Controller:
         self.__model.extend_chain_component(component)
 
     def reset_ids(self):
+        """
+        Notifies the model to reset the ids of all components in the contract.
+        """
         self.__model.reset_ids()

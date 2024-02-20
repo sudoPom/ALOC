@@ -275,5 +275,115 @@
       "result": "statement",
       "collection_location": "other_components"
     }
-  ]
+  ],
+  "attribute_types": {
+    "multi-choice": [
+      {
+        "name": "modal_verb",
+        "default": "shall",
+        "choices": [
+          "shall",
+          "must",
+          "may",
+          "is forbidden to"
+        ]
+      },
+      {
+        "name": "holds",
+        "default": "it is the case that ",
+        "choices": [
+          "it is the case that ",
+          "it is not the case that ",
+          ""
+        ]
+      },
+      {
+        "name": "verb",
+        "default": "pay",
+        "choices": [
+          "deliver",
+          "pay",
+          "charge"
+        ]
+      },
+      {
+        "name": "date",
+        "default": "on ADATE",
+        "choices": [
+          "on ADATE",
+          "on THEDATE",
+          "on ANYDATE",
+          "custom date"
+        ]
+      },
+      {
+        "name": "logical_operator",
+        "default": "and",
+        "choices": [
+          "and",
+          "or"
+        ]
+      },
+      {
+        "name": "logival_and",
+        "default": "and",
+        "choices": [
+          "and"
+        ]
+      },
+      {
+        "name": "comparison",
+        "default": "less than",
+        "choices": [
+          "less than",
+          "equal to",
+          "more than"
+        ]
+      },
+      {
+        "name": "verb_status",
+        "default": "paid",
+        "choices": [
+          "paid",
+          "delivered",
+          "changed"
+        ]
+      }
+    ],
+    "text": [
+      {
+        "name": "subject",
+        "default": "SUBJECT",
+        "parser_root": "subject",
+        "explanation": "Subject attributes should contain only alphanumeric characters and spaces."
+      },
+      {
+        "name": "numerical_expression",
+        "default": "0",
+        "parser_root": "numerical_expression",
+        "explanation": "Numerical expressions must be of the form:\n'number OPERATOR number OPERATOR number...'\nOPERATOR can be either:\nPLUS, MINUS, TIMES or DIVIDE"
+      },
+      {
+        "name": "object",
+        "default": "GBP 0",
+        "parser_root": "object",
+        "explanation": "Objects must be of the form: GBP/USD/SOMECURRENCY number or\nREPORT/SOMECURRENCY/NAMEDOBJECT/OTHEROBJECT 'text'"
+      }
+    ],
+    "date": [
+      {
+        "name": "date",
+        "default_date": "27 January 2002",
+        "default_option": "on ADATE",
+        "parser_root": "date",
+        "explanation": "Custom dates must be of the form:\nnumber month number",
+        "choices": [
+          "on ADATE",
+          "on THEDATE",
+          "on ANYDATE",
+          "custom date"
+        ]
+      }
+    ]
+  }
 }
