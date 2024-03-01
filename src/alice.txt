@@ -1,8 +1,0 @@
-IF
-[0] it is the case that  Alice paid GBP 100 on the 1 April 2021 or
-[1] it is the case that  Alice paid USD 120 on the 1 April 2021
-THEN
-[2] it is the case that  Bob must pay OTHEROBJECT "bicycle" on the 5 April 2021
-C-AND
-[3] it is the case that  Bob may deliver REPORT "receipt" on ANYDATE and
-[4] it is the case that  Bob is forbidden to charge AMOUNT "delivery fee" on ANYDATE
