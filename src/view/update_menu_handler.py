@@ -2,9 +2,9 @@ import tkinter as tk
 from collections import defaultdict
 from typing import Callable
 
-from controller.controller import Controller
-from model.components.simple_component import SimpleComponent
-from model.terminal_types.terminal import Terminal, TerminalTypeNames
+from src.controller.controller import Controller
+from src.model.components.simple_component import SimpleComponent
+from src.model.terminal_types.terminal import TerminalTypeNames
 
 
 class UpdateFormEntry:

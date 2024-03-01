@@ -1,9 +1,9 @@
 import pickle
 from typing import Dict, List, Type
 
-from model.component_collection import ComponentCollection
-from model.components.component import Component
-from model.components.contract import Contract
+from src.model.component_collection import ComponentCollection
+from src.model.components.component import Component
+from src.model.components.contract import Contract
 
 
 class Model:

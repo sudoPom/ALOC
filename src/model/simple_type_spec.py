@@ -1,6 +1,6 @@
 from typing import List
 
-from model.type_spec import TypeSpec
+from src.model.type_spec import TypeSpec
 
 
 class SimpleTypeSpec(TypeSpec):

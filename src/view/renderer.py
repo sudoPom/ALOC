@@ -1,15 +1,15 @@
 from tkinter import Canvas
 from typing import Callable
 
-from controller.controller import Controller
-from model.components.component import Component
-from model.components.contract import Contract
-from view.constants import Constants
-from view.frames.base_frame import BaseFrame
-from view.frames.chain_frame import ChainFrame
-from view.frames.conditional_frame import ConditionalFrame
-from view.frames.contract_frame import ContractFrame
-from view.scroll_canvas import ScrollCanvas
+from src.controller.controller import Controller
+from src.model.components.component import Component
+from src.model.components.contract import Contract
+from src.view.constants import Constants
+from src.view.frames.base_frame import BaseFrame
+from src.view.frames.chain_frame import ChainFrame
+from src.view.frames.conditional_frame import ConditionalFrame
+from src.view.frames.contract_frame import ContractFrame
+from src.view.scroll_canvas import ScrollCanvas
 
 
 class Renderer:

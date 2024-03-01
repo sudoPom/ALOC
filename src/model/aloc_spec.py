@@ -1,22 +1,22 @@
 import json
 from typing import Dict, List, Type
 
-from model.component_collection import ComponentCollection
-from model.component_specifications.chain_component_spec import \
+from src.model.component_collection import ComponentCollection
+from src.model.component_specifications.chain_component_spec import \
     ChainComponentSpec
-from model.component_specifications.component_spec import ComponentSpec
-from model.component_specifications.conditional_component_spec import \
+from src.model.component_specifications.component_spec import ComponentSpec
+from src.model.component_specifications.conditional_component_spec import \
     ConditionalComponentSpec
-from model.component_specifications.simple_component_spec import \
+from src.model.component_specifications.simple_component_spec import \
     SimpleComponentSpec
-from model.components.chain_component import ChainComponent
-from model.components.component import Component
-from model.components.conditional_component import ConditionalComponent
-from model.components.simple_component import SimpleComponent
-from model.terminal_types.date_terminal import DateTerminal
-from model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
-from model.terminal_types.terminal import TerminalTypeNames
-from model.terminal_types.text_terminal import TextTerminal
+from src.model.components.chain_component import ChainComponent
+from src.model.components.component import Component
+from src.model.components.conditional_component import ConditionalComponent
+from src.model.components.simple_component import SimpleComponent
+from src.model.terminal_types.date_terminal import DateTerminal
+from src.model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
+from src.model.terminal_types.terminal import TerminalTypeNames
+from src.model.terminal_types.text_terminal import TextTerminal
 
 
 class ALOCSpec:

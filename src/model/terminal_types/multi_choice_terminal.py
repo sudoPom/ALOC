@@ -1,6 +1,6 @@
 from typing import List
 
-from model.terminal_types.terminal import Terminal, TerminalTypeNames
+from src.model.terminal_types.terminal import Terminal, TerminalTypeNames
 
 
 class MultiChoiceTerminal(Terminal):

@@ -1,5 +1,5 @@
-from model.terminal_types.terminal import Terminal, TerminalTypeNames
-from parsers.base_parser import BaseParser
+from src.model.terminal_types.terminal import Terminal, TerminalTypeNames
+from src.parsers.base_parser import BaseParser
 
 
 class TextTerminal(Terminal):

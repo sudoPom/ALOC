@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Dict, List, TypeVar
 
-from model.type_spec import TypeSpec
+from src.model.type_spec import TypeSpec
 
 T = TypeVar("T", bound=TypeSpec)
 

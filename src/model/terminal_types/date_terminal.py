@@ -1,9 +1,9 @@
 from typing import Tuple
 
-from model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
-from model.terminal_types.terminal import Terminal, TerminalTypeNames
-from model.terminal_types.text_terminal import TextTerminal
-from parsers.base_parser import BaseParser
+from src.model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
+from src.model.terminal_types.terminal import Terminal, TerminalTypeNames
+from src.model.terminal_types.text_terminal import TextTerminal
+from src.parsers.base_parser import BaseParser
 
 
 class DateTerminal(Terminal):

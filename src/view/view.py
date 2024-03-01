@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import filedialog
 
-from model.components.contract import Contract
-from view.constants import Constants
-from view.renderer import Renderer
-from view.scroll_canvas import ScrollCanvas
+from src.model.components.contract import Contract
+from src.view.constants import Constants
+from src.view.renderer import Renderer
+from src.view.scroll_canvas import ScrollCanvas
 
 
 class View(tk.Tk):

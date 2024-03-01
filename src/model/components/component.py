@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import List, Tuple, TypeVar
 
-from model.component_specifications.component_spec import ComponentSpec
-from model.type_spec import TypeSpec
+from src.model.component_specifications.component_spec import ComponentSpec
+from src.model.type_spec import TypeSpec
 
 T = TypeVar("T", bound=TypeSpec)
 

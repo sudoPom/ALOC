@@ -1,8 +1,9 @@
 from typing import Dict, List
 
-from model.component_attribute import ComponentAttribute
-from model.component_specifications.simple_component_spec import SimpleComponentSpec
-from model.simple_type_spec import SimpleTypeSpec
+from src.model.component_attribute import ComponentAttribute
+from src.model.component_specifications.simple_component_spec import \
+    SimpleComponentSpec
+from src.model.simple_type_spec import SimpleTypeSpec
 
 
 class ChainComponentSpec(SimpleComponentSpec):

@@ -1,8 +1,8 @@
 import tkinter as tk
 
-from view.constants import Constants
-from view.frames.base_frame import BaseFrame
-from view.frames.chain_frame import ChainFrame
+from src.view.constants import Constants
+from src.view.frames.base_frame import BaseFrame
+from src.view.frames.chain_frame import ChainFrame
 
 
 class ConditionalFrame(BaseFrame):

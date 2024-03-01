@@ -11,9 +11,9 @@ Classes:
 
 from typing import Dict, List
 
-from model.component_specifications.component_spec import ComponentSpec
-from model.components.contract import Contract
-from model.model import Model
+from src.model.component_specifications.component_spec import ComponentSpec
+from src.model.components.contract import Contract
+from src.model.model import Model
 
 
 class Controller:

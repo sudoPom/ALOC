@@ -1,9 +1,9 @@
 import tkinter as tk
 from typing import Callable, TypeVar
 
-from controller.controller import Controller
-from model.components.component import Component
-from view.update_menu_handler import UpdateFormHandler
+from src.controller.controller import Controller
+from src.model.components.component import Component
+from src.view.update_menu_handler import UpdateFormHandler
 
 
 class BaseFrame(tk.Frame):

@@ -1,9 +1,9 @@
 from typing import Tuple
 
-from model.chain_parent import ChainParent
-from model.component_specifications.chain_component_spec import \
+from src.model.chain_parent import ChainParent
+from src.model.component_specifications.chain_component_spec import \
     ChainComponentSpec
-from model.components.simple_component import SimpleComponent
+from src.model.components.simple_component import SimpleComponent
 
 
 class ChainComponent(SimpleComponent):

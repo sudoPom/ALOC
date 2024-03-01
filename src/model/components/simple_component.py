@@ -1,9 +1,10 @@
 from typing import Any, List, Tuple
 
-from model.component_attribute import ComponentAttribute
-from model.component_specifications.simple_component_spec import SimpleComponentSpec
-from model.components.component import Component
-from model.terminal_types.terminal import TerminalTypeNames
+from src.model.component_attribute import ComponentAttribute
+from src.model.component_specifications.simple_component_spec import \
+    SimpleComponentSpec
+from src.model.components.component import Component
+from src.model.terminal_types.terminal import TerminalTypeNames
 
 
 class SimpleComponent(Component):

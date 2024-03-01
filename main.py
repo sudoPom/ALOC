@@ -1,12 +1,12 @@
-from controller.controller import Controller
-from model.aloc_spec import ALOCSpec
-from model.model import Model
-from view.view import View
+from src.controller.controller import Controller
+from src.model.aloc_spec import ALOCSpec
+from src.model.model import Model
+from src.view.view import View
 
 
 class App:
     def __init__(self) -> None:
-        spec_reader = ALOCSpec("./relative_time_aloc_spec.json")
+        spec_reader = ALOCSpec("./src/relative_time_aloc_spec.json")
         self.model = Model(
             spec_reader.get_contract_collections(), spec_reader.get_component_types()
         )

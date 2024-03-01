@@ -1,6 +1,6 @@
-from typing import List, Set
+from typing import List
 
-from model.components.component import Component
+from src.model.components.component import Component
 
 
 class ComponentCollection:

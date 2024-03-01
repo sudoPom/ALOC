@@ -1,9 +1,9 @@
 from tkinter import Canvas
 from typing import Callable
 
-from controller.controller import Controller
-from model.components.chain_component import ChainComponent
-from view.frames.base_frame import BaseFrame
+from src.controller.controller import Controller
+from src.model.components.chain_component import ChainComponent
+from src.view.frames.base_frame import BaseFrame
 
 
 class ChainFrame(BaseFrame):

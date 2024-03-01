@@ -1,9 +1,9 @@
 from typing import Dict, List
 
-from model.component_specifications.chain_component_spec import \
+from src.model.component_specifications.chain_component_spec import \
     ChainComponentSpec
-from model.component_specifications.component_spec import ComponentSpec
-from model.type_spec import TypeSpec
+from src.model.component_specifications.component_spec import ComponentSpec
+from src.model.type_spec import TypeSpec
 
 
 class ConditionalComponentSpec(ComponentSpec):

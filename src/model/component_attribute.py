@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from model.terminal_types.terminal import Terminal
+from src.model.terminal_types.terminal import Terminal
 
 
 class ComponentAttribute:

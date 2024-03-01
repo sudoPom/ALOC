@@ -1,10 +1,10 @@
 from typing import Tuple
 
-from model.chain_parent import ChainParent
-from model.component_specifications.conditional_component_spec import \
+from src.model.chain_parent import ChainParent
+from src.model.component_specifications.conditional_component_spec import \
     ConditionalComponentSpec
-from model.components.chain_component import ChainComponent
-from model.components.component import Component
+from src.model.components.chain_component import ChainComponent
+from src.model.components.component import Component
 
 
 class ConditionalComponent(Component, ChainParent):

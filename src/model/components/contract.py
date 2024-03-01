@@ -1,10 +1,10 @@
 from typing import Dict, List, Type
 
-from model.chain_parent import ChainParent
-from model.component_collection import ComponentCollection
-from model.component_specifications.component_spec import ComponentSpec
-from model.components.component import Component
-from model.constants import Constants
+from src.model.chain_parent import ChainParent
+from src.model.component_collection import ComponentCollection
+from src.model.component_specifications.component_spec import ComponentSpec
+from src.model.components.component import Component
+from src.model.constants import Constants
 
 
 class Contract(ChainParent):

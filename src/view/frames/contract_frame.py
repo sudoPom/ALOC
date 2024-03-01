@@ -1,7 +1,7 @@
 import tkinter as tk
 from typing import Callable, List
 
-from controller.controller import Controller
+from src.controller.controller import Controller
 
 
 class ContractFrame(tk.Frame):
