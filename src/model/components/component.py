@@ -30,11 +30,11 @@ class Component(ABC):
         Args:
         - component_spec (ComponentSpec): The specification of the component.
         """
-        self.__id: int = 0
+        self.__id = 0
         self.__internal_id = 0
-        self.__types: List[TypeSpec] = component_spec.get_types()
-        self.__type: TypeSpec = self.__types[0]
-        self.__component_type: str = component_spec.get_component_type()
+        self.__types = component_spec.get_types()
+        self.__type = self.__types[0]
+        self.__component_type = component_spec.get_component_type()
         self.__component_location = component_spec.get_location()
 
     def set_type(self, component_type: str) -> None:
@@ -144,5 +144,12 @@ class Component(ABC):
 
         Returns:
          - int: The next values of the next available unique id and internal id.
+        """
+        pass
+
+    @abstractmethod
+    def to_cola(self) -> str:
+        """
+        Converts this component to it's textual CoLa form.
         """
         pass

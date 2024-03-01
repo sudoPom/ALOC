@@ -77,11 +77,11 @@ COLA_GRAMMAR = """
     numerical_object: pounds " " num
         | dollars " " num
         | euros " " num
-        | amount subject
     nonnumerical_object: "SOMECURRENCY " quoted_string
         | "REPORT " quoted_string
         | "NAMEDOBJECT " quoted_string
         | "OTHEROBJECT " quoted_string
+        | "AMOUNT " quoted_string
     quoted_string : /"[a-zA-Z ]*"/
     string: char
         | char string
@@ -122,17 +122,17 @@ COLA_GRAMMAR = """
         | "TIMES"
     divide: "/"
         | "DIVIDE"
-    amount: "AMOUNT"
 """
 
 
 class BaseParser:
     def __init__(self, start_from: str):
-        self.__parser = Lark(COLA_GRAMMAR, start=start_from)
+        self.__start_from = start_from
 
     def parse(self, input_string: str):
+        parser = Lark(COLA_GRAMMAR, start=self.__start_from)
         try:
-            self.__parser.parse(input_string)
+            parser.parse(input_string)
             return True
         except exceptions.LarkError as e:
             print(e)

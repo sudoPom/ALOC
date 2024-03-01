@@ -4,6 +4,7 @@ from model.chain_parent import ChainParent
 from model.component_collection import ComponentCollection
 from model.component_specifications.component_spec import ComponentSpec
 from model.components.component import Component
+from model.constants import Constants
 
 
 class Contract(ChainParent):
@@ -44,7 +45,7 @@ class Contract(ChainParent):
             if component_collection.contains_component(component_id):
                 component_collection.delete_component(component_id)
 
-    def update_component(self, component_id: str, **kwargs) -> None:
+    def update_component(self, component_id: int, **kwargs) -> None:
         """Update the attributes of a component in the contract."""
         for component_collection in self.__component_collections:
             if component_collection.contains_component(component_id):
@@ -107,3 +108,10 @@ class Contract(ChainParent):
             component_collection.replace_component(new_first_element, id)
         else:
             self.delete_component(id)
+
+    def to_cola(self):
+        component_texts = []
+        for component_collection in self.get_component_collections():
+            components = component_collection.get_components()
+            component_texts += [component.to_cola() for component in components]
+        return f"\n{Constants.COMPONENT_JOINER}\n".join(component_texts)

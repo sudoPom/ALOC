@@ -1,8 +1,7 @@
 from typing import Any, List, Tuple
 
 from model.component_attribute import ComponentAttribute
-from model.component_specifications.simple_component_spec import \
-    SimpleComponentSpec
+from model.component_specifications.simple_component_spec import SimpleComponentSpec
 from model.components.component import Component
 from model.terminal_types.terminal import TerminalTypeNames
 
@@ -33,7 +32,9 @@ class SimpleComponent(Component):
         - component_spec (SimpleComponentSpec): The specification of the component.
         """
         super().__init__(component_spec)
-        self.__attributes: List[ComponentAttribute] = component_spec.get_attributes()
+        self.__attributes = [
+            attribute.create_blank() for attribute in component_spec.get_attributes()
+        ]
 
     def update(self, **kwargs: Any) -> None:
         """
@@ -70,6 +71,14 @@ class SimpleComponent(Component):
         - List[ComponentAttribute]: List of component attributes.
         """
         return self.__attributes
+
+    def get_attribute(self, attribute_name):
+        for attribute in self.get_attributes():
+            if attribute.get_name() == attribute_name:
+                return attribute
+        raise ValueError(
+            f"Unsupported attribute name supplied. Requested {attribute_name} when there are only {self.get_attributes()} "
+        )
 
     def get_display_text(self) -> str:
         """
@@ -146,3 +155,6 @@ class SimpleComponent(Component):
             if attribute.get_name() == name:
                 return attribute
         raise ValueError("Invalid attribute name.")
+
+    def to_cola(self) -> str:
+        return self.get_display_text()

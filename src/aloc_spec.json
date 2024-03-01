@@ -9,36 +9,35 @@
   "chain_components": [
     {
       "component_name": "definition",
+      "linking_attribute": "logical_operator",
       "type_specs": [
         {
           "type_name": "subject pair",
-          "format_string": "[{}] {} IS {} {}",
+          "format_string": "[{}] {} IS {}",
           "attributes": [
-            "subject",
-            "other_subject",
-            "logical_operator"
+            "Name",
+            "Definition"
           ],
           "display_name": "Subject-Pair Definition",
           "colour": "skyblue"
         },
         {
           "type_name": "subject numerical pair",
-          "format_string": "[{}] {} EQUALS {} {}",
+          "format_string": "[{}] {} EQUALS {}",
           "attributes": [
-            "subject",
-            "numerical_expression",
-            "logical_operator"
+            "Name",
+            "numerical_expression"
           ],
           "display_name": "Numerical Definition"
         }
       ],
       "attributes": [
         {
-          "name": "subject",
+          "name": "Name",
           "type": "subject"
         },
         {
-          "name": "other_subject",
+          "name": "Definition",
           "type": "subject"
         },
         {
@@ -54,46 +53,44 @@
     },
     {
       "component_name": "statement",
+      "linking_attribute": "logical_operator",
       "type_specs": [
         {
           "type_name": "subject modal",
-          "format_string": "[{}] {} {} {} {} {} {} {}",
+          "format_string": "[{}] {} {} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
             "modal_verb",
             "verb",
             "object",
-            "date",
-            "logical_operator"
+            "date"
           ],
           "display_name": "Subject-Modal Statement"
         },
         {
           "type_name": "subject date",
-          "format_string": "[{}] {} {} {} {} {} {} {}",
+          "format_string": "[{}] {} {} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
             "date",
             "modal_verb",
             "verb",
-            "object",
-            "logical_operator"
+            "object"
           ],
           "display_name": "Subject-Date Statement"
         },
         {
           "type_name": "date subject",
-          "format_string": "[{}] {} {} {} {} {} {} {}",
+          "format_string": "[{}] {} {} {} {} {} {}",
           "attributes": [
             "holds",
             "date",
             "subject",
             "modal_verb",
             "verb",
-            "object",
-            "logical_operator"
+            "object"
           ],
           "display_name": "Date-Subject Statement"
         }
@@ -132,70 +129,66 @@
     },
     {
       "component_name": "condition",
+      "linking_attribute": "logical_operator",
       "type_specs": [
         {
           "type_name": "subject verb_status",
-          "format_string": "[{}] {} {} {} {} {} {}",
+          "format_string": "[{}] {} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
             "verb_status",
             "object",
-            "date",
-            "logical_operator"
+            "date"
           ],
           "display_name": "Subject-Verb-Status Condition"
         },
         {
           "type_name": "subject date",
-          "format_string": "[{}] {} {} {} {} {} {}",
+          "format_string": "[{}] {} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
             "date",
             "verb_status",
-            "object",
-            "logical_operator"
+            "object"
           ],
           "display_name": "Subject-Date Condition"
         },
         {
           "type_name": "date subject",
-          "format_string": "[{}] {} {} {} {} {} {}",
+          "format_string": "[{}] {} {} {} {} {}",
           "attributes": [
             "holds",
             "date",
             "subject",
             "verb_status",
-            "object",
-            "logical_operator"
+            "object"
           ],
           "display_name": "Date-Subject Condition"
         },
         {
           "type_name": "subject modal verb",
-          "format_string": "[{}] {} {} {} {} {} {}",
+          "format_string": "[{}] {} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
             "modal_verb",
             "verb,",
             "object",
-            "date",
-            "logical_operator"
+            "date"
           ],
           "display_name": "Subject-Modal-Verb Condition"
         },
         {
           "type_name": "boolean expression",
-          "format_string": "[{}] {} {} {} {} {} {}",
+          "format_string": "[{}] {} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
             "verb_status",
             "comparison",
-            "other_subject",
-            "logical_operator"
+            "other_subject"
           ],
           "display_name": "Boolean-Expression Condition"
         }
@@ -308,17 +301,17 @@
       },
       {
         "name": "logical_operator",
-        "default": "and",
+        "default": "AND",
         "choices": [
-          "and",
-          "or"
+          "AND",
+          "OR"
         ]
       },
       {
         "name": "logical_and",
-        "default": "and",
+        "default": "AND",
         "choices": [
-          "and"
+          "AND"
         ]
       },
       {

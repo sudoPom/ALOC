@@ -39,6 +39,9 @@ class ComponentCollection:
             if component.get_internal_id() != component_id
         ]
 
+    def clear(self):
+        self.__components = []
+
     def replace_component(self, component_to_replace_with, replace_id):
         self.__components = [
             component

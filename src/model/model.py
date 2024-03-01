@@ -37,7 +37,7 @@ class Model:
         """
         self.__component_collections: List[ComponentCollection] = component_collections
         self.__component_spec_pairs: Dict[str, Type[Component]] = component_spec_pairs
-        self.__contract: Contract = self.create_new_contract()
+        self.create_new_contract()
 
     @staticmethod
     def change_component_type(component, component_type):
@@ -110,7 +110,6 @@ class Model:
         contract_data = pickle.dumps(self.__contract, protocol=pickle.HIGHEST_PROTOCOL)
         with open(path, "wb") as file:
             file.write(contract_data)
-        print(f"Contract saved to: {path}")
         self.__contract.set_path(path)
 
     def open_contract_file(self, path: str) -> None:
@@ -124,7 +123,6 @@ class Model:
             with open(path, "rb") as file:
                 contract_data = file.read()
                 self.__contract = pickle.loads(contract_data)
-                print(f"Contract loaded from: {path}")
         except Exception as e:
             print(f"Error loading contract: {e}")
 
@@ -135,7 +133,26 @@ class Model:
         Returns:
         - Contract: The newly created contract.
         """
+        for component_collection in self.__component_collections:
+            component_collection.clear()
+        self.__contract = Contract(
+            self.__component_collections, self.__component_spec_pairs
+        )
         return Contract(self.__component_collections, self.__component_spec_pairs)
+
+    def export_to_cola(self, path: str):
+        """
+        Exports the contract to CoLa and saves it.
+
+        Args:
+        - path (str): The file path to save the CoLa to.
+        """
+        try:
+            cola = self.__contract.to_cola()
+            with open(path, "w") as file:
+                file.write(cola)
+        except Exception as e:
+            print(f"Error exporting to contract: {e}")
 
     def reset_ids(self):
         self.__contract.reset_ids()

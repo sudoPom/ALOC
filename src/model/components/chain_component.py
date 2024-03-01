@@ -1,7 +1,8 @@
 from typing import Tuple
 
 from model.chain_parent import ChainParent
-from model.component_specifications.chain_component_spec import ChainComponentSpec
+from model.component_specifications.chain_component_spec import \
+    ChainComponentSpec
 from model.components.simple_component import SimpleComponent
 
 
@@ -36,6 +37,7 @@ class ChainComponent(SimpleComponent):
         self.__component_spec: ChainComponentSpec = component_spec
         self.__next = None
         self.__parent: ChainParent = parent
+        self.__linking_attribute = component_spec.get_linking_attribute()
 
     def add_next(self) -> None:
         """Adds a next component to the chain."""
@@ -74,8 +76,16 @@ class ChainComponent(SimpleComponent):
         """Retrieves the display text of the component."""
         text: str = super().get_display_text()
         if not self.__next:
-            text = " ".join(text.split(" ")[:-1])
+            return text
+        attribute_value = self.get_attribute(self.__linking_attribute).get_value()
+        assert type(attribute_value) is str
+        text += f" {attribute_value}"
         return text
+
+    def get_current_attributes(self):
+        attributes = super().get_current_attributes()
+        attributes.append(self.get_attribute(self.__linking_attribute))
+        return attributes
 
     def reset_id(self, id: int, internal_id: int) -> Tuple[int, int]:
         """
@@ -94,3 +104,12 @@ class ChainComponent(SimpleComponent):
         if self.__next:
             return self.__next.reset_id(id, internal_id)
         return id, internal_id
+
+    def to_cola(self):
+        text = self.get_display_text()
+        current_component = self.get_next()
+        while current_component:
+            text += "\n"
+            text += f"{current_component.get_display_text()}"
+            current_component = current_component.get_next()
+        return text

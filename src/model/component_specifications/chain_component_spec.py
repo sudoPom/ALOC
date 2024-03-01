@@ -1,8 +1,7 @@
 from typing import Dict, List
 
 from model.component_attribute import ComponentAttribute
-from model.component_specifications.simple_component_spec import \
-    SimpleComponentSpec
+from model.component_specifications.simple_component_spec import SimpleComponentSpec
 from model.simple_type_spec import SimpleTypeSpec
 
 
@@ -27,6 +26,7 @@ class ChainComponentSpec(SimpleComponentSpec):
         attributes: List[ComponentAttribute],
         location: str,
         component_type: str,
+        linking_attribute: str,
     ):
         """
         Initializes a ChainComponentSpec object.
@@ -39,6 +39,7 @@ class ChainComponentSpec(SimpleComponentSpec):
         - component_type: The type of the component.
         """
         super().__init__(name, types, attributes, location, component_type)
+        self.__linking_attribute = linking_attribute
 
     def create_blank(self):
         attributes = [attribute.create_blank() for attribute in self.get_attributes()]
@@ -48,8 +49,12 @@ class ChainComponentSpec(SimpleComponentSpec):
             attributes,
             self.get_location(),
             self.get_component_type(),
+            self.__linking_attribute,
         )
         return new_spec
+
+    def get_linking_attribute(self):
+        return self.__linking_attribute
 
     @classmethod
     def from_json(
@@ -73,4 +78,5 @@ class ChainComponentSpec(SimpleComponentSpec):
             attributes,
             json["collection_location"],
             "chain_component",
+            json["linking_attribute"],
         )

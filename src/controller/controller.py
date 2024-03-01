@@ -74,6 +74,15 @@ class Controller:
         """
         self.__model.open_contract_file(path)
 
+    def export_to_cola(self, path) -> None:
+        """
+        Exports the current contract to CoLa and saves it to the specified path.
+
+        Args:
+        - path (str): The path to store the exported CoLa.
+        """
+        self.__model.export_to_cola(path)
+
     def create_new_contract(self) -> None:
         """Creates a new contract."""
         self.__model.create_new_contract()

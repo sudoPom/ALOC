@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog
 
 from model.components.contract import Contract
+from view.constants import Constants
 from view.renderer import Renderer
 from view.scroll_canvas import ScrollCanvas
 
@@ -45,7 +46,10 @@ class View(tk.Tk):
             toolbar, text="Open Contract", command=self._load_contract
         )
         load_button.pack(side="left")
-
+        export_button = tk.Button(
+            toolbar, text="Export Contract", command=self._export_to_cola
+        )
+        export_button.pack(side="left")
         self.__tree_frame = ScrollCanvas(self)
         self.__tree_frame.pack(fill=tk.BOTH, expand=True)
         self.__renderer = Renderer(self.__tree_frame, controller, self.update_display)
@@ -73,8 +77,10 @@ class View(tk.Tk):
         file_path = self.__controller.get_contract_path()
         if file_path == "":
             file_path = filedialog.asksaveasfilename(
-                defaultextension=".cola",
-                filetypes=[("Cola files", "*.cola")],
+                defaultextension=f".{Constants.FILE_EXT}",
+                filetypes=[
+                    (f".{Constants.FILE_TYPE_NAME} files", f"*.{Constants.FILE_EXT}")
+                ],
             )
         if file_path:
             self.__controller.save_contract(file_path)
@@ -83,8 +89,10 @@ class View(tk.Tk):
     def _load_contract(self) -> None:
         """Loads a contract from a file."""
         file_path = filedialog.askopenfilename(
-            defaultextension=".cola",
-            filetypes=[("Cola files", "*.cola")],
+            defaultextension=f".{Constants.FILE_EXT}",
+            filetypes=[
+                (f"{Constants.FILE_TYPE_NAME} files", f"*.{Constants.FILE_EXT}")
+            ],
         )
         if file_path:
             self.__controller.load_contract(file_path)
@@ -95,3 +103,12 @@ class View(tk.Tk):
         """Creates a new contract."""
         self.__controller.create_new_contract()
         self.update_display()
+
+    def _export_to_cola(self) -> None:
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=f".{Constants.TEXT_EXT}",
+            filetypes=[(f"{Constants.TEXT_EXT} files", f"*.{Constants.TEXT_EXT}")],
+        )
+        if file_path:
+            self.__controller.export_to_cola(file_path)
+            print(f"Contract exported to: {file_path}")

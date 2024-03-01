@@ -1,9 +1,8 @@
 from typing import Tuple
 
 from model.chain_parent import ChainParent
-from model.component_specifications.conditional_component_spec import (
-    ConditionalComponentSpec,
-)
+from model.component_specifications.conditional_component_spec import \
+    ConditionalComponentSpec
 from model.components.chain_component import ChainComponent
 from model.components.component import Component
 
@@ -75,8 +74,17 @@ class ConditionalComponent(Component, ChainParent):
         elif current_type == "if then":
             id, internal_id = self.__condition_component.reset_id(id, internal_id)
             return self.__result_component.reset_id(id, internal_id)
-        else:
-            raise ValueError(f"Conditional component has invalid type: {current_type}")
+        raise ValueError(f"Conditional component has invalid type: {current_type}")
 
     def delete_chain_component(self, id):
         super().delete_chain_component(id)
+
+    def to_cola(self) -> str:
+        current_type = self.get_type().get_name()
+        result_text = self.__result_component.to_cola()
+        condition_text = self.__condition_component.to_cola()
+        if current_type == "if":
+            return f"{result_text}\nIF\n{condition_text}"
+        elif current_type == "if then":
+            return f"IF\n{condition_text}\nTHEN\n{result_text}"
+        raise ValueError(f"Conditional component has invalid type: {current_type}")

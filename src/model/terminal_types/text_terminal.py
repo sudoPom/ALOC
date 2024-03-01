@@ -15,5 +15,8 @@ class TextTerminal(Terminal):
     def get_explanation(self):
         return self.__explanation
 
+    def get_parser(self):
+        return self.__parser
+
     def validate(self, text: str):
         return self.__parser.parse(text)
