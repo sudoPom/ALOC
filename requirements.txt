@@ -1,0 +1,4 @@
+tk-tools==0.16.0
+lark==1.1.8
+pytest==8.0.2
+Sphinx==7.2.6
