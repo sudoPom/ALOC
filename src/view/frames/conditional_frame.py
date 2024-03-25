@@ -1,5 +1,6 @@
 import tkinter as tk
 
+from src.model.components.conditional_component import ConditionalComponent
 from src.view.constants import Constants
 from src.view.frames.base_frame import BaseFrame
 from src.view.frames.chain_frame import ChainFrame
@@ -42,15 +43,30 @@ class ConditionalFrame(BaseFrame):
             controller,
             re_render_func,
             conditional,
-            {"multi-typed", "deletable", "hide_text"},
             **kwargs,
         )
+        component = self.get_component()
+        assert isinstance(component, ConditionalComponent)
         self.__result = ChainFrame(
-            parent, controller, re_render_func, self.get_component().get_result()
+            parent, controller, re_render_func, component.get_result()
         )
         self.__condition = ChainFrame(
-            parent, controller, re_render_func, self.get_component().get_condition()
+            parent, controller, re_render_func, component.get_condition()
         )
+
+    def create_widget(self):
+        """
+        Creates widgets for the frame.
+        """
+        button = tk.Button(
+            self,
+            text=self.get_component().get_type().get_display_text(),
+            bg=self.get_component().get_type().get_colour(),
+        )
+        button.grid(row=0, column=0, sticky=tk.W)
+        self.add_type_submenu()
+        self.add_delete_button()
+        button.bind("<Button-1>", self.show_menu)
 
     def render(self, x, y):
         """

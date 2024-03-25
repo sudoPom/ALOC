@@ -23,4 +23,4 @@ class Terminal:
 class TerminalTypeNames(Enum):
     TEXT = "text"
     MULTI_CHOICE = "multi-choice"
-    DATE = "date"
+    HYBRID = "hybrid"

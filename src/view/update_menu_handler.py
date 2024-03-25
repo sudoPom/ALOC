@@ -74,12 +74,11 @@ class UpdateFormHandler:
     - _create_date_widgets(parent, entry, row, custom_var): Creates date selection widgets.
     - update_button_state(button, entries, error_variable): Updates the state of the submit button.
     - _update(entries, update_form, component, controller, re_render_func): Updates the component.
-    - _handle_date(entry_name, entry_var, date_dict): Handles date entry values.
+    - _handle_hybrid(entry_name, entry_var, date_dict): Handles date entry values.
     """
 
     def create_update_form(
         self,
-        root: tk.Tk,
         component: SimpleComponent,
         re_render_func: Callable,
         controller: Controller,
@@ -93,7 +92,7 @@ class UpdateFormHandler:
         - re_render_func (Callable): The function to call for re-rendering.
         - controller (Controller): The controller for managing component actions.
         """
-        update_form = tk.Toplevel(root)
+        update_form = tk.Toplevel()
         update_form.geometry("1000x600")
         current_attributes = component.get_current_attributes()
 
@@ -112,6 +111,29 @@ class UpdateFormHandler:
                 "write",
                 lambda *_: self.update_button_state(submit_button, entries, error_var),
             )
+
+    @staticmethod
+    def update_button_state(
+        button: tk.Button, entries: list, error_variable: tk.StringVar
+    ) -> None:
+        """
+        Updates the state of the submit button.
+
+        Args:
+        - button (tk.Button): The submit button.
+        - entries (list): The list of entry widgets.
+        - error_variable (tk.StringVar): The variable for error messages.
+        """
+        for entry in entries:
+            terminal = entry.get_terminal()
+            if terminal.get_type() == TerminalTypeNames.MULTI_CHOICE:
+                continue
+            if not terminal.validate(entry.get_value()):
+                button["state"] = "disabled"
+                error_variable.set(terminal.get_explanation())
+                return
+        error_variable.set("")
+        button["state"] = "normal"
 
     def _create_submit_button(
         self,
@@ -165,23 +187,23 @@ class UpdateFormHandler:
             match attribute_type:
                 case TerminalTypeNames.TEXT | TerminalTypeNames.MULTI_CHOICE:
                     entry.set_value(attribute.get_value())
-                case TerminalTypeNames.DATE:
+                case TerminalTypeNames.HYBRID:
                     entry.set_value(attribute.get_value()[0])
-                    custom_date_entry = UpdateFormEntry(
+                    custom_hybrid_entry = UpdateFormEntry(
                         f"{attribute.get_name()}_custom", attribute.get_terminal()
                     )
-                    custom_date_entry.set_value(attribute.get_value()[1])
-                    entries.append(custom_date_entry)
+                    custom_hybrid_entry.set_value(attribute.get_value()[1])
+                    entries.append(custom_hybrid_entry)
                 case _:
                     raise ValueError(f"Unsupported terminal type {attribute_type}")
             """
             if attribute.get_type() == Terminal.DATE:
                 entry.set_value(attribute.get_value()[0])
-                custom_date_entry = UpdateFormEntry(
+                custom_hybrid_entry = UpdateFormEntry(
                     f"{attribute.get_name()}_custom", attribute.get_type()
                 )
-                custom_date_entry.set_value(attribute.get_value()[1])
-                entries.append(custom_date_entry)
+                custom_hybrid_entry.set_value(attribute.get_value()[1])
+                entries.append(custom_hybrid_entry)
             else:
                 entry.set_value(attribute.get_value())
             """
@@ -233,8 +255,8 @@ class UpdateFormHandler:
         terminal = entry.get_terminal()
         terminal_type = terminal.get_type()
         match terminal_type:
-            case TerminalTypeNames.DATE:
-                return self._create_date_widgets(
+            case TerminalTypeNames.HYBRID:
+                return self._create_hybrid_widgets(
                     parent, entry, row, entries[-1].get_var()
                 )
             case TerminalTypeNames.TEXT:
@@ -279,45 +301,22 @@ class UpdateFormHandler:
     def _create_option_widget(
         parent: tk.Toplevel, entry: UpdateFormEntry, row: int
     ) -> tk.OptionMenu:
-        """
-        Creates a dropdown menu widget.
-
-        Args:
-        - parent (tk.Toplevel): The parent window for the widget.
-        - entry (UpdateFormEntry): The entry to create.
-        - row (int): The row number for placing the widget.
-
-        Returns:
-        - tk.OptionMenu: The dropdown menu widget.
-        """
         options = entry.get_terminal().get_choices()
         option_widget = tk.OptionMenu(parent, entry.get_var(), *options)
         option_widget.grid(row=row, column=1)
         return option_widget
 
     @staticmethod
-    def _create_date_widgets(
+    def _create_hybrid_widgets(
         parent: tk.Toplevel,
         entry: UpdateFormEntry,
         row: int,
         custom_var: tk.StringVar,
     ) -> tk.OptionMenu:
-        """
-        Creates date selection widgets.
-
-        Args:
-        - parent (tk.Toplevel): The parent window for the widget.
-        - entry (UpdateFormEntry): The entry to create.
-        - row (int): The row number for placing the widget.
-        - custom_var (tk.StringVar): The variable for the custom date entry.
-
-        Returns:
-        - tk.OptionMenu: The date selection widget.
-        """
         terminal = entry.get_terminal()
         options = terminal.get_choices()
-        date_widget = tk.OptionMenu(parent, entry.get_var(), *options)
-        date_widget.grid(row=row, column=1)
+        hybrid_widget = tk.OptionMenu(parent, entry.get_var(), *options)
+        hybrid_widget.grid(row=row, column=1)
 
         custom_entry = tk.Entry(parent, textvariable=custom_var)
         custom_entry.grid(row=row, column=2)
@@ -331,32 +330,9 @@ class UpdateFormHandler:
                 custom_var.set(terminal.get_default()[1])
                 custom_entry.grid_forget()
 
-        date_widget.bind("<Configure>", handle_option_change)
+        hybrid_widget.bind("<Configure>", handle_option_change)
 
-        return date_widget
-
-    @staticmethod
-    def update_button_state(
-        button: tk.Button, entries: list, error_variable: tk.StringVar
-    ) -> None:
-        """
-        Updates the state of the submit button.
-
-        Args:
-        - button (tk.Button): The submit button.
-        - entries (list): The list of entry widgets.
-        - error_variable (tk.StringVar): The variable for error messages.
-        """
-        for entry in entries:
-            terminal = entry.get_terminal()
-            if terminal.get_type() == TerminalTypeNames.MULTI_CHOICE:
-                continue
-            if not terminal.validate(entry.get_value()):
-                button["state"] = "disabled"
-                error_variable.set(terminal.get_explanation())
-                return
-        error_variable.set("")
-        button["state"] = "normal"
+        return hybrid_widget
 
     @staticmethod
     def _update(
@@ -366,48 +342,30 @@ class UpdateFormHandler:
         controller: Controller,
         re_render_func: Callable,
     ) -> None:
-        """
-        Updates the component represented by this frame and destroys the update form.
-
-        Args:
-        - entries (list): The list of entry widgets.
-        - update_form (tk.Toplevel): The update form used to enter the component's sub-components.
-        - component (Component): The component to be updated.
-        - controller (Controller): The controller for managing component actions.
-        - re_render_func (Callable): The function to call for re-rendering.
-        """
         update_dict = dict()
-        date_dict = defaultdict(lambda: ("", ""))
+        hybrid_dict = defaultdict(lambda: ("", ""))
         for entry in entries:
             terminal = entry.get_terminal()
-            if terminal.get_type() == TerminalTypeNames.DATE:
-                UpdateFormHandler._handle_date(
-                    entry.get_name(), entry.get_var(), date_dict
+            if terminal.get_type() == TerminalTypeNames.HYBRID:
+                UpdateFormHandler._handle_hybrid(
+                    entry.get_name(), entry.get_var(), hybrid_dict
                 )
             else:
                 update_dict[entry.get_name()] = entry.get_value()
-        for date_name, date in date_dict.items():
-            update_dict[date_name] = date
+        for hybrid_entry_name, hybrid_entry_val in hybrid_dict.items():
+            update_dict[hybrid_entry_name] = hybrid_entry_val
         controller.update_component(component, update_dict)
         re_render_func()
         update_form.destroy()
 
     @staticmethod
-    def _handle_date(
+    def _handle_hybrid(
         entry_name: str, entry_var: tk.StringVar, date_dict: defaultdict
     ) -> None:
-        """
-        Handles date entry values.
-
-        Args:
-        - entry_name (str): The name of the date entry.
-        - entry_var (tk.StringVar): The variable for the date entry.
-        - date_dict (defaultdict): The dictionary for storing date values.
-        """
         if entry_name.endswith("_custom"):
-            date_entry = entry_name[:-7]
-            current_date_value = date_dict[date_entry]
-            date_dict[date_entry] = (current_date_value[0], entry_var.get())
+            hybrid_entry = entry_name[:-7]
+            current_date_value = date_dict[hybrid_entry]
+            date_dict[hybrid_entry] = (current_date_value[0], entry_var.get())
         else:
             current_date_value = date_dict[entry_name]
             date_dict[entry_name] = (entry_var.get(), current_date_value[1])

@@ -2,11 +2,11 @@ from src.model.terminal_types.terminal import Terminal, TerminalTypeNames
 from src.parsers.base_parser import BaseParser
 
 
-class DateTerminal(Terminal):
+class HybridTerminal(Terminal):
     def __init__(
-        self, name, default_option, default_date, parse_string, explanation, choices
+        self, name, default_option, default_text, parse_string, explanation, choices
     ):
-        super().__init__(name, (default_option, default_date), TerminalTypeNames.DATE)
+        super().__init__(name, (default_option, default_text), TerminalTypeNames.HYBRID)
         self.__parse_root = parse_string
         self.__explanation = explanation
         self.__choices = choices

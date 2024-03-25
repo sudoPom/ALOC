@@ -1,5 +1,6 @@
 import tkinter as tk
-from typing import Callable, TypeVar
+from abc import abstractmethod
+from typing import Callable
 
 from src.controller.controller import Controller
 from src.model.components.component import Component
@@ -7,7 +8,6 @@ from src.view.update_menu_handler import UpdateFormHandler
 
 
 class BaseFrame(tk.Frame):
-    Component = TypeVar("Component", bound=Component)
     """
     BaseFrame class represents the base frame for a component in the GUI.
 
@@ -38,7 +38,6 @@ class BaseFrame(tk.Frame):
         controller: Controller,
         re_render_func: Callable,
         component: Component,
-        render_settings: set,
         **kwargs,
     ):
         """
@@ -58,29 +57,13 @@ class BaseFrame(tk.Frame):
         self.__re_render_func = re_render_func
         self.__menu = tk.Menu(self, tearoff=0)
         self.__component = component
-        self.__widget_handler = UpdateFormHandler()
-        self.__render_settings = render_settings
-        self.create_widgets()
+        self.create_widget()
 
-    def create_widgets(self):
+    @abstractmethod
+    def create_widget(self):
         """
-        Creates widgets for the frame.
+        Creates the widget for this frame.
         """
-        button = tk.Button(
-            self,
-            text=self.__component.get_type().get_display_text(),
-            bg=self.__component.get_type().get_colour(),
-        )
-        button.grid(row=0, column=0, sticky=tk.W)
-        if "updatable" in self.__render_settings:
-            self.add_update_button()
-        if "multi-typed" in self.__render_settings:
-            self.add_type_submenu()
-        if "chain_component" in self.__render_settings:
-            self.add_chain_options()
-        if "deletable" in self.__render_settings:
-            self.add_delete_button()
-        button.bind("<Button-1>", self.show_menu)
 
     def get_controller(self) -> Controller:
         """
@@ -152,13 +135,6 @@ class BaseFrame(tk.Frame):
         Controller.change_component_type(self.__component, component_type)
         self.trigger_re_render()
 
-    def extend_component(self):
-        """
-        Extends the associated component.
-        """
-        self.__controller.extend_chain_component(self.__component)
-        self.trigger_re_render()
-
     def add_delete_button(self):
         """
         Adds a delete button to the menu.
@@ -171,17 +147,6 @@ class BaseFrame(tk.Frame):
         """
         self.__controller.delete_component(self.__component.get_internal_id())
         self.trigger_re_render()
-
-    def add_update_button(self):
-        """
-        Adds an update button to the menu.
-        """
-        self.__menu.add_command(
-            label="Update",
-            command=lambda: self.__widget_handler.create_update_form(
-                self, self.__component, self.__re_render_func, self.__controller
-            ),
-        )
 
     def add_type_submenu(self):
         """
@@ -197,16 +162,6 @@ class BaseFrame(tk.Frame):
                 command=lambda c_type=type_name: self.change_component_type(c_type),
             )
         self.__menu.add_cascade(label="Change component type", menu=menu)
-
-    def add_chain_options(self):
-        """
-        Adds options for chain components to the menu.
-        """
-        menu = tk.Menu(self.__menu, tearoff=0)
-        menu.add_command(
-            label="Extend component", command=lambda: self.extend_component()
-        )
-        self.__menu.add_cascade(label="Component chain options...", menu=menu)
 
     def get_display_text(self):
         """

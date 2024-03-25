@@ -10,7 +10,7 @@ from src.model.component_specifications.chain_component_spec import \
     ChainComponentSpec
 from src.model.components.chain_component import ChainComponent
 from src.model.simple_type_spec import SimpleTypeSpec
-from src.model.terminal_types.date_terminal import DateTerminal
+from src.model.terminal_types.hybrid_terminal import HybridTerminal
 from src.model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
 from src.model.terminal_types.text_terminal import TextTerminal
 
@@ -25,7 +25,7 @@ def terminals():
 
 @pytest.fixture
 def date_terminal():
-    return DateTerminal(
+    return HybridTerminal(
         "date", "ADATE", "27 January 2002", "date", "", ["ADATE", "custom date"]
     )
 

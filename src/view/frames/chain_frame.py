@@ -1,12 +1,12 @@
-from tkinter import Canvas
+import tkinter as tk
 from typing import Callable
 
 from src.controller.controller import Controller
 from src.model.components.chain_component import ChainComponent
-from src.view.frames.base_frame import BaseFrame
+from src.view.frames.simple_frame import SimpleFrame
 
 
-class ChainFrame(BaseFrame):
+class ChainFrame(SimpleFrame):
     """
     ChainFrame class represents the frame for displaying chain components in the GUI.
 
@@ -23,7 +23,7 @@ class ChainFrame(BaseFrame):
 
     def __init__(
         self,
-        parent: Canvas,
+        parent: tk.Canvas,
         controller: Controller,
         re_render_func: Callable,
         component: ChainComponent,
@@ -42,8 +42,23 @@ class ChainFrame(BaseFrame):
             controller,
             re_render_func,
             component,
-            {"updatable", "deletable", "chain_component", "multi-typed"},
         )
+
+    def create_widget(self):
+        """
+        Creates widgets for the frame.
+        """
+        button = tk.Button(
+            self,
+            text=self.get_component().get_type().get_display_text(),
+            bg=self.get_component().get_type().get_colour(),
+        )
+        button.grid(row=0, column=0, sticky=tk.W)
+        self.add_update_button()
+        self.add_type_submenu()
+        self.add_chain_options()
+        self.add_delete_button()
+        button.bind("<Button-1>", self.show_menu)
 
     def render(self, x: int, y: int) -> int:
         """
@@ -57,6 +72,7 @@ class ChainFrame(BaseFrame):
         - int: The y-coordinate after rendering.
         """
         current_component = self.get_component()
+        assert isinstance(current_component, ChainComponent)
         y += super().render(x, y)
         next_component = current_component.get_next()
         if next_component:
@@ -68,7 +84,27 @@ class ChainFrame(BaseFrame):
             ).render(x, y)
         return y
 
+    def add_chain_options(self):
+        """
+        Adds options for chain components to the menu.
+        """
+        root_menu = self.get_menu()
+        menu = tk.Menu(root_menu, tearoff=0)
+        menu.add_command(
+            label="Extend component", command=lambda: self.extend_component()
+        )
+        root_menu.add_cascade(label="Component chain options...", menu=menu)
+
+    def extend_component(self):
+        """
+        Extends the associated component.
+        """
+        self.get_controller().extend_chain_component(self.__component)
+        self.trigger_re_render()
+
     def destruct(self):
-        self.get_component().delete()
+        component = self.get_component()
+        assert isinstance(component, ChainComponent)
+        component.delete()
         self.get_controller().reset_ids()
         self.trigger_re_render()

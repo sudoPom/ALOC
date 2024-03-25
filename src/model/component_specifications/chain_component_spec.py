@@ -23,7 +23,7 @@ class ChainComponentSpec(SimpleComponentSpec):
     def __init__(
         self,
         name: str,
-        types: List[SimpleTypeSpec],
+        types: List,
         attributes: List[ComponentAttribute],
         location: str,
         component_type: str,
@@ -44,9 +44,12 @@ class ChainComponentSpec(SimpleComponentSpec):
 
     def create_blank(self):
         attributes = [attribute.create_blank() for attribute in self.get_attributes()]
+        types = self.get_types()
+        assert isinstance(types, List)
+        assert all(isinstance(_type, SimpleTypeSpec) for _type in types)
         new_spec = ChainComponentSpec(
             self.get_name(),
-            self.get_types(),
+            types,
             attributes,
             self.get_location(),
             self.get_component_type(),

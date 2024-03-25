@@ -26,7 +26,7 @@ class SimpleComponentSpec(ComponentSpec):
     def __init__(
         self,
         name: str,
-        types: List[SimpleTypeSpec],
+        types: List,
         attributes: List[ComponentAttribute],
         location: str,
         component_type: str,

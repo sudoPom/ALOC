@@ -5,7 +5,51 @@
       "other_components"
     ]
   },
-  "simple_components": [],
+  "simple_components": [
+    {
+      "component_name": "boring definition",
+      "linking_attribute": "logical_operator",
+      "type_specs": [
+        {
+          "type_name": "subject pair",
+          "format_string": "{} IS {}",
+          "attributes": [
+            "subject",
+            "other_subject"
+          ],
+          "display_name": "Subject-Pair Definition",
+          "colour": "violet"
+        }
+      ],
+      "attributes": [
+        {
+          "name": "subject",
+          "type": "subject"
+        },
+        {
+          "name": "other_subject",
+          "type": "subject"
+        },
+        {
+          "name": "numerical_expression",
+          "type": "numerical_expression"
+        },
+        {
+          "name": "logical_operator",
+          "type": "logical_and"
+        },
+        {
+          "name": "relative_time",
+          "type": "relative_time"
+        },
+        {
+          "name": "date",
+          "type": "date"
+        }
+      ],
+      "collection_location": "definitions"
+    }
+  ],
   "chain_components": [
     {
       "component_name": "definition",
@@ -380,10 +424,10 @@
         "explanation": "Objects must be of the form: GBP/USD/SOMECURRENCY number or\nREPORT/SOMECURRENCY/NAMEDOBJECT/OTHEROBJECT 'text'"
       }
     ],
-    "date": [
+    "hybrid": [
       {
         "name": "date",
-        "default_date": "27 January 2002",
+        "default_text": "27 January 2002",
         "default_option": "on ADATE",
         "parse_root": "date",
         "explanation": "Custom dates must be of the form:\nnumber month number",

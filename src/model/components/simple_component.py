@@ -4,6 +4,7 @@ from src.model.component_attribute import ComponentAttribute
 from src.model.component_specifications.simple_component_spec import \
     SimpleComponentSpec
 from src.model.components.component import Component
+from src.model.simple_type_spec import SimpleTypeSpec
 from src.model.terminal_types.terminal import TerminalTypeNames
 
 
@@ -37,7 +38,12 @@ class SimpleComponent(Component):
             attribute.create_blank() for attribute in component_spec.get_attributes()
         ]
 
-    def update(self, **kwargs: Any) -> None:
+    def get_type(self) -> SimpleTypeSpec:
+        type_spec = super().get_type()
+        assert isinstance(type_spec, SimpleTypeSpec)
+        return type_spec
+
+    def update(self, **kwargs) -> None:
         """
         Update the attributes of the component with the provided keyword arguments.
 
@@ -55,13 +61,12 @@ class SimpleComponent(Component):
         Returns:
         - List[ComponentAttribute]: List of component attributes.
         """
-        expected_attributes = self._get_type_spec(
-            self.get_type().get_name()
-        ).get_expected_attributes()
+        type_spec = self._get_type_spec(self.get_type().get_name())
+        assert isinstance(type_spec, SimpleTypeSpec)
         return [
             attribute
             for attribute in self.__attributes
-            if attribute.get_name() in expected_attributes
+            if attribute.get_name() in type_spec.get_expected_attributes()
         ]
 
     def get_attributes(self) -> List[ComponentAttribute]:
@@ -121,7 +126,7 @@ class SimpleComponent(Component):
         - Any: The value of the component.
         """
         attribute = self.get_attribute(component_key)
-        if attribute.get_terminal().get_type() == TerminalTypeNames.DATE:
+        if attribute.get_terminal().get_type() == TerminalTypeNames.HYBRID:
             return self._get_component_date(attribute)
         return attribute.get_value()
 

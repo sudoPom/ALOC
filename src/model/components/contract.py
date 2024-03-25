@@ -2,8 +2,12 @@ from typing import Dict, List, Type
 
 from src.model.chain_parent import ChainParent
 from src.model.component_collection import ComponentCollection
+from src.model.component_specifications.chain_component_spec import \
+    ChainComponentSpec
 from src.model.component_specifications.component_spec import ComponentSpec
+from src.model.components.chain_component import ChainComponent
 from src.model.components.component import Component
+from src.model.components.simple_component import SimpleComponent
 from src.model.constants import Constants
 
 
@@ -50,7 +54,8 @@ class Contract(ChainParent):
         for component_collection in self.__component_collections:
             if component_collection.contains_component(component_id):
                 component = component_collection.get_component(component_id)
-                component.update(kwargs)
+                assert isinstance(component, SimpleComponent)
+                component.update(**kwargs)
                 return
         raise ValueError(f"This statement does not exist! {component_id}")
 
@@ -61,7 +66,8 @@ class Contract(ChainParent):
         )
         component_type = self.__component_types[component_spec.get_component_type()]
         if component_spec.get_component_type() == "chain_component":
-            component = component_type(component_spec, self)
+            assert isinstance(component_spec, ChainComponentSpec)
+            component = ChainComponent(component_spec, self)
             self.add_child(component)
         else:
             component = component_type(component_spec)

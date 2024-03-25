@@ -13,7 +13,7 @@ from src.model.components.chain_component import ChainComponent
 from src.model.components.component import Component
 from src.model.components.conditional_component import ConditionalComponent
 from src.model.components.simple_component import SimpleComponent
-from src.model.terminal_types.date_terminal import DateTerminal
+from src.model.terminal_types.hybrid_terminal import HybridTerminal
 from src.model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
 from src.model.terminal_types.terminal import TerminalTypeNames
 from src.model.terminal_types.text_terminal import TextTerminal
@@ -49,7 +49,9 @@ class ALOCSpec:
             "simple_component": SimpleComponent,
             "conditional_component": ConditionalComponent,
         }
-        self.__terminal_types = {"text", "date", "multi-choice"}
+        self.__terminal_types = [
+            terminal_type_name.value for terminal_type_name in TerminalTypeNames
+        ]
         self.__terminal_types_to_objects = dict()
         self.__contract_collections = []
         self.__component_specs = dict()
@@ -92,11 +94,11 @@ class ALOCSpec:
                 return MultiChoiceTerminal(
                     terminal["name"], terminal["default"], terminal["choices"]
                 )
-            case TerminalTypeNames.DATE.value:
-                return DateTerminal(
+            case TerminalTypeNames.HYBRID.value:
+                return HybridTerminal(
                     terminal["name"],
                     terminal["default_option"],
-                    terminal["default_date"],
+                    terminal["default_text"],
                     terminal["parse_root"],
                     terminal["explanation"],
                     terminal["choices"],

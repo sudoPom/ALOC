@@ -59,7 +59,7 @@ class ComponentCollection:
         component_ids = [component.get_internal_id() for component in self.__components]
         return component_id in component_ids
 
-    def get_component(self, component_id: str) -> Component:
+    def get_component(self, component_id: int) -> Component:
         """Retrieves a component from the collection by its ID."""
         for component in self.__components:
             if component.get_internal_id() == component_id:

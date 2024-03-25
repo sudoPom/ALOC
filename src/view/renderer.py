@@ -2,13 +2,16 @@ from tkinter import Canvas
 from typing import Callable
 
 from src.controller.controller import Controller
+from src.model.components.chain_component import ChainComponent
 from src.model.components.component import Component
+from src.model.components.conditional_component import ConditionalComponent
 from src.model.components.contract import Contract
+from src.model.components.simple_component import SimpleComponent
 from src.view.constants import Constants
-from src.view.frames.base_frame import BaseFrame
 from src.view.frames.chain_frame import ChainFrame
 from src.view.frames.conditional_frame import ConditionalFrame
 from src.view.frames.contract_frame import ContractFrame
+from src.view.frames.simple_frame import SimpleFrame
 from src.view.scroll_canvas import ScrollCanvas
 
 
@@ -74,24 +77,25 @@ class Renderer:
         Returns:
         - int: The updated y-coordinate after rendering the component.
         """
-        match component.get_component_type():
-            case "simple_component":
-                y = BaseFrame(
-                    self.__frame,
-                    self.__controller,
-                    self.__re_render_func,
-                    component,
-                    {"updatable", "deletable", "multi-typed"},
-                ).render(x, y)
-            case "chain_component":
-                y = ChainFrame(
-                    self.__frame,
-                    self.__controller,
-                    self.__re_render_func,
-                    component,
-                ).render(x, y)
-            case "conditional_component":
-                y = ConditionalFrame(
-                    self.__frame, self.__controller, self.__re_render_func, component
-                ).render(x, y)
-        return y
+        if isinstance(component, SimpleComponent):
+            return y + SimpleFrame(
+                self.__frame,
+                self.__controller,
+                self.__re_render_func,
+                component,
+            ).render(x, y)
+        if isinstance(component, ChainComponent):
+            return y + ChainFrame(
+                self.__frame,
+                self.__controller,
+                self.__re_render_func,
+                component,
+            ).render(x, y)
+        if isinstance(component, ConditionalComponent):
+            return ConditionalFrame(
+                self.__frame,
+                self.__controller,
+                self.__re_render_func,
+                component,
+            ).render(x, y)
+        raise Exception(f"Unsupported component type: {component}")
