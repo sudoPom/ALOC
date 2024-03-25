@@ -1,8 +1,7 @@
 from typing import Any, List, Tuple
 
 from src.model.component_attribute import ComponentAttribute
-from src.model.component_specifications.simple_component_spec import \
-    SimpleComponentSpec
+from src.model.component_specifications.simple_component_spec import SimpleComponentSpec
 from src.model.components.component import Component
 from src.model.terminal_types.terminal import TerminalTypeNames
 
@@ -45,7 +44,7 @@ class SimpleComponent(Component):
         - **kwargs: Keyword arguments representing the updated attributes.
         """
         for key, value in kwargs.items():
-            attribute = self._get_attribute(key)
+            attribute = self.get_attribute(key)
             attribute.set_value(value)
 
     def get_current_attributes(self) -> List[ComponentAttribute]:
@@ -78,7 +77,7 @@ class SimpleComponent(Component):
             if attribute.get_name() == attribute_name:
                 return attribute
         raise ValueError(
-            f"Unsupported attribute name supplied. Requested {attribute_name} when there are only {self.get_attributes()} "
+            f"Unsupported attribute name supplied. Requested {attribute_name} when there are only {[attribute.get_name() for attribute in self.get_attributes()]} "
         )
 
     def get_display_text(self) -> str:
@@ -121,7 +120,7 @@ class SimpleComponent(Component):
         Returns:
         - Any: The value of the component.
         """
-        attribute = self._get_attribute(component_key)
+        attribute = self.get_attribute(component_key)
         if attribute.get_terminal().get_type() == TerminalTypeNames.DATE:
             return self._get_component_date(attribute)
         return attribute.get_value()
@@ -138,24 +137,6 @@ class SimpleComponent(Component):
         """
         value = attribute.get_value()
         return value[0] if value[0] != "custom date" else f"on the {value[1]}"
-
-    def _get_attribute(self, name: str) -> ComponentAttribute:
-        """
-        Get the attribute by name.
-
-        Args:
-        - name (str): The name of the attribute.
-
-        Returns:
-        - ComponentAttribute: The attribute object.
-
-        Raises:
-        - ValueError: If the attribute name is invalid.
-        """
-        for attribute in self.__attributes:
-            if attribute.get_name() == name:
-                return attribute
-        raise ValueError("Invalid attribute name.")
 
     def to_cola(self) -> str:
         return self.get_display_text()
