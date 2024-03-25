@@ -30,7 +30,6 @@ class ChainParent:
                 if to_delete.get_next():
                     self.__children.append(to_delete.get_next())
                 return to_delete.get_next()
-        raise ValueError(f"Component with invalid ID deleted {id}")
 
     def add_child(self, child):
         self.__children.append(child)

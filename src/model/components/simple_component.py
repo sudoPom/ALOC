@@ -99,7 +99,7 @@ class SimpleComponent(Component):
             self._get_component_value(attribute)
             for attribute in component_type.get_expected_attributes()
         ]
-        return format_string.format(*format_params)
+        return f"{self.get_textual_id()} {format_string.format(*format_params)}"
 
     def reset_id(self, id: int, internal_id: int) -> Tuple[int, int]:
         """
@@ -144,4 +144,4 @@ class SimpleComponent(Component):
         return value[0] if value[0] != "custom date" else f"on the {value[1]}"
 
     def to_cola(self) -> str:
-        return f"{self.get_textual_id()} {self.get_display_text()}"
+        return f"{self.get_display_text()}"

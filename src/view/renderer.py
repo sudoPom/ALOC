@@ -77,21 +77,22 @@ class Renderer:
         Returns:
         - int: The updated y-coordinate after rendering the component.
         """
-        if isinstance(component, SimpleComponent):
+
+        if type(component) == SimpleComponent:
             return y + SimpleFrame(
                 self.__frame,
                 self.__controller,
                 self.__re_render_func,
                 component,
             ).render(x, y)
-        if isinstance(component, ChainComponent):
+        if type(component) == ChainComponent:
             return y + ChainFrame(
                 self.__frame,
                 self.__controller,
                 self.__re_render_func,
                 component,
             ).render(x, y)
-        if isinstance(component, ConditionalComponent):
+        if type(component) == ConditionalComponent:
             return ConditionalFrame(
                 self.__frame,
                 self.__controller,

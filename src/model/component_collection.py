@@ -1,5 +1,6 @@
 from typing import List
 
+from src.model.components.chain_component import ChainComponent
 from src.model.components.component import Component
 
 
@@ -56,14 +57,29 @@ class ComponentCollection:
 
     def contains_component(self, component_id: int) -> bool:
         """Checks if the collection contains a component with the given ID."""
-        component_ids = [component.get_internal_id() for component in self.__components]
-        return component_id in component_ids
+        for component in self.__components:
+            if isinstance(component, ChainComponent):
+                current_component = component
+                while current_component:
+                    if current_component.get_internal_id() == component_id:
+                        return True
+                    current_component = current_component.get_next()
+            elif component.get_internal_id() == component_id:
+                return True
+
+        return False
 
     def get_component(self, component_id: int) -> Component:
         """Retrieves a component from the collection by its ID."""
         for component in self.__components:
             if component.get_internal_id() == component_id:
                 return component
+            if isinstance(component, ChainComponent):
+                current_component = component
+                while current_component:
+                    if current_component.get_internal_id() == component_id:
+                        return current_component
+                    current_component = current_component.get_next()
         raise ValueError("Component not found")
 
     def get_components(self) -> List[Component]:

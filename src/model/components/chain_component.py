@@ -106,10 +106,10 @@ class ChainComponent(SimpleComponent):
         return id, internal_id
 
     def to_cola(self):
-        text = f"{self.get_textual_id()} {self.get_display_text()}"
+        text = f"{self.get_display_text()}"
         current_component = self.get_next()
         while current_component:
             text += "\n"
-            text += f"{current_component.get_textual_id()} {current_component.get_display_text()}"
+            text += f"{current_component.get_display_text()}"
             current_component = current_component.get_next()
         return text

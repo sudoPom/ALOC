@@ -1,5 +1,4 @@
 import tkinter as tk
-from abc import abstractmethod
 from typing import Callable
 
 from src.controller.controller import Controller
@@ -31,7 +30,6 @@ class SimpleFrame(BaseFrame):
         super().__init__(parent, controller, re_render_func, component, **kwargs)
         self.__widget_handler = UpdateFormHandler()
 
-    @abstractmethod
     def create_widget(self):
         """
         Creates the widget for this frame.

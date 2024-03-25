@@ -48,6 +48,10 @@ class Contract(ChainParent):
         for component_collection in self.__component_collections:
             if component_collection.contains_component(component_id):
                 component_collection.delete_component(component_id)
+                return
+        raise ValueError(
+            f"Tried to delete component with id {component_id} but it doesn't exist."
+        )
 
     def update_component(self, component_id: int, **kwargs) -> None:
         """Update the attributes of a component in the contract."""
@@ -114,6 +118,7 @@ class Contract(ChainParent):
             component_collection.replace_component(new_first_element, id)
         else:
             self.delete_component(id)
+        self.reset_ids()
 
     def to_cola(self):
         component_texts = []
