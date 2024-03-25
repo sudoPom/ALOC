@@ -1,10 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import List, Tuple, TypeVar
+from typing import List, Tuple
 
 from src.model.component_specifications.component_spec import ComponentSpec
 from src.model.type_spec import TypeSpec
-
-T = TypeVar("T", bound=TypeSpec)
 
 
 class Component(ABC):
@@ -46,7 +44,7 @@ class Component(ABC):
         """
         self.__type = self._get_type_spec(component_type)
 
-    def get_type(self) -> T:
+    def get_type(self) -> TypeSpec:
         """
         Get the type of the component.
 
@@ -64,7 +62,7 @@ class Component(ABC):
         """
         return self.__component_type
 
-    def get_types(self) -> List[T]:
+    def get_types(self) -> List[TypeSpec]:
         """
         Get the possible types for this component.
 
@@ -81,6 +79,12 @@ class Component(ABC):
         - str: The unique identifier of the component.
         """
         return self.__id
+
+    def get_textual_id(self) -> str:
+        """
+        Get the textual form of this components ID.
+        """
+        return f"[{self.__id}]"
 
     def get_internal_id(self) -> int:
         """
@@ -106,7 +110,7 @@ class Component(ABC):
         """
         self.__id = id
 
-    def _get_type_spec(self, component_type: str) -> T:
+    def _get_type_spec(self, component_type: str) -> TypeSpec:
         """
         Get the type specification for the given component type.
 

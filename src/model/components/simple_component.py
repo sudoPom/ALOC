@@ -1,7 +1,8 @@
 from typing import Any, List, Tuple
 
 from src.model.component_attribute import ComponentAttribute
-from src.model.component_specifications.simple_component_spec import SimpleComponentSpec
+from src.model.component_specifications.simple_component_spec import \
+    SimpleComponentSpec
 from src.model.components.component import Component
 from src.model.terminal_types.terminal import TerminalTypeNames
 
@@ -93,7 +94,6 @@ class SimpleComponent(Component):
             self._get_component_value(attribute)
             for attribute in component_type.get_expected_attributes()
         ]
-        format_params.insert(0, self.get_id())
         return format_string.format(*format_params)
 
     def reset_id(self, id: int, internal_id: int) -> Tuple[int, int]:
@@ -139,4 +139,4 @@ class SimpleComponent(Component):
         return value[0] if value[0] != "custom date" else f"on the {value[1]}"
 
     def to_cola(self) -> str:
-        return self.get_display_text()
+        return f"{self.get_textual_id()} {self.get_display_text()}"

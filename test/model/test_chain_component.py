@@ -8,10 +8,9 @@ sys.path.append("../..")
 
 from test.model.fixtures import *
 
-from src.model.component_attribute import ComponentAttribute
-from src.model.component_specifications.chain_component_spec import ChainComponentSpec
+from src.model.component_specifications.chain_component_spec import \
+    ChainComponentSpec
 from src.model.components.chain_component import ChainComponent
-from src.model.simple_type_spec import SimpleTypeSpec
 
 
 class TestChainComponent:
@@ -50,8 +49,8 @@ class TestChainComponent:
         return [attribute.get_name() for attribute in attributes]
 
     @pytest.fixture
-    def simple_type_specs(self, simple_type_spec_1, chain_type_spec_2):
-        return [simple_type_spec_1, chain_type_spec_2]
+    def simple_type_specs(self, simple_type_spec_1, chain_type_spec_1):
+        return [simple_type_spec_1, chain_type_spec_1]
 
     @pytest.fixture
     def chain_component_spec(self, simple_type_specs, attributes):
@@ -73,22 +72,22 @@ class TestChainComponent:
         assert chain_component.get_type().get_name() == "type_1"
 
     def test_display_text(self, chain_component: ChainComponent):
-        assert chain_component.get_display_text() == "0 TEXT ADATE choice 1"
+        assert chain_component.to_cola() == "[0] TEXT ADATE choice 1"
 
     def test_change_type(self, chain_component: ChainComponent):
         chain_component.set_type("type_2")
-        assert chain_component.get_display_text() == "0 choice 1 ADATE TEXT"
+        assert chain_component.to_cola() == "[0] choice 1 ADATE TEXT"
 
     def test_update_component(self, chain_component: ChainComponent):
-        assert chain_component.get_display_text() == "0 TEXT ADATE choice 1"
+        assert chain_component.to_cola() == "[0] TEXT ADATE choice 1"
         chain_component.update(
             subject="DIFFERENT TEXT",
             date=("custom date", "27 January 2002"),
             multi_choice="choice 2",
         )
         assert (
-            chain_component.get_display_text()
-            == "0 DIFFERENT TEXT on the 27 January 2002 choice 2"
+            chain_component.to_cola()
+            == "[0] DIFFERENT TEXT on the 27 January 2002 choice 2"
         )
 
     def test_extend_component(self, chain_component: ChainComponent):
@@ -101,8 +100,8 @@ class TestChainComponent:
             date=("custom date", "27 January 2002"),
             multi_choice="choice 2",
         )
+        chain_component.reset_id(0, 0)
         assert (
-            chain_component.get_display_text()
-            == "0 DIFFERENT TEXT on the 27 January 2002 choice 2 and"
+            chain_component.to_cola()
+            == "[0] DIFFERENT TEXT on the 27 January 2002 choice 2 and\n[1] TEXT ADATE choice 1"
         )
-        assert next_component.get_display_text() == "0 TEXT ADATE choice 1"

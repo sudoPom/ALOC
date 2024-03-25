@@ -1,9 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Dict, List, TypeVar
+from typing import Dict, List
 
 from src.model.type_spec import TypeSpec
-
-T = TypeVar("T", bound=TypeSpec)
 
 
 class ComponentSpec(ABC):
@@ -29,7 +27,7 @@ class ComponentSpec(ABC):
     def __init__(
         self,
         name: str,
-        types: List[T],
+        types: List[TypeSpec],
         location: str,
         component_type: str,
     ) -> None:
@@ -58,7 +56,7 @@ class ComponentSpec(ABC):
         """Retrieves the name of the component specification."""
         return self.__name
 
-    def get_types(self) -> List[T]:
+    def get_types(self) -> List[TypeSpec]:
         """Retrieves the list of type specifications associated with the component."""
         return self.__types
 

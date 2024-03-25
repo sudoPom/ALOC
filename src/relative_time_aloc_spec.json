@@ -13,7 +13,7 @@
       "type_specs": [
         {
           "type_name": "subject pair",
-          "format_string": "[{}] {} IS {}",
+          "format_string": "{} IS {}",
           "attributes": [
             "subject",
             "other_subject"
@@ -23,7 +23,7 @@
         },
         {
           "type_name": "subject numerical pair",
-          "format_string": "[{}] {} EQUALS {}",
+          "format_string": "{} EQUALS {}",
           "attributes": [
             "subject",
             "numerical_expression"
@@ -32,7 +32,7 @@
         },
         {
           "type_name": "event definition",
-          "format_string": "[{}] {} IS {} {}",
+          "format_string": "{} IS {} {}",
           "attributes": [
             "subject",
             "relative_time",
@@ -75,7 +75,7 @@
       "type_specs": [
         {
           "type_name": "subject modal",
-          "format_string": "[{}] {} {} {} {} {} {}",
+          "format_string": "{} {} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
@@ -88,7 +88,7 @@
         },
         {
           "type_name": "subject date",
-          "format_string": "[{}] {} {} {} {} {} {}",
+          "format_string": "{} {} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
@@ -101,7 +101,7 @@
         },
         {
           "type_name": "date subject",
-          "format_string": "[{}] {} {} {} {} {} {}",
+          "format_string": "{} {} {} {} {} {}",
           "attributes": [
             "holds",
             "date",
@@ -151,7 +151,7 @@
       "type_specs": [
         {
           "type_name": "subject verb_status",
-          "format_string": "[{}] {} {} {} {} {}",
+          "format_string": "{} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
@@ -163,7 +163,7 @@
         },
         {
           "type_name": "subject date",
-          "format_string": "[{}] {} {} {} {} {}",
+          "format_string": "{} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
@@ -175,7 +175,7 @@
         },
         {
           "type_name": "date subject",
-          "format_string": "[{}] {} {} {} {} {}",
+          "format_string": "{} {} {} {} {}",
           "attributes": [
             "holds",
             "date",
@@ -187,7 +187,7 @@
         },
         {
           "type_name": "subject modal verb",
-          "format_string": "[{}] {} {} {} {} {}",
+          "format_string": "{} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
@@ -200,7 +200,7 @@
         },
         {
           "type_name": "boolean expression",
-          "format_string": "[{}] {} {} {} {} {}",
+          "format_string": "{} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
