@@ -4,34 +4,9 @@ from typing import Callable
 
 from src.controller.controller import Controller
 from src.model.components.component import Component
-from src.view.update_menu_handler import UpdateFormHandler
 
 
 class BaseFrame(tk.Frame):
-    """
-    BaseFrame class represents the base frame for a component in the GUI.
-
-    Methods:
-    - __init__(parent, controller, re_render_func, component, render_settings, **kwargs): Initializes a BaseFrame object.
-    - create_widgets(): Creates widgets for the frame.
-    - get_controller(): Returns the controller.
-    - get_component(): Returns the component.
-    - get_re_render_func(): Returns the re-render function.
-    - get_parent(): Returns the parent widget.
-    - get_menu(): Returns the associated menu.
-    - trigger_re_render(): Triggers re-rendering of the frame.
-    - show_menu(event): Displays the associated menu.
-    - change_component_type(component_type): Changes the type of the associated component.
-    - extend_component(): Extends the associated component.
-    - add_delete_button(): Adds a delete button to the menu.
-    - destruct(): Deletes the associated component.
-    - add_update_button(): Adds an update button to the menu.
-    - add_type_submenu(): Adds a submenu for changing the component type.
-    - add_chain_options(): Adds options for chain components to the menu.
-    - get_display_text(): Returns the display text of the associated component.
-    - render(x, y): Renders the frame at the specified coordinates.
-    """
-
     def __init__(
         self,
         parent: tk.Canvas,
