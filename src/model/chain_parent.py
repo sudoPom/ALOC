@@ -34,6 +34,5 @@ class ChainParent:
     def add_child(self, child):
         self.__children.append(child)
 
-    def print_children(self):
-        for child in self.__children:
-            print(child.get_internal_id())
+    def get_children(self):
+        return self.__children

@@ -1,5 +1,6 @@
 from typing import List
 
+from src.model.chain_parent import ChainParent
 from src.model.components.chain_component import ChainComponent
 from src.model.components.component import Component
 
@@ -57,17 +58,11 @@ class ComponentCollection:
 
     def contains_component(self, component_id: int) -> bool:
         """Checks if the collection contains a component with the given ID."""
-        for component in self.__components:
-            if isinstance(component, ChainComponent):
-                current_component = component
-                while current_component:
-                    if current_component.get_internal_id() == component_id:
-                        return True
-                    current_component = current_component.get_next()
-            elif component.get_internal_id() == component_id:
-                return True
-
-        return False
+        try:
+            self.get_component(component_id)
+            return True
+        except:
+            return False
 
     def get_component(self, component_id: int) -> Component:
         """Retrieves a component from the collection by its ID."""
@@ -75,13 +70,22 @@ class ComponentCollection:
             if component.get_internal_id() == component_id:
                 return component
             if isinstance(component, ChainComponent):
-                current_component = component
-                while current_component:
-                    if current_component.get_internal_id() == component_id:
-                        return current_component
-                    current_component = current_component.get_next()
-        raise ValueError("Component not found")
+                found_component = self.search_chain_component(component, component_id)
+                if found_component is not None:
+                    return found_component
+            if isinstance(component, ChainParent):
+                for child in component.get_children():
+                    found_component = self.search_chain_component(child, component_id)
+                    if found_component is not None:
+                        return found_component
+        raise ValueError(f"Component with id {component_id} not found")
 
     def get_components(self) -> List[Component]:
         """Retrieves all components in the collection."""
         return self.__components
+
+    def search_chain_component(self, component, component_id):
+        current_component = component
+        while current_component and current_component.get_internal_id() != component_id:
+            current_component = current_component.get_next()
+        return current_component

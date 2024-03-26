@@ -14,8 +14,8 @@
           "type_name": "subject pair",
           "format_string": "{} IS {}",
           "attributes": [
-            "subject",
-            "other_subject"
+            "Name",
+            "Definition"
           ],
           "display_name": "Subject-Pair Definition",
           "colour": "violet"
@@ -23,11 +23,11 @@
       ],
       "attributes": [
         {
-          "name": "subject",
+          "name": "Name",
           "type": "subject"
         },
         {
-          "name": "other_subject",
+          "name": "Definition",
           "type": "subject"
         },
         {
@@ -345,10 +345,10 @@
       },
       {
         "name": "holds",
-        "default": "it is the case that ",
+        "default": "it is the case that",
         "choices": [
-          "it is the case that ",
-          "it is not the case that ",
+          "it is the case that",
+          "it is not the case that",
           ""
         ]
       },

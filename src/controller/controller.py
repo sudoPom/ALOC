@@ -129,8 +129,7 @@ class Controller:
             if self.__component_specs[component].get_location() != "none"
         ]
 
-    @staticmethod
-    def change_component_type(component, component_type) -> None:
+    def change_component_type(self, component, component_type) -> None:
         """
         Changes the type of a component.
 
@@ -138,7 +137,7 @@ class Controller:
         - component: The component whose type will be changed.
         - component_type: The new type of the component.
         """
-        Model.change_component_type(component, component_type)
+        self.__model.change_component_type(component, component_type)
 
     @staticmethod
     def update_component(component, update_dict) -> None:

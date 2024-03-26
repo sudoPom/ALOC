@@ -107,7 +107,7 @@ class BaseFrame(tk.Frame):
         Args:
         - component_type: The new type of the component.
         """
-        Controller.change_component_type(self.__component, component_type)
+        self.__controller.change_component_type(self.__component, component_type)
         self.trigger_re_render()
 
     def add_delete_button(self):

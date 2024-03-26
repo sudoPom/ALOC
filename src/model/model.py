@@ -39,8 +39,7 @@ class Model:
         self.__component_spec_pairs: Dict[str, Type[Component]] = component_spec_pairs
         self.create_new_contract()
 
-    @staticmethod
-    def change_component_type(component, component_type):
+    def change_component_type(self, component, component_type):
         """
         Changes the type of the component.
 
@@ -49,6 +48,7 @@ class Model:
         - component_type: The new type of the component.
         """
         component.set_type(component_type)
+        self.reset_ids()
 
     @staticmethod
     def update_component(component, update_dict):
