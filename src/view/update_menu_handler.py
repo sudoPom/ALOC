@@ -354,7 +354,7 @@ class UpdateFormHandler:
                 update_dict[entry.get_name()] = entry.get_value()
         for hybrid_entry_name, hybrid_entry_val in hybrid_dict.items():
             update_dict[hybrid_entry_name] = hybrid_entry_val
-        controller.update_component(component, update_dict)
+        controller.update_component(component.get_id(), update_dict)
         re_render_func()
         update_form.destroy()
 

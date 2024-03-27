@@ -1,8 +1,7 @@
 import sys
-from typing import Dict, List
+from typing import List
 
 from src.model.component_collection import ComponentCollection
-from src.model.components.conditional_component import ConditionalComponent
 
 sys.path.append("../..")
 
@@ -35,12 +34,6 @@ class TestContract:
                 continue
         raise ValueError(f"Component component id {id} not found in contract.")
 
-    def update_component(
-        self, contract, id: int, controller: Controller, update_dict: Dict
-    ):
-        component = self.get_component_by_id(contract, id)
-        controller.update_component(component, update_dict)
-
     def test_simple(self):
         controller, contract = self.create_controller(
             "./test/end_to_end/relative_time_aloc_spec.json"
@@ -62,9 +55,7 @@ class TestContract:
             "./test/end_to_end/relative_time_aloc_spec.json"
         )
         controller.add_new_component("definition")
-        self.update_component(
-            contract, 0, controller, {"Name": "BABA", "Definition": "YOU"}
-        )
+        controller.update_component(0, {"Name": "BABA", "Definition": "YOU"})
         assert contract.to_cola() == "[0] BABA IS YOU"
 
     def test_multi_update_and_delete(self):
@@ -73,19 +64,10 @@ class TestContract:
         )
         for _ in range(4):
             controller.add_new_component("definition")
-        self.update_component(
-            contract, 0, controller, {"Name": "ROSE", "Definition": "RED"}
-        )
-        self.update_component(
-            contract, 1, controller, {"Name": "VIOLET", "Definition": "BLUE"}
-        )
-        self.update_component(
-            contract, 2, controller, {"Name": "FLAG", "Definition": "WIN"}
-        )
-        self.update_component(
-            contract, 3, controller, {"Name": "BABA", "Definition": "YOU"}
-        )
-
+        controller.update_component(0, {"Name": "ROSE", "Definition": "RED"})
+        controller.update_component(1, {"Name": "VIOLET", "Definition": "BLUE"})
+        controller.update_component(2, {"Name": "FLAG", "Definition": "WIN"})
+        controller.update_component(3, {"Name": "BABA", "Definition": "YOU"})
         assert (
             contract.to_cola()
             == "[0] ROSE IS RED\nC-AND\n[1] VIOLET IS BLUE\nC-AND\n[2] FLAG IS WIN\nC-AND\n[3] BABA IS YOU"
@@ -102,8 +84,8 @@ class TestContract:
         )
         controller.add_new_component("definition")
         component = self.get_component_by_id(contract, 0)
-        controller.extend_chain_component(component)
-        self.update_component(contract, 1, controller, {"Definition": "ALSO SUBJECT"})
+        controller.extend_chain_component(0)
+        controller.update_component(1, {"Definition": "ALSO SUBJECT"})
         assert (
             contract.to_cola()
             == "[0] SUBJECT IS SUBJECT AND\n[1] SUBJECT IS ALSO SUBJECT"
@@ -121,9 +103,7 @@ class TestContract:
             "./test/end_to_end/relative_time_aloc_spec.json"
         )
         controller.add_new_component("boring definition")
-        self.update_component(
-            contract, 0, controller, {"Name": "BABA", "Definition": "YOU"}
-        )
+        controller.update_component(0, {"Name": "BABA", "Definition": "YOU"})
         assert contract.to_cola() == "[0] BABA IS YOU"
 
     def test_conditional_component(self):
@@ -135,9 +115,7 @@ class TestContract:
             contract.to_cola()
             == "[0] SUBJECT IS SUBJECT\nIF\n[1] it is the case that SUBJECT paid GBP 0 on ADATE"
         )
-        self.update_component(
-            contract, 2, controller, {"date": ("custom date", "27 January 2002")}
-        )
+        controller.update_component(2, {"date": ("custom date", "27 January 2002")})
         assert (
             contract.to_cola()
             == "[0] SUBJECT IS SUBJECT\nIF\n[1] it is the case that SUBJECT paid GBP 0 on the 27 January 2002"
@@ -149,18 +127,11 @@ class TestContract:
         )
         controller.add_new_component("conditional_statement")
         controller.add_new_component("statement")
-        condition = self.get_component_by_id(contract, 2)
-        controller.extend_chain_component(condition)
-        statement = self.get_component_by_id(contract, 4)
-        controller.extend_chain_component(statement)
-        conditional_component = self.get_component_by_id(contract, 0)
-        assert isinstance(conditional_component, ConditionalComponent)
-        controller.change_component_type(conditional_component, "if then")
-
-        self.update_component(
-            contract,
+        controller.extend_chain_component(2)
+        controller.extend_chain_component(4)
+        controller.change_component_type(0, "if then")
+        controller.update_component(
             1,
-            controller,
             {
                 "subject": "Alice",
                 "verb_status": "paid",
@@ -169,10 +140,8 @@ class TestContract:
                 "logical_operator": "OR",
             },
         )
-        self.update_component(
-            contract,
+        controller.update_component(
             2,
-            controller,
             {
                 "subject": "Alice",
                 "verb_status": "paid",
@@ -180,10 +149,8 @@ class TestContract:
                 "date": ("custom date", "1 April 2001"),
             },
         )
-        self.update_component(
-            contract,
+        controller.update_component(
             3,
-            controller,
             {
                 "subject": "Bob",
                 "modal_verb": "must",
@@ -192,10 +159,8 @@ class TestContract:
                 "date": ("custom date", "5 April 2001"),
             },
         )
-        self.update_component(
-            contract,
+        controller.update_component(
             4,
-            controller,
             {
                 "subject": "Bob",
                 "modal_verb": "may",
@@ -204,10 +169,8 @@ class TestContract:
                 "date": ("ANYDATE", "27 January 2002"),
             },
         )
-        self.update_component(
-            contract,
+        controller.update_component(
             5,
-            controller,
             {
                 "subject": "Bob",
                 "modal_verb": "is forbiddent to",

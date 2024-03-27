@@ -2,8 +2,10 @@ import pickle
 from typing import Dict, List, Type
 
 from src.model.component_collection import ComponentCollection
+from src.model.components.chain_component import ChainComponent
 from src.model.components.component import Component
 from src.model.components.contract import Contract
+from src.model.components.simple_component import SimpleComponent
 
 
 class Model:
@@ -39,7 +41,7 @@ class Model:
         self.__component_spec_pairs: Dict[str, Type[Component]] = component_spec_pairs
         self.create_new_contract()
 
-    def change_component_type(self, component, component_type):
+    def change_component_type(self, component_id, component_type):
         """
         Changes the type of the component.
 
@@ -47,11 +49,11 @@ class Model:
         - component: The component whose type will be changed.
         - component_type: The new type of the component.
         """
+        component = self.__contract.get_component(component_id)
         component.set_type(component_type)
         self.reset_ids()
 
-    @staticmethod
-    def update_component(component, update_dict):
+    def update_component(self, component_id, update_dict):
         """
         Updates a component's attributes.
 
@@ -59,7 +61,10 @@ class Model:
         - component: The component to be updated.
         - update_dict: A dictionary containing the updated attributes.
         """
+        component = self.__contract.get_component(component_id)
+        assert isinstance(component, SimpleComponent)
         component.update(**update_dict)
+        self.reset_ids()
 
     def delete_component(self, component_id):
         """
@@ -81,13 +86,15 @@ class Model:
         self.__contract.add_component(component_spec)
         self.__contract.reset_ids()
 
-    def extend_chain_component(self, component):
+    def extend_chain_component(self, component_id):
         """
         Extends a chain component in the contract.
 
         Args:
         - component: The chain component to be extended.
         """
+        component = self.__contract.get_component(component_id)
+        assert isinstance(component, ChainComponent)
         component.add_next()
         self.__contract.reset_ids()
 
@@ -135,7 +142,7 @@ class Model:
         """
         for component_collection in self.__component_collections:
             component_collection.clear()
-        self.__contract = Contract(
+        self.__contract: Contract = Contract(
             self.__component_collections, self.__component_spec_pairs
         )
         return Contract(self.__component_collections, self.__component_spec_pairs)

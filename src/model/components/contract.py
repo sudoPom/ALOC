@@ -53,6 +53,15 @@ class Contract(ChainParent):
             f"Tried to delete component with id {component_id} but it doesn't exist."
         )
 
+    def get_component(self, component_id: int) -> Component:
+        """Delete a component from the contract."""
+        for component_collection in self.__component_collections:
+            if component_collection.contains_component(component_id):
+                return component_collection.get_component(component_id)
+        raise ValueError(
+            f"Tried to delete component with id {component_id} but it doesn't exist."
+        )
+
     def update_component(self, component_id: int, **kwargs) -> None:
         """Update the attributes of a component in the contract."""
         for component_collection in self.__component_collections:

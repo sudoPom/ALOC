@@ -106,7 +106,7 @@ class Controller:
         component_spec = self.__component_specs[component]
         self.__model.add_component(component_spec)
 
-    def delete_component(self, component_id) -> None:
+    def delete_component(self, component_id: int) -> None:
         """
         Deletes a component from the contract.
 
@@ -129,7 +129,7 @@ class Controller:
             if self.__component_specs[component].get_location() != "none"
         ]
 
-    def change_component_type(self, component, component_type) -> None:
+    def change_component_type(self, component_id: int, component_type) -> None:
         """
         Changes the type of a component.
 
@@ -137,10 +137,9 @@ class Controller:
         - component: The component whose type will be changed.
         - component_type: The new type of the component.
         """
-        self.__model.change_component_type(component, component_type)
+        self.__model.change_component_type(component_id, component_type)
 
-    @staticmethod
-    def update_component(component, update_dict) -> None:
+    def update_component(self, component_id: int, update_dict) -> None:
         """
         Updates a component.
 
@@ -148,16 +147,16 @@ class Controller:
         - component: The component to be updated.
         - update_dict: The key-value pairs of the new component.
         """
-        Model.update_component(component, update_dict)
+        self.__model.update_component(component_id, update_dict)
 
-    def extend_chain_component(self, component) -> None:
+    def extend_chain_component(self, component_id: int) -> None:
         """
         Extends a chain component in the contract.
 
         Args:
         - component: The chain component to be extended.
         """
-        self.__model.extend_chain_component(component)
+        self.__model.extend_chain_component(component_id)
 
     def reset_ids(self):
         """
