@@ -73,7 +73,7 @@ class ChainFrame(SimpleFrame):
         """
         current_component = self.get_component()
         assert isinstance(current_component, ChainComponent)
-        y += super().render(x, y)
+        y = super().render(x, y)
         next_component = current_component.get_next()
         if next_component:
             return ChainFrame(
@@ -89,11 +89,9 @@ class ChainFrame(SimpleFrame):
         Adds options for chain components to the menu.
         """
         root_menu = self.get_menu()
-        menu = tk.Menu(root_menu, tearoff=0)
-        menu.add_command(
+        root_menu.add_command(
             label="Extend component", command=lambda: self.extend_component()
         )
-        root_menu.add_cascade(label="Component chain options...", menu=menu)
 
     def extend_component(self):
         """

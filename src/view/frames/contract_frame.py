@@ -98,5 +98,4 @@ class ContractFrame(tk.Frame):
         """
         self.__parent.create_window(x, y, anchor=tk.NW, window=self)
         self.__parent.update()
-        y += self.winfo_reqheight()
-        return y
+        return y + self.winfo_reqheight()

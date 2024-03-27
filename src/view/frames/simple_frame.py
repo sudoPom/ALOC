@@ -61,7 +61,7 @@ class SimpleFrame(BaseFrame):
             ),
         )
 
-    def render(self, x, y):
+    def render(self, x, y) -> int:
         """
         Renders the frame at the specified coordinates.
 
@@ -81,4 +81,4 @@ class SimpleFrame(BaseFrame):
         label = tk.Message(self, font=("Arial", 10), text=display_text, width=500)
         label.grid(row=1, column=0, sticky=tk.W)
         parent.update()
-        return self.winfo_reqheight()
+        return y + self.winfo_reqheight()

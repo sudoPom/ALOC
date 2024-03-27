@@ -14,6 +14,12 @@ from src.view.frames.contract_frame import ContractFrame
 from src.view.frames.simple_frame import SimpleFrame
 from src.view.scroll_canvas import ScrollCanvas
 
+COMPONENTS_TO_FRAMES = {
+    ChainComponent: ChainFrame,
+    SimpleComponent: SimpleFrame,
+    ConditionalComponent: ConditionalFrame,
+}
+
 
 class Renderer:
     """
@@ -53,7 +59,7 @@ class Renderer:
         - contract (Contract): The contract to render.
         """
         self.__frame.delete("all")
-        y += ContractFrame(
+        y = ContractFrame(
             self.__frame,
             self.__controller,
             self.__re_render_func,
@@ -77,26 +83,11 @@ class Renderer:
         Returns:
         - int: The updated y-coordinate after rendering the component.
         """
-
-        if type(component) == SimpleComponent:
-            return y + SimpleFrame(
-                self.__frame,
-                self.__controller,
-                self.__re_render_func,
-                component,
-            ).render(x, y)
-        if type(component) == ChainComponent:
-            return y + ChainFrame(
-                self.__frame,
-                self.__controller,
-                self.__re_render_func,
-                component,
-            ).render(x, y)
-        if type(component) == ConditionalComponent:
-            return ConditionalFrame(
-                self.__frame,
-                self.__controller,
-                self.__re_render_func,
-                component,
-            ).render(x, y)
-        raise Exception(f"Unsupported component type: {component}")
+        component_type = type(component)
+        assert (
+            component_type in COMPONENTS_TO_FRAMES
+        ), f"{component_type} either doesn't exists or doesnt have an associated frame."
+        frame_type = COMPONENTS_TO_FRAMES[component_type]
+        return frame_type(
+            self.__frame, self.__controller, self.__re_render_func, component
+        ).render(x, y)
