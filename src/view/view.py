@@ -30,6 +30,7 @@ class View(tk.Tk):
         super().__init__()
         self.__controller = controller
         self.geometry("1000x1000")
+        self.title("ALOC: a Legal Outline Creator")
 
         toolbar = tk.Frame(self)
         toolbar.pack(side="top", fill="x")

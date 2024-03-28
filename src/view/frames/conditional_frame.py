@@ -84,13 +84,13 @@ class ConditionalFrame(BaseFrame):
         conditional_type = self.get_component().get_type().get_name()
         if conditional_type == "if":
             y = self.__result.render(x, y)
-            y += self.create_text_and_get_height("IF", x, y)
+            y = self.create_text_and_get_height("IF", x, y)
             y = self.__condition.render(x, y)
             return y
         elif conditional_type == "if then":
-            y += self.create_text_and_get_height("IF", x, y)
+            y = self.create_text_and_get_height("IF", x, y)
             y = self.__condition.render(x, y)
-            y += self.create_text_and_get_height("THEN", x, y)
+            y = self.create_text_and_get_height("THEN", x, y)
             y = self.__result.render(x, y)
             return y
         raise ValueError("Invalid conditional type")
@@ -111,4 +111,4 @@ class ConditionalFrame(BaseFrame):
         label = tk.Message(parent, font=("Arial", 10), text=text, width=500)
         parent.create_window(x, y, anchor=tk.NW, window=label)
         parent.update()
-        return label.winfo_reqheight()
+        return y + label.winfo_reqheight()
