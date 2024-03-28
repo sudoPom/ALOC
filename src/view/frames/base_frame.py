@@ -62,6 +62,15 @@ class BaseFrame(tk.Frame):
         Returns:
         - int: The required height of the frame.
         """
+        display_text = self.get_display_text()
+        self.__parent.create_window(x, y, anchor=tk.NW, window=self)
+        self.__parent.update()
+        if not display_text:
+            return self.winfo_reqheight()
+        label = tk.Message(self, font=("Arial", 10), text=display_text, width=500)
+        label.grid(row=1, column=0, sticky=tk.W)
+        self.__parent.update()
+        return self.winfo_reqheight()
 
     @abstractmethod
     def destruct(self):
