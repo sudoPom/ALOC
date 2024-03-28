@@ -71,15 +71,6 @@ class Component(ABC):
         """
         return self.__types
 
-    def get_id(self) -> int:
-        """
-        Get the unique identifier of the component.
-
-        Returns:
-        - str: The unique identifier of the component.
-        """
-        return self.__id
-
     def get_textual_id(self) -> str:
         """
         Get the textual form of this components ID.

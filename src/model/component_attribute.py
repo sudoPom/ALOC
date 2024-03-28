@@ -16,7 +16,7 @@ class ComponentAttribute:
     - from_json(json): Constructs a ComponentAttribute object from JSON data.
     """
 
-    def __init__(self, name: str, terminal: Terminal) -> None:
+    def __init__(self, name: str, terminal: Terminal, prefix: str = "") -> None:
         """
         Initializes a ComponentAttribute object.
 
@@ -27,6 +27,7 @@ class ComponentAttribute:
         self.__name: str = name
         self.__terminal: Terminal = terminal
         self.__value: str | Tuple = terminal.get_default()
+        self.__prefix = prefix
 
     def get_name(self) -> str:
         """Retrieves the name of the attribute."""
@@ -38,10 +39,13 @@ class ComponentAttribute:
 
     def get_value(self) -> str | Tuple:
         """Retrieves the value of the attribute."""
-        return self.__value
+        if type(self.__value) == str:
+            return f"{self.__prefix}{self.__value}"
+        print(self.__value[0])
+        return (self.__value[0], f"{self.__prefix}{self.__value[1]}")
 
     def create_blank(self):
-        return ComponentAttribute(self.__name, self.__terminal)
+        return ComponentAttribute(self.__name, self.__terminal, self.__prefix)
 
     def set_value(self, value: str) -> None:
         """Sets the value of the attribute."""
@@ -61,4 +65,8 @@ class ComponentAttribute:
 
         terminal_type = json["type"]
         terminal = terminals[terminal_type]
-        return cls(json["name"], terminal)
+        if "prefix" in json:
+            prefix = json["prefix"]
+        else:
+            prefix = ""
+        return cls(json["name"], terminal, prefix)

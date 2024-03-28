@@ -81,7 +81,7 @@ class TestSimpleComponent:
         assert simple_component.to_cola() == "[0] TEXT ADATE choice 1"
         simple_component.update(
             subject="DIFFERENT TEXT",
-            date=("custom date", "27 January 2002"),
+            date=(HybridTerminal.CUSTOM_OPTION, "27 January 2002"),
             multi_choice="choice 2",
         )
         assert (

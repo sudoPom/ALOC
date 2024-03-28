@@ -111,11 +111,14 @@ class TestContract:
             "./test/end_to_end/relative_time_aloc_spec.json"
         )
         controller.add_new_component("conditional_definition")
+        print(contract.to_cola())
         assert (
             contract.to_cola()
             == "[0] SUBJECT IS SUBJECT\nIF\n[1] it is the case that SUBJECT paid GBP 0 on ADATE"
         )
-        controller.update_component(2, {"date": ("custom date", "27 January 2002")})
+        controller.update_component(
+            2, {"date": (HybridTerminal.CUSTOM_OPTION, "27 January 2002")}
+        )
         assert (
             contract.to_cola()
             == "[0] SUBJECT IS SUBJECT\nIF\n[1] it is the case that SUBJECT paid GBP 0 on the 27 January 2002"
@@ -136,7 +139,7 @@ class TestContract:
                 "subject": "Alice",
                 "verb_status": "paid",
                 "object": "POUNDS 100",
-                "date": ("custom date", "1 April 2001"),
+                "date": (HybridTerminal.CUSTOM_OPTION, "1 April 2001"),
                 "logical_operator": "OR",
             },
         )
@@ -146,7 +149,7 @@ class TestContract:
                 "subject": "Alice",
                 "verb_status": "paid",
                 "object": "DOLLARS 120",
-                "date": ("custom date", "1 April 2001"),
+                "date": (HybridTerminal.CUSTOM_OPTION, "1 April 2001"),
             },
         )
         controller.update_component(
@@ -156,7 +159,7 @@ class TestContract:
                 "modal_verb": "must",
                 "verb": "deliver",
                 "object": 'OTHEROBJECT "bicycle"',
-                "date": ("custom date", "5 April 2001"),
+                "date": (HybridTerminal.CUSTOM_OPTION, "5 April 2001"),
             },
         )
         controller.update_component(

@@ -148,7 +148,7 @@ class BaseFrame(tk.Frame):
         - component_type: The new type of the component.
         """
         self.__controller.change_component_type(
-            self.__component.get_id(), component_type
+            self.__component.get_internal_id(), component_type
         )
         self.trigger_re_render()
 

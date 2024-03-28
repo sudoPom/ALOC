@@ -37,14 +37,6 @@
         {
           "name": "logical_operator",
           "type": "logical_and"
-        },
-        {
-          "name": "relative_time",
-          "type": "relative_time"
-        },
-        {
-          "name": "date",
-          "type": "date"
         }
       ],
       "collection_location": "definitions"
@@ -119,7 +111,7 @@
       "type_specs": [
         {
           "type_name": "subject modal",
-          "format_string": "{} {} {} {} {} {}",
+          "format_string": "{}{} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
@@ -132,7 +124,7 @@
         },
         {
           "type_name": "subject date",
-          "format_string": "{} {} {} {} {} {}",
+          "format_string": "{}{} {} {} {} {}",
           "attributes": [
             "holds",
             "subject",
@@ -145,7 +137,7 @@
         },
         {
           "type_name": "date subject",
-          "format_string": "{} {} {} {} {} {}",
+          "format_string": "{}{} {} {} {} {}",
           "attributes": [
             "holds",
             "date",
@@ -180,7 +172,8 @@
         },
         {
           "name": "date",
-          "type": "date"
+          "type": "date",
+          "prefix": "on the "
         },
         {
           "name": "logical_operator",
@@ -195,7 +188,7 @@
       "type_specs": [
         {
           "type_name": "subject verb_status",
-          "format_string": "{} {} {} {} {}",
+          "format_string": "{}{} {} {} {}",
           "attributes": [
             "holds",
             "subject",
@@ -207,7 +200,7 @@
         },
         {
           "type_name": "subject date",
-          "format_string": "{} {} {} {} {}",
+          "format_string": "{}{} {} {} {}",
           "attributes": [
             "holds",
             "subject",
@@ -219,7 +212,7 @@
         },
         {
           "type_name": "date subject",
-          "format_string": "{} {} {} {} {}",
+          "format_string": "{}{} {} {} {}",
           "attributes": [
             "holds",
             "date",
@@ -231,7 +224,7 @@
         },
         {
           "type_name": "subject modal verb",
-          "format_string": "{} {} {} {} {}",
+          "format_string": "{}{} {} {} {}",
           "attributes": [
             "holds",
             "subject",
@@ -244,7 +237,7 @@
         },
         {
           "type_name": "boolean expression",
-          "format_string": "{} {} {} {} {}",
+          "format_string": "{}{} {} {} {}",
           "attributes": [
             "holds",
             "subject",
@@ -274,7 +267,8 @@
         },
         {
           "name": "date",
-          "type": "date"
+          "type": "date",
+          "prefix": "on the "
         },
         {
           "name": "modal_verb",
@@ -345,11 +339,11 @@
       },
       {
         "name": "holds",
-        "default": "it is the case that",
+        "allow_empty": true,
+        "default": "it is the case that ",
         "choices": [
-          "it is the case that",
-          "it is not the case that",
-          ""
+          "it is the case that ",
+          "it is not the case that "
         ]
       },
       {

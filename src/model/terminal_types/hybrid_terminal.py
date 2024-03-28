@@ -3,6 +3,8 @@ from src.parsers.base_parser import BaseParser
 
 
 class HybridTerminal(Terminal):
+    CUSTOM_OPTION = "CUSTOM"
+
     def __init__(
         self, name, default_option, default_text, parse_string, explanation, choices
     ):
@@ -10,6 +12,7 @@ class HybridTerminal(Terminal):
         self.__parse_root = parse_string
         self.__explanation = explanation
         self.__choices = choices
+        self.__choices.append(self.CUSTOM_OPTION)
         self.__parser = BaseParser(self.__parse_root)
 
     def get_parse_root(self):

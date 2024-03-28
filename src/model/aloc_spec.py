@@ -91,8 +91,15 @@ class ALOCSpec:
                     terminal["explanation"],
                 )
             case TerminalTypeNames.MULTI_CHOICE.value:
+                if "allow_empty" in terminal and terminal["allow_empty"]:
+                    allow_empty = True
+                else:
+                    allow_empty = False
                 return MultiChoiceTerminal(
-                    terminal["name"], terminal["default"], terminal["choices"]
+                    terminal["name"],
+                    terminal["default"],
+                    terminal["choices"],
+                    allow_empty,
                 )
             case TerminalTypeNames.HYBRID.value:
                 return HybridTerminal(

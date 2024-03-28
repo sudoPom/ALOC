@@ -4,6 +4,8 @@ from typing import Callable
 
 from src.controller.controller import Controller
 from src.model.components.simple_component import SimpleComponent
+from src.model.terminal_types.hybrid_terminal import HybridTerminal
+from src.model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
 from src.model.terminal_types.terminal import TerminalTypeNames
 
 
@@ -181,9 +183,14 @@ class UpdateFormHandler:
         entries = []
 
         for i, attribute in enumerate(current_attributes):
+            attribute_type = attribute.get_terminal().get_type()
+            if attribute_type == TerminalTypeNames.MULTI_CHOICE:
+                terminal = attribute.get_terminal()
+                assert isinstance(terminal, MultiChoiceTerminal)
+                if len(terminal.get_choices()) == 1:
+                    continue
             entry = UpdateFormEntry(attribute.get_name(), attribute.get_terminal())
             entries.append(entry)
-            attribute_type = attribute.get_terminal().get_type()
             match attribute_type:
                 case TerminalTypeNames.TEXT | TerminalTypeNames.MULTI_CHOICE:
                     entry.set_value(attribute.get_value())
@@ -196,17 +203,6 @@ class UpdateFormHandler:
                     entries.append(custom_hybrid_entry)
                 case _:
                     raise ValueError(f"Unsupported terminal type {attribute_type}")
-            """
-            if attribute.get_type() == Terminal.DATE:
-                entry.set_value(attribute.get_value()[0])
-                custom_hybrid_entry = UpdateFormEntry(
-                    f"{attribute.get_name()}_custom", attribute.get_type()
-                )
-                custom_hybrid_entry.set_value(attribute.get_value()[1])
-                entries.append(custom_hybrid_entry)
-            else:
-                entry.set_value(attribute.get_value())
-            """
             self._create_entry_label(
                 update_form, attribute.get_name().replace("_", " "), i
             )
@@ -324,7 +320,7 @@ class UpdateFormHandler:
         def handle_option_change(_):
             selected_option = entry.get_value()
             print(selected_option)
-            if selected_option == "custom date":
+            if selected_option == HybridTerminal.CUSTOM_OPTION:
                 custom_entry.grid(row=row, column=2)
             else:
                 custom_var.set(terminal.get_default()[1])

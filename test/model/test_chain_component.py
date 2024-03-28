@@ -82,7 +82,7 @@ class TestChainComponent:
         assert chain_component.to_cola() == "[0] TEXT ADATE choice 1"
         chain_component.update(
             subject="DIFFERENT TEXT",
-            date=("custom date", "27 January 2002"),
+            date=(HybridTerminal.CUSTOM_OPTION, "27 January 2002"),
             multi_choice="choice 2",
         )
         assert (
@@ -97,7 +97,7 @@ class TestChainComponent:
         assert next_component is not None
         chain_component.update(
             subject="DIFFERENT TEXT",
-            date=("custom date", "27 January 2002"),
+            date=(HybridTerminal.CUSTOM_OPTION, "27 January 2002"),
             multi_choice="choice 2",
         )
         chain_component.reset_id(0, 0)

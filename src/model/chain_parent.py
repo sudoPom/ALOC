@@ -25,7 +25,7 @@ class ChainParent:
                 return
             if to_delete:
                 self.__children = [
-                    child for child in self.__children if child.get_id() != id
+                    child for child in self.__children if child.get_internal_id() != id
                 ]
                 if to_delete.get_next():
                     self.__children.append(to_delete.get_next())

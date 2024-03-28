@@ -5,6 +5,8 @@ from src.model.component_specifications.simple_component_spec import \
     SimpleComponentSpec
 from src.model.components.component import Component
 from src.model.simple_type_spec import SimpleTypeSpec
+from src.model.terminal_types.hybrid_terminal import HybridTerminal
+from src.model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
 from src.model.terminal_types.terminal import TerminalTypeNames
 
 
@@ -127,10 +129,13 @@ class SimpleComponent(Component):
         """
         attribute = self.get_attribute(component_key)
         if attribute.get_terminal().get_type() == TerminalTypeNames.HYBRID:
-            return self._get_component_date(attribute)
+            return self._get_component_hybrid(attribute)
+        if attribute.get_terminal().get_type() == TerminalTypeNames.MULTI_CHOICE:
+            return self._get_component_multi_choice(attribute)
         return attribute.get_value()
 
-    def _get_component_date(self, attribute: ComponentAttribute) -> str:
+    @staticmethod
+    def _get_component_hybrid(attribute: ComponentAttribute) -> str:
         """
         Get the date value of the component.
 
@@ -141,7 +146,14 @@ class SimpleComponent(Component):
         - str: The formatted date value.
         """
         value = attribute.get_value()
-        return value[0] if value[0] != "custom date" else f"on the {value[1]}"
+        return value[0] if value[0] != HybridTerminal.CUSTOM_OPTION else value[1]
+
+    @staticmethod
+    def _get_component_multi_choice(attribute):
+        value = attribute.get_value()
+        if value == MultiChoiceTerminal.EMPTY_CHOICE:
+            return ""
+        return value
 
     def to_cola(self) -> str:
         return f"{self.get_display_text()}"

@@ -18,7 +18,7 @@ from src.model.terminal_types.text_terminal import TextTerminal
 @pytest.fixture
 def terminals():
     multi_choice_terminal = MultiChoiceTerminal(
-        "choice", "choice 1", ["choice 1", "choice 2"]
+        "choice", "choice 1", ["choice 1", "choice 2"], False
     )
     return [text_terminal, date_terminal, multi_choice_terminal]
 
@@ -37,12 +37,12 @@ def text_terminal():
 
 @pytest.fixture
 def multi_choice_terminal():
-    return MultiChoiceTerminal("choice", "choice 1", ["choice 1", "choice 2"])
+    return MultiChoiceTerminal("choice", "choice 1", ["choice 1", "choice 2"], False)
 
 
 @pytest.fixture
 def logical_operator_terminal():
-    return MultiChoiceTerminal("logical_operator", "and", ["and", "or"])
+    return MultiChoiceTerminal("logical_operator", "and", ["and", "or"], False)
 
 
 @pytest.fixture
@@ -52,7 +52,7 @@ def text_attribute(text_terminal):
 
 @pytest.fixture
 def date_attribute(date_terminal):
-    return ComponentAttribute("date", date_terminal)
+    return ComponentAttribute("date", date_terminal, "on the ")
 
 
 @pytest.fixture

@@ -97,7 +97,9 @@ class ChainFrame(SimpleFrame):
         """
         Extends the associated component.
         """
-        self.get_controller().extend_chain_component(self.get_component().get_id())
+        self.get_controller().extend_chain_component(
+            self.get_component().get_internal_id()
+        )
         self.trigger_re_render()
 
     def destruct(self):
