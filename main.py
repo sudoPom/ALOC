@@ -6,7 +6,7 @@ from src.view.view import View
 
 class App:
     def __init__(self) -> None:
-        spec_reader = ALOCSpec("./src/relative_time_aloc_spec.json")
+        spec_reader = ALOCSpec("./src/aloc_spec.json")
         self.model = Model(
             spec_reader.get_contract_collections(), spec_reader.get_component_types()
         )

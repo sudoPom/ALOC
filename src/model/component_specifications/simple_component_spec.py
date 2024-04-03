@@ -2,7 +2,7 @@ from typing import Dict, List
 
 from src.model.component_attribute import ComponentAttribute
 from src.model.component_specifications.component_spec import ComponentSpec
-from src.model.simple_type_spec import SimpleTypeSpec
+from src.model.simple_type_spec import SimpleFormSpec
 
 
 class SimpleComponentSpec(ComponentSpec):
@@ -81,9 +81,9 @@ class SimpleComponentSpec(ComponentSpec):
         - SimpleComponentSpec: A SimpleComponentSpec object constructed from the JSON data.
         """
         attributes = cls.attributes_from_json(json, terminals)
-        type_specs = cls.type_specs_from_json(json)
+        type_specs = cls.form_specs_from_json(json)
         type_specs = [
-            SimpleTypeSpec.from_json(type_spec) for type_spec in json["type_specs"]
+            SimpleFormSpec.from_json(type_spec) for type_spec in json["form_specs"]
         ]
         return cls(
             json["component_name"],
@@ -110,7 +110,7 @@ class SimpleComponentSpec(ComponentSpec):
         ]
 
     @staticmethod
-    def type_specs_from_json(json) -> List[SimpleTypeSpec]:
+    def form_specs_from_json(json) -> List[SimpleFormSpec]:
         """
         Parses JSON data to create SimpleTypeSpec objects.
 
@@ -120,4 +120,4 @@ class SimpleComponentSpec(ComponentSpec):
         Returns:
         - List[SimpleTypeSpec]: A list of SimpleTypeSpec objects parsed from the JSON data.
         """
-        return [SimpleTypeSpec.from_json(type_spec) for type_spec in json["type_specs"]]
+        return [SimpleFormSpec.from_json(type_spec) for type_spec in json["form_specs"]]

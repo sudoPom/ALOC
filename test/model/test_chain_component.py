@@ -69,13 +69,13 @@ class TestChainComponent:
         return ChainComponent(chain_component_spec, parent)
 
     def test_get_type(self, chain_component: ChainComponent):
-        assert chain_component.get_type().get_name() == "type_1"
+        assert chain_component.get_form().get_name() == "type_1"
 
     def test_display_text(self, chain_component: ChainComponent):
         assert chain_component.to_cola() == "[0] TEXT ADATE choice 1"
 
     def test_change_type(self, chain_component: ChainComponent):
-        chain_component.set_type("type_2")
+        chain_component.set_form("type_2")
         assert chain_component.to_cola() == "[0] choice 1 ADATE TEXT"
 
     def test_update_component(self, chain_component: ChainComponent):

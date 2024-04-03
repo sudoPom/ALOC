@@ -114,6 +114,7 @@
       "collection_location": "other_components"
     }
   ],
+  "else_conditional_components": [],
   "terminal_types": {
     "multi-choice": [
       {

@@ -18,22 +18,8 @@ from src.model.model import Model
 
 class Controller:
     """
-    Controller serves as the controller in the MVC architecture, sending control messages between the view and the model.
-
-    Methods:
-    - __init__(model, component_specs): Initializes a Controller object.
-    - get_contract_path(): Retrieves the path of the current contract.
-    - save_contract(path): Saves the current contract to the specified path.
-    - load_contract(path): Loads a contract from the specified path.
-    - create_new_contract(): Creates a new contract.
-    - get_contract(): Retrieves the current contract from the model.
-    - add_new_component(component): Adds a new component to the contract.
-    - delete_component(component_id): Deletes a component from the contract.
-    - get_contract_component_names(): Retrieves the names of contract components.
-    - change_component_type(component, component_type): Changes the type of a component.
-    - update_component(component, update_dict): Updates a component.
-    - extend_chain_component(component): Extends a chain component in the contract.
-
+    Controller serves as the controller in the MVC architecture of ALOC,
+    sending control messages between the view and the model.
     """
 
     def __init__(self, model: Model, component_specs: Dict[str, ComponentSpec]):
@@ -42,7 +28,8 @@ class Controller:
 
         Args:
         - model (Model): The model instance to be associated with the controller.
-        - component_specs (dict): A dictionary containing component specifications.
+        - component_specs (dict): A dictionary mapping component names to
+        component specifications.
         """
         self.__model = model
         self.__component_specs = component_specs

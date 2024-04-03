@@ -3,7 +3,7 @@ from typing import Dict, List
 from src.model.component_attribute import ComponentAttribute
 from src.model.component_specifications.simple_component_spec import \
     SimpleComponentSpec
-from src.model.simple_type_spec import SimpleTypeSpec
+from src.model.simple_type_spec import SimpleFormSpec
 
 
 class ChainComponentSpec(SimpleComponentSpec):
@@ -23,7 +23,7 @@ class ChainComponentSpec(SimpleComponentSpec):
     def __init__(
         self,
         name: str,
-        types: List,
+        forms: List,
         attributes: List[ComponentAttribute],
         location: str,
         component_type: str,
@@ -34,22 +34,22 @@ class ChainComponentSpec(SimpleComponentSpec):
 
         Args:
         - name: The name of the chain component.
-        - types: The types associated with the chain component.
+        - forms: The types associated with the chain component.
         - attributes: The attributes of the chain component.
         - location: The location of the chain component.
         - component_type: The type of the component.
         """
-        super().__init__(name, types, attributes, location, component_type)
+        super().__init__(name, forms, attributes, location, component_type)
         self.__linking_attribute = linking_attribute
 
     def create_blank(self):
         attributes = [attribute.create_blank() for attribute in self.get_attributes()]
-        types = self.get_types()
-        assert isinstance(types, List)
-        assert all(isinstance(_type, SimpleTypeSpec) for _type in types)
+        forms = self.get_forms()
+        assert isinstance(forms, List)
+        assert all(isinstance(_type, SimpleFormSpec) for _type in forms)
         new_spec = ChainComponentSpec(
             self.get_name(),
-            types,
+            forms,
             attributes,
             self.get_location(),
             self.get_component_type(),
@@ -75,10 +75,10 @@ class ChainComponentSpec(SimpleComponentSpec):
         - ChainComponentSpec: A ChainComponentSpec object constructed from the JSON data.
         """
         attributes = cls.attributes_from_json(json, terminals)
-        type_specs = cls.type_specs_from_json(json)
+        form_specs = cls.form_specs_from_json(json)
         return cls(
             json["component_name"],
-            type_specs,
+            form_specs,
             attributes,
             json["collection_location"],
             "chain_component",

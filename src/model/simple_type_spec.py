@@ -1,13 +1,11 @@
 from typing import List
 
-from src.model.type_spec import TypeSpec
+from src.model.form_spec import FormSpec
 
 
-class SimpleTypeSpec(TypeSpec):
+class SimpleFormSpec(FormSpec):
     """
     SimpleTypeSpec class represents a simple type specification.
-
-    This class inherits from TypeSpec.
 
     Methods:
     - __init__(name, format_string, attributes, display_text, colour="Grey"): Initializes a SimpleTypeSpec object.
@@ -29,7 +27,7 @@ class SimpleTypeSpec(TypeSpec):
         Initializes a SimpleTypeSpec object.
 
         Args:
-        - name (str): The name of the type specification.
+        - name (str): The name of the form specification.
         - format_string (str): The format string used to display the type.
         - attributes (List[str]): The list of expected attributes.
         - display_text (str): The display text for the type specification.
@@ -58,7 +56,7 @@ class SimpleTypeSpec(TypeSpec):
         return self.__expected_attributes
 
     @classmethod
-    def from_json(cls, json: dict) -> "SimpleTypeSpec":
+    def from_json(cls, json: dict) -> "SimpleFormSpec":
         """
         Creates a SimpleTypeSpec object from JSON data.
 
@@ -68,8 +66,8 @@ class SimpleTypeSpec(TypeSpec):
         Returns:
         - SimpleTypeSpec: A SimpleTypeSpec object created from the JSON data.
         """
-        return SimpleTypeSpec(
-            json["type_name"],
+        return SimpleFormSpec(
+            json["form_name"],
             json["format_string"],
             json["attributes"],
             json["display_name"],

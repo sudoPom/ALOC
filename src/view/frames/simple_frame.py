@@ -36,8 +36,8 @@ class SimpleFrame(BaseFrame):
         """
         button = tk.Button(
             self,
-            text=self.get_component().get_type().get_display_text(),
-            bg=self.get_component().get_type().get_colour(),
+            text=self.get_component().get_form().get_display_text(),
+            bg=self.get_component().get_form().get_colour(),
         )
         button.grid(row=0, column=0, sticky=tk.W)
         self.add_update_button()

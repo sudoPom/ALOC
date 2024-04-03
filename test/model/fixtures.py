@@ -9,7 +9,7 @@ from src.model.component_attribute import ComponentAttribute
 from src.model.component_specifications.chain_component_spec import \
     ChainComponentSpec
 from src.model.components.chain_component import ChainComponent
-from src.model.simple_type_spec import SimpleTypeSpec
+from src.model.simple_type_spec import SimpleFormSpec
 from src.model.terminal_types.hybrid_terminal import HybridTerminal
 from src.model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
 from src.model.terminal_types.text_terminal import TextTerminal
@@ -68,13 +68,13 @@ def logical_operator_attribute(logical_operator_terminal):
 @pytest.fixture
 def simple_type_spec_1(attributes):
     attribute_names_type_1 = [attribute.get_name() for attribute in attributes]
-    return SimpleTypeSpec("type_1", "{} {} {}", attribute_names_type_1, "type 1")
+    return SimpleFormSpec("type_1", "{} {} {}", attribute_names_type_1, "type 1")
 
 
 @pytest.fixture
 def simple_type_spec_2(attributes):
     attribute_names_type_2 = [attribute.get_name() for attribute in attributes[::-1]]
-    return SimpleTypeSpec("type_2", "{} {} {}", attribute_names_type_2, "type 2")
+    return SimpleFormSpec("type_2", "{} {} {}", attribute_names_type_2, "type 2")
 
 
 @pytest.fixture
@@ -82,7 +82,7 @@ def chain_type_spec_1(attributes):
     attribute_names_type_2 = [attribute.get_name() for attribute in attributes[::-1]][
         1:
     ]
-    return SimpleTypeSpec("type_2", "{} {} {}", attribute_names_type_2, "type 2")
+    return SimpleFormSpec("type_2", "{} {} {}", attribute_names_type_2, "type 2")
 
 
 @pytest.fixture

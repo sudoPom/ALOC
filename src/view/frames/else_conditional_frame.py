@@ -1,12 +1,13 @@
 import tkinter as tk
 
-from src.model.components.conditional_component import ConditionalComponent
+from src.model.components.else_conditional_component import \
+    ElseConditionalComponent
 from src.view.constants import Constants
-from src.view.frames.base_frame import BaseFrame
 from src.view.frames.chain_frame import ChainFrame
+from src.view.frames.conditional_frame import ConditionalFrame
 
 
-class ConditionalFrame(BaseFrame):
+class ElseConditionalFrame(ConditionalFrame):
     """
     ConditionalFrame class represents the frame for conditional components in the GUI.
 
@@ -46,12 +47,9 @@ class ConditionalFrame(BaseFrame):
             **kwargs,
         )
         component = self.get_component()
-        assert isinstance(component, ConditionalComponent)
-        self.__result = ChainFrame(
-            parent, controller, re_render_func, component.get_result()
-        )
-        self.__condition = ChainFrame(
-            parent, controller, re_render_func, component.get_condition()
+        assert isinstance(component, ElseConditionalComponent)
+        self.__else = ChainFrame(
+            parent, controller, re_render_func, component.get_else()
         )
 
     def create_widget(self):
@@ -79,21 +77,10 @@ class ConditionalFrame(BaseFrame):
         Returns:
         - int: The y-coordinate after rendering.
         """
-        y += super().render(x, y)
+        y = super().render(x, y)
         x += Constants.PADDING_PX
-        conditional_type = self.get_component().get_form().get_name()
-        if conditional_type == "if":
-            y = self.__result.render(x, y)
-            y = self.create_text_and_get_height("IF", x, y)
-            y = self.__condition.render(x, y)
-            return y
-        elif conditional_type == "if then":
-            y = self.create_text_and_get_height("IF", x, y)
-            y = self.__condition.render(x, y)
-            y = self.create_text_and_get_height("THEN", x, y)
-            y = self.__result.render(x, y)
-            return y
-        raise ValueError("Invalid conditional type")
+        y = self.create_text_and_get_height("ELSE", x, y)
+        return self.__else.render(x, y)
 
     def create_text_and_get_height(self, text, x, y):
         """

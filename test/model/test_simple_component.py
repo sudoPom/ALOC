@@ -9,7 +9,7 @@ from test.model.fixtures import *
 from src.model.component_specifications.simple_component_spec import \
     SimpleComponentSpec
 from src.model.components.simple_component import SimpleComponent
-from src.model.simple_type_spec import SimpleTypeSpec
+from src.model.simple_type_spec import SimpleFormSpec
 
 
 class TestSimpleComponent:
@@ -45,10 +45,10 @@ class TestSimpleComponent:
         attribute_names_type_2 = [
             attribute.get_name() for attribute in attributes[::-1]
         ]
-        type_spec_1 = SimpleTypeSpec(
+        type_spec_1 = SimpleFormSpec(
             "type_1", "{} {} {}", attribute_names_type_1, "type 1"
         )
-        type_spec_2 = SimpleTypeSpec(
+        type_spec_2 = SimpleFormSpec(
             "type_2", "{} {} {}", attribute_names_type_2, "type 2"
         )
         return [type_spec_1, type_spec_2]
@@ -68,13 +68,13 @@ class TestSimpleComponent:
         return SimpleComponent(simple_component_spec)
 
     def test_get_type(self, simple_component: SimpleComponent):
-        assert simple_component.get_type().get_name() == "type_1"
+        assert simple_component.get_form().get_name() == "type_1"
 
     def test_display_text(self, simple_component: SimpleComponent):
         assert simple_component.to_cola() == "[0] TEXT ADATE choice 1"
 
     def test_change_type(self, simple_component: SimpleComponent):
-        simple_component.set_type("type_2")
+        simple_component.set_form("type_2")
         assert simple_component.to_cola() == "[0] choice 1 ADATE TEXT"
 
     def test_update_component(self, simple_component: SimpleComponent):

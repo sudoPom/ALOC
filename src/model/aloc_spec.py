@@ -7,11 +7,15 @@ from src.model.component_specifications.chain_component_spec import \
 from src.model.component_specifications.component_spec import ComponentSpec
 from src.model.component_specifications.conditional_component_spec import \
     ConditionalComponentSpec
+from src.model.component_specifications.else_conditional_component_spec import \
+    ElseConditionalComponentSpec
 from src.model.component_specifications.simple_component_spec import \
     SimpleComponentSpec
 from src.model.components.chain_component import ChainComponent
 from src.model.components.component import Component
 from src.model.components.conditional_component import ConditionalComponent
+from src.model.components.else_conditional_component import \
+    ElseConditionalComponent
 from src.model.components.simple_component import SimpleComponent
 from src.model.terminal_types.hybrid_terminal import HybridTerminal
 from src.model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
@@ -43,11 +47,13 @@ class ALOCSpec:
             "chain_components": ChainComponentSpec,
             "simple_components": SimpleComponentSpec,
             "conditional_components": ConditionalComponentSpec,
+            "else_conditional_components": ElseConditionalComponentSpec,
         }
         self.__component_types = {
             "chain_component": ChainComponent,
             "simple_component": SimpleComponent,
             "conditional_component": ConditionalComponent,
+            "else_conditional_component": ElseConditionalComponent,
         }
         self.__terminal_types = [
             terminal_type_name.value for terminal_type_name in TerminalTypeNames

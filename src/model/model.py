@@ -50,7 +50,7 @@ class Model:
         - component_type: The new type of the component.
         """
         component = self.__contract.get_component(component_id)
-        component.set_type(component_type)
+        component.set_form(component_type)
         self.reset_ids()
 
     def update_component(self, component_id, update_dict):

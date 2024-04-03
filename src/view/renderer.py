@@ -6,11 +6,14 @@ from src.model.components.chain_component import ChainComponent
 from src.model.components.component import Component
 from src.model.components.conditional_component import ConditionalComponent
 from src.model.components.contract import Contract
+from src.model.components.else_conditional_component import \
+    ElseConditionalComponent
 from src.model.components.simple_component import SimpleComponent
 from src.view.constants import Constants
 from src.view.frames.chain_frame import ChainFrame
 from src.view.frames.conditional_frame import ConditionalFrame
 from src.view.frames.contract_frame import ContractFrame
+from src.view.frames.else_conditional_frame import ElseConditionalFrame
 from src.view.frames.simple_frame import SimpleFrame
 from src.view.scroll_canvas import ScrollCanvas
 
@@ -18,6 +21,7 @@ COMPONENTS_TO_FRAMES = {
     ChainComponent: ChainFrame,
     SimpleComponent: SimpleFrame,
     ConditionalComponent: ConditionalFrame,
+    ElseConditionalComponent: ElseConditionalFrame,
 }
 
 
@@ -69,6 +73,7 @@ class Renderer:
         for component_collection in contract.get_component_collections():
             components = component_collection.get_components()
             for component in components:
+                print(component)
                 y = self.render_component(x, y, component)
 
     def render_component(self, x: int, y: int, component: Component) -> int:

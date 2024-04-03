@@ -4,7 +4,7 @@ from src.model.component_attribute import ComponentAttribute
 from src.model.component_specifications.simple_component_spec import \
     SimpleComponentSpec
 from src.model.components.component import Component
-from src.model.simple_type_spec import SimpleTypeSpec
+from src.model.simple_type_spec import SimpleFormSpec
 from src.model.terminal_types.hybrid_terminal import HybridTerminal
 from src.model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
 from src.model.terminal_types.terminal import TerminalTypeNames
@@ -40,9 +40,9 @@ class SimpleComponent(Component):
             attribute.create_blank() for attribute in component_spec.get_attributes()
         ]
 
-    def get_type(self) -> SimpleTypeSpec:
-        type_spec = super().get_type()
-        assert isinstance(type_spec, SimpleTypeSpec)
+    def get_form(self) -> SimpleFormSpec:
+        type_spec = super().get_form()
+        assert isinstance(type_spec, SimpleFormSpec)
         return type_spec
 
     def update(self, **kwargs) -> None:
@@ -63,8 +63,8 @@ class SimpleComponent(Component):
         Returns:
         - List[ComponentAttribute]: List of component attributes.
         """
-        type_spec = self._get_type_spec(self.get_type().get_name())
-        assert isinstance(type_spec, SimpleTypeSpec)
+        type_spec = self._get_form_spec(self.get_form().get_name())
+        assert isinstance(type_spec, SimpleFormSpec)
         return [
             attribute
             for attribute in self.__attributes
@@ -95,7 +95,7 @@ class SimpleComponent(Component):
         Returns:
         - str: The display text of the component.
         """
-        component_type = self.get_type()
+        component_type = self.get_form()
         format_string = component_type.get_format_string()
         format_params = [
             self._get_component_value(attribute)

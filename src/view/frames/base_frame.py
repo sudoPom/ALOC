@@ -164,7 +164,7 @@ class BaseFrame(tk.Frame):
         """
         menu = tk.Menu(self.__menu, tearoff=0)
         type_names = [
-            type_spec.get_name() for type_spec in self.__component.get_types()
+            type_spec.get_name() for type_spec in self.__component.get_forms()
         ]
         for type_name in type_names:
             menu.add_command(

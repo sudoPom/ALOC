@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Dict, List
 
-from src.model.type_spec import TypeSpec
+from src.model.form_spec import FormSpec
 
 
 class ComponentSpec(ABC):
@@ -27,7 +27,7 @@ class ComponentSpec(ABC):
     def __init__(
         self,
         name: str,
-        types: List[TypeSpec],
+        types: List[FormSpec],
         location: str,
         component_type: str,
     ) -> None:
@@ -41,7 +41,7 @@ class ComponentSpec(ABC):
         - component_type (Type[Component]): The type of the component.
         """
         self.__name = name
-        self.__types = types
+        self.__forms = types
         self.__location = location
         self.__component_type = component_type
 
@@ -56,9 +56,9 @@ class ComponentSpec(ABC):
         """Retrieves the name of the component specification."""
         return self.__name
 
-    def get_types(self) -> List[TypeSpec]:
+    def get_forms(self) -> List[FormSpec]:
         """Retrieves the list of type specifications associated with the component."""
-        return self.__types
+        return self.__forms
 
     def get_contract_location(self) -> str:
         """Retrieves the location of the component in the contract."""

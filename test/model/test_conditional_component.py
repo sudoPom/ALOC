@@ -2,7 +2,7 @@ import sys
 
 import pytest
 
-from src.model.type_spec import TypeSpec
+from src.model.form_spec import FormSpec
 
 sys.path.append("../..")
 
@@ -66,8 +66,8 @@ class TestConditionalComponent:
     @pytest.fixture
     def conditional_component_spec(self, chain_component_spec):
         conditional_type_specs = [
-            TypeSpec("if", "If Conditional"),
-            TypeSpec("if then", "If-Then Conditional"),
+            FormSpec("if", "If Conditional"),
+            FormSpec("if then", "If-Then Conditional"),
         ]
         return ConditionalComponentSpec(
             "conditional",
@@ -88,7 +88,7 @@ class TestConditionalComponent:
 
     def test_change_conditional_type(self, conditional_component_spec):
         conditional = ConditionalComponent(conditional_component_spec)
-        conditional.set_type("if then")
+        conditional.set_form("if then")
         conditional.reset_id(0, 0)
         assert (
             conditional.to_cola()

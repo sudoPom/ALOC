@@ -67,7 +67,7 @@ class ConditionalComponent(Component, ChainParent):
         """
         self.set_internal_id(internal_id)
         internal_id += 1
-        current_type = self.get_type().get_name()
+        current_type = self.get_form().get_name()
         if current_type == "if":
             id, internal_id = self.__result_component.reset_id(id, internal_id)
             return self.__condition_component.reset_id(id, internal_id)
@@ -80,7 +80,7 @@ class ConditionalComponent(Component, ChainParent):
         super().delete_chain_component(id)
 
     def to_cola(self) -> str:
-        current_type = self.get_type().get_name()
+        current_type = self.get_form().get_name()
         result_text = self.__result_component.to_cola()
         condition_text = self.__condition_component.to_cola()
         if current_type == "if":

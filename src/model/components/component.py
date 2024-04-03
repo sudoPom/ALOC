@@ -2,149 +2,147 @@ from abc import ABC, abstractmethod
 from typing import List, Tuple
 
 from src.model.component_specifications.component_spec import ComponentSpec
-from src.model.type_spec import TypeSpec
+from src.model.form_spec import FormSpec
 
 
 class Component(ABC):
-    """
-    Parent class of all component classes.
+    """Parent class of all component classes.
 
-    Args:
-    - component_spec (ComponentSpec): The specification of the component.
-
-    Methods:
-    - update(**kwargs): Update the attributes of the component with the provided keyword arguments.
-    - set_type(type): Set the type of the component.
-    - get_type(): Get the type of the component.
-    - get_id(): Get the unique identifier of the component.
-    - extract_key(kwargs, key, default): Extract the value of a key from kwargs, with a default value if the key is not present.
-    - throw_if_no_keys_found(kwargs, expected_keys): Throw an error if none of the expected keys are found in kwargs.
+    Attributes:
+        component_spec (ComponentSpec): The specification of the component.
+        _id (int): The unique identifier of the component.
+        _internal_id (int): The unique internal identifier of the component.
+        _types (List[FormSpec]): The possible forms for this component.
+        _type (FormSpec): The current form of the component.
+        _component_type (str): The type of the component.
+        _component_location: The location of the component.
     """
 
     def __init__(self, component_spec: ComponentSpec) -> None:
-        """
-        Initialize a BaseComponent object.
+        """Initializes a BaseComponent object.
 
         Args:
-        - component_spec (ComponentSpec): The specification of the component.
+            component_spec (ComponentSpec): The specification of the component.
         """
-        self.__id = 0
-        self.__internal_id = 0
-        self.__types = component_spec.get_types()
-        self.__type = self.__types[0]
-        self.__component_type = component_spec.get_component_type()
-        self.__component_location = component_spec.get_location()
+        self._id = 0
+        self._internal_id = 0
+        self._forms = component_spec.get_forms()
+        self._form = self._forms[0]
+        self._component_type = component_spec.get_component_type()
+        self._component_location = component_spec.get_location()
 
-    def set_type(self, component_type: str) -> None:
-        """
-        Set the type of the component.
+    def set_form(self, component_form: str) -> None:
+        """Sets the type of the component.
 
         Args:
-        - component_type (str): The new type of the component.
+            component_type (str): The new type of the component.
         """
-        self.__type = self._get_type_spec(component_type)
+        self._form = self._get_form_spec(component_form)
 
-    def get_type(self) -> TypeSpec:
-        """
-        Get the type of the component.
+    def get_form(self) -> FormSpec:
+        """Gets the form of the component.
 
         Returns:
-        - TypeSpec: The type of the component.
+            FormSpec: The type of the component.
         """
-        return self.__type
+        return self._form
 
     def get_component_type(self) -> str:
-        """
-        Get the component type.
+        """Gets the component type.
 
         Returns:
-        - str: The type of the component.
+            str: The type of the component.
         """
-        return self.__component_type
+        return self._component_type
 
-    def get_types(self) -> List[TypeSpec]:
-        """
-        Get the possible types for this component.
+    def get_forms(self) -> List[FormSpec]:
+        """Gets the possible types for this component.
 
         Returns:
-        - List[TypeSpec]: The possible types of the component.
+            List[FormSpec]: The possible types of the component.
         """
-        return self.__types
+        return self._forms
 
     def get_textual_id(self) -> str:
+        """Gets the textual form of this component's ID.
+
+        Returns:
+            str: The textual form of this component's ID.
         """
-        Get the textual form of this components ID.
-        """
-        return f"[{self.__id}]"
+        return f"[{self._id}]"
 
     def get_internal_id(self) -> int:
-        """
-        Get the unique internal identifier of the component.
+        """Gets the unique internal identifier of the component.
 
         Returns:
-        - str: The unique identifier of the component.
+            int: The unique internal identifier of the component.
         """
-        return self.__internal_id
+        return self._internal_id
 
-    def set_internal_id(self, id) -> None:
+    def set_internal_id(self, id: int) -> None:
+        """Sets the unique internal identifier of the component.
+
+        Args:
+            id (int): The new internal identifier of the component.
         """
-        Set the unique internal identifier of the component.
-        """
-        self.__internal_id = id
+        self._internal_id = id
 
     def set_id(self, id: int) -> None:
-        """
-        Set the unique identifier of the component.
+        """Sets the unique identifier of the component.
 
         Args:
-        - id (str): The new identifier of the component.
+            id (int): The new identifier of the component.
         """
-        self.__id = id
+        self._id = id
 
-    def _get_type_spec(self, component_type: str) -> TypeSpec:
-        """
-        Get the type specification for the given component type.
+    def _get_form_spec(self, component_form: str) -> FormSpec:
+        """Gets the type specification for the given component type.
 
         Args:
-        - component_type (str): The type of the component.
+            component_type (str): The type of the component.
 
         Returns:
-        - TypeSpec: The type specification for the component type.
+            FormSpec: The type specification for the component type.
 
         Raises:
-        - ValueError: If the component type is invalid.
+            ValueError: If the component type is invalid.
         """
-        for type_spec in self.__types:
-            if type_spec.get_name() == component_type:
+        for type_spec in self._forms:
+            if type_spec.get_name() == component_form:
                 return type_spec
         raise ValueError("Invalid type name.")
 
     def get_location(self):
-        return self.__component_location
+        """Gets the location of the component."""
+        return self._component_location
 
     @abstractmethod
     def get_display_text(self) -> str:
-        """
-        Get the display text of the component.
+        """Gets the display text of the component.
 
         Returns:
-        - str: The display text of the component.
+            str: The display text of the component.
         """
         pass
 
     @abstractmethod
     def reset_id(self, id: int, internal_id: int) -> Tuple[int, int]:
-        """
-        Resets the id (internal and non internal) of the component.
+        """Resets the id (internal and non-internal) of the component.
+
+        Args:
+            id (int): The new identifier of the component.
+            internal_id (int): The new internal identifier of the component.
 
         Returns:
-         - int: The next values of the next available unique id and internal id.
+             Tuple[int, int]: The next values of the next available unique id and internal id.
         """
         pass
 
     @abstractmethod
     def to_cola(self) -> str:
-        """
-        Converts this component to it's textual CoLa form.
+        """Converts this component to its textual CoLa form.
+
+        Returns:
+            str: The CoLa representation of the component.
         """
         pass
