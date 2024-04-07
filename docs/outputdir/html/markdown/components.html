@@ -99,13 +99,16 @@
 <p>This page covers all the components currently supported by ALOC. Components represent a phrase in the target language. There are currently three components supported by ALOC.</p>
 <section id="simple-components">
 <h2>Simple Components<a class="headerlink" href="#simple-components" title="Link to this heading"></a></h2>
-<p>A simple component is a component used to represent simple phrases that are made up of attributes that the user can modify.</p>
+<p>A simple component is a component used to represent simple phrases that are made up of attributes that the user can modify. A simple component may look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="n">BABA</span> <span class="ow">is</span> <span class="n">waiting</span> <span class="k">for</span> <span class="n">FOOD</span>
+</pre></div>
+</div>
 </section>
 <section id="chain-components">
 <h2>Chain Components<a class="headerlink" href="#chain-components" title="Link to this heading"></a></h2>
 <p>Chain components are similar to simple components but can be chained together like the name suggests. A chained component could look something like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="n">ONE</span> <span class="n">IS</span> <span class="n">ODD</span> <span class="n">AND</span>
-<span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">TWO</span> <span class="n">IS</span> <span class="n">EVEN</span> <span class="n">AND</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">TWO</span> <span class="n">IS</span> <span class="n">EVEN</span> <span class="n">AND</span>
 <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="n">THREE</span> <span class="n">IS</span> <span class="n">ODD</span>
 </pre></div>
 </div>
@@ -120,6 +123,7 @@
 <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">FLAG</span> <span class="n">IS</span> <span class="n">WIN</span>
 </pre></div>
 </div>
+<p>Unlike the other two components, the conditional component does not have any attribute, but instead has two Chain components (which each have their own attributes that can be modified).</p>
 </section>
 </section>
 
