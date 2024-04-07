@@ -3,21 +3,20 @@ from typing import Dict, List
 from src.model.component_attribute import ComponentAttribute
 from src.model.component_specifications.simple_component_spec import \
     SimpleComponentSpec
-from src.model.simple_type_spec import SimpleFormSpec
+from src.model.simple_form_spec import SimpleFormSpec
 
 
 class ChainComponentSpec(SimpleComponentSpec):
     """
     ChainComponentSpec class represents the specifications for a chain component.
 
-    This class inherits from SimpleComponentSpec.
-
-    Methods:
-    - __init__(name, types, attributes, location, component_type): Initializes a ChainComponentSpec object.
-    - from_json(json, _): Constructs a ChainComponentSpec object from JSON data.
-
-    Attributes:
-    - Inherits all attributes from the SimpleComponentSpec class.
+    Args:
+        name (str): The name of the component.
+        forms (:obj:`list` of :obj:`SimpleFormSpec`): The forms associated with the chain component.
+        attributes (:obj:`list` of :obj:`ComponentAttribute`): The attributes of the chain component.
+        location (str): The location of the chain component within the contract.
+        linking_attribute: (str) The name of the attribute that links together chain components.
+        component_type: (str) The name of the type of the component.
     """
 
     def __init__(
@@ -26,19 +25,9 @@ class ChainComponentSpec(SimpleComponentSpec):
         forms: List,
         attributes: List[ComponentAttribute],
         location: str,
-        component_type: str,
         linking_attribute: str,
+        component_type: str,
     ):
-        """
-        Initializes a ChainComponentSpec object.
-
-        Args:
-        - name: The name of the chain component.
-        - forms: The types associated with the chain component.
-        - attributes: The attributes of the chain component.
-        - location: The location of the chain component.
-        - component_type: The type of the component.
-        """
         super().__init__(name, forms, attributes, location, component_type)
         self.__linking_attribute = linking_attribute
 
@@ -52,12 +41,15 @@ class ChainComponentSpec(SimpleComponentSpec):
             forms,
             attributes,
             self.get_location(),
-            self.get_component_type(),
             self.__linking_attribute,
+            "chain_component",
         )
         return new_spec
 
     def get_linking_attribute(self):
+        """
+        Gets the linking attribute of the component spec.
+        """
         return self.__linking_attribute
 
     @classmethod
@@ -68,11 +60,12 @@ class ChainComponentSpec(SimpleComponentSpec):
         Constructs a ChainComponentSpec object from JSON data.
 
         Args:
-        - json: The JSON data representing the chain component.
-        - _: Placeholder argument.
+            json (:obj:`dict`): The JSON data representing the chain component specification.
+            constructed_component_specs (:obj:`dict`): Component specs that have already been created.
+            terminals (:obj:`list` of :obj:`Terminal`): All defined terminal types.
 
         Returns:
-        - ChainComponentSpec: A ChainComponentSpec object constructed from the JSON data.
+            A ChainComponentSpec object constructed from the JSON data.
         """
         attributes = cls.attributes_from_json(json, terminals)
         form_specs = cls.form_specs_from_json(json)
@@ -81,6 +74,6 @@ class ChainComponentSpec(SimpleComponentSpec):
             form_specs,
             attributes,
             json["collection_location"],
-            "chain_component",
             json["linking_attribute"],
+            "chain_component",
         )

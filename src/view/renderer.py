@@ -30,9 +30,9 @@ class Renderer:
     Renderer class responsible for rendering components on the canvas.
 
     Methods:
-    - __init__(frame, controller, re_render_func): Initializes a Renderer object.
-    - render(x, y, contract): Renders the components of the contract.
-    - render_component(x, y, component): Renders a specific component.
+        __init__(frame, controller, re_render_func): Initializes a Renderer object.
+        render(x, y, contract): Renders the components of the contract.
+        render_component(x, y, component): Renders a specific component.
     """
 
     def __init__(
@@ -45,9 +45,9 @@ class Renderer:
         Initializes a Renderer object.
 
         Args:
-        - frame (Canvas): The frame to render components on.
-        - controller (ContractController): The controller for managing component actions.
-        - re_render_func (callable): The function to call for re-rendering.
+            frame (Canvas): The frame to render components on.
+            controller (ContractController): The controller for managing component actions.
+            re_render_func (callable): The function to call for re-rendering.
         """
         self.__frame: Canvas = frame.get_canvas()
         self.__controller: Controller = controller
@@ -58,9 +58,9 @@ class Renderer:
         Renders the components of the contract.
 
         Args:
-        - x (int): The starting x-coordinate for rendering.
-        - y (int): The starting y-coordinate for rendering.
-        - contract (Contract): The contract to render.
+            x (int): The starting x-coordinate for rendering.
+            y (int): The starting y-coordinate for rendering.
+            contract (Contract): The contract to render.
         """
         self.__frame.delete("all")
         y = ContractFrame(
@@ -81,12 +81,12 @@ class Renderer:
         Renders a specific component.
 
         Args:
-        - x (int): The x-coordinate for rendering.
-        - y (int): The y-coordinate for rendering.
-        - component (Component): The component to render.
+            x (int): The x-coordinate for rendering.
+            y (int): The y-coordinate for rendering.
+            component (Component): The component to render.
 
         Returns:
-        - int: The updated y-coordinate after rendering the component.
+            int: The updated y-coordinate after rendering the component.
         """
         component_type = type(component)
         assert (

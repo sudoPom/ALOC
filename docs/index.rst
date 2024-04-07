@@ -25,14 +25,6 @@ Welcome to ALOC: A Logical Outline Creator's Documentation
 
    markdown/development
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Reference
-   :hidden:
-   
-   apidocs/contract
-   apidocs/component
-   apidocs/frame
 
 
 Getting Started
@@ -100,4 +92,15 @@ ALOC's power stems not from it's ability to draft contracts, but from the abilit
 Extending ALOC
 --------------
 
-ALOC has plenty of room to grow, and if you'd like to help extend it please have a look at the :ref:`development section <Architecture>`. Additionally, you can make use of the code reference (see the toolbar).
+ALOC has plenty of room to grow, and if you'd like to help extend it please have a look at the :ref:`development section <Architecture>`. Additionally, you can make use of the code reference.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Reference
+   
+   apidocs/contract
+   apidocs/components
+   apidocs/frame
+   apidocs/specifications
+   apidocs/aloc_specifications
+   apidocs/terminals

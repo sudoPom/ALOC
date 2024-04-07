@@ -132,7 +132,7 @@ class TestContract:
         controller.add_new_component("statement")
         controller.extend_chain_component(2)
         controller.extend_chain_component(4)
-        controller.change_component_type(0, "if then")
+        controller.change_component_form(0, "if then")
         controller.update_component(
             1,
             {

@@ -8,17 +8,13 @@ from src.view.frames.simple_frame import SimpleFrame
 
 class ChainFrame(SimpleFrame):
     """
-    ChainFrame class represents the frame for displaying chain components in the GUI.
+    Widget for interacting with a SimpleFrame
 
-    Attributes:
-    - parent (Canvas): The parent canvas.
-    - controller (Controller): The controller managing component actions.
-    - re_render_func (Callable): The function for re-rendering.
-    - component (ChainComponent): The chain component to be displayed.
-
-    Methods:
-    - __init__(parent, controller, re_render_func, component): Initializes a ChainFrame object.
-    - render(x, y): Renders the frame at the specified coordinates.
+    Args:
+        parent (:obj:`tk.Canvas`): The parent canvas.
+        controller (:obj:`Controller`): The controller managing component actions.
+        re_render_func (:obj:`Callable`): The function for re-rendering.
+        component (:obj:`ChainComponent`): The component associated with the frame.
     """
 
     def __init__(
@@ -28,15 +24,6 @@ class ChainFrame(SimpleFrame):
         re_render_func: Callable,
         component: ChainComponent,
     ):
-        """
-        Initializes a ChainFrame object.
-
-        Args:
-        - parent (Canvas): The parent canvas.
-        - controller (Controller): The controller managing component actions.
-        - re_render_func (Callable): The function for re-rendering.
-        - component (ChainComponent): The chain component to be displayed.
-        """
         super().__init__(
             parent,
             controller,
@@ -65,11 +52,11 @@ class ChainFrame(SimpleFrame):
         Renders the frame at the specified coordinates.
 
         Args:
-        - x (int): The x-coordinate.
-        - y (int): The y-coordinate.
+            x: The x-coordinate to render the widget on the canvas.
+            y: The y-coordinate to render the widget on the canvas.
 
         Returns:
-        - int: The y-coordinate after rendering.
+            int: The height of the frame on the canvas.
         """
         current_component = self.get_component()
         assert isinstance(current_component, ChainComponent)
@@ -103,6 +90,9 @@ class ChainFrame(SimpleFrame):
         self.trigger_re_render()
 
     def destruct(self):
+        """
+        Deletes the associated component.
+        """
         component = self.get_component()
         assert isinstance(component, ChainComponent)
         component.delete()

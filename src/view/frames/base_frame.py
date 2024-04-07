@@ -7,6 +7,18 @@ from src.model.components.component import Component
 
 
 class BaseFrame(tk.Frame):
+    """
+    Parent class for all Component Frame classes.
+
+    Args:
+        parent (tk.Widget): The parent widget.
+        controller (Controller): The controller managing component actions.
+        re_render_func (Callable): The function for re-rendering.
+        component (Component): The component associated with the frame.
+        render_settings (set): The settings for rendering the frame.
+        **kwargs: Additional keyword arguments.
+    """
+
     def __init__(
         self,
         parent: tk.Canvas,
@@ -15,17 +27,6 @@ class BaseFrame(tk.Frame):
         component: Component,
         **kwargs,
     ):
-        """
-        Initializes a BaseFrame object.
-
-        Args:
-        - parent (tk.Widget): The parent widget.
-        - controller (Controller): The controller managing component actions.
-        - re_render_func (Callable): The function for re-rendering.
-        - component (Component): The component associated with the frame.
-        - render_settings (set): The settings for rendering the frame.
-        - **kwargs: Additional keyword arguments.
-        """
         super().__init__(parent, **kwargs)
         self.__parent = parent
         self.__controller = controller
@@ -46,7 +47,7 @@ class BaseFrame(tk.Frame):
         Returns the display text of the associated component.
 
         Returns:
-        - str: The display text.
+            str: The display text.
         """
         return self.__component.get_display_text()
 
@@ -56,11 +57,11 @@ class BaseFrame(tk.Frame):
         Renders the frame at the specified coordinates.
 
         Args:
-        - x: The x-coordinate.
-        - y: The y-coordinate.
+            x: The x-coordinate to render the widget on the canvas.
+            y: The y-coordinate to render the widget on the canvas.
 
         Returns:
-        - int: The required height of the frame.
+            int: The height of the frame on the canvas.
         """
         display_text = self.get_display_text()
         self.__parent.create_window(x, y, anchor=tk.NW, window=self)
@@ -85,7 +86,7 @@ class BaseFrame(tk.Frame):
         Returns the controller.
 
         Returns:
-        - Controller: The controller managing component actions.
+            :obj:`Controller`: The controller managing component actions.
         """
         return self.__controller
 
@@ -94,7 +95,7 @@ class BaseFrame(tk.Frame):
         Returns the component.
 
         Returns:
-        - Component: The component associated with the frame.
+            :obj:`Component`: The component associated with the frame.
         """
         return self.__component
 
@@ -103,7 +104,7 @@ class BaseFrame(tk.Frame):
         Returns the re-render function.
 
         Returns:
-        - Callable: The function for re-rendering.
+            :obj:`Callable`: The function for re-rendering.
         """
         return self.__re_render_func
 
@@ -112,7 +113,7 @@ class BaseFrame(tk.Frame):
         Returns the parent widget.
 
         Returns:
-        - tk.Widget: The parent widget.
+            :obj:`tk.Widget`: The parent widget.
         """
         return self.__parent
 
@@ -121,7 +122,7 @@ class BaseFrame(tk.Frame):
         Returns the associated menu.
 
         Returns:
-        - tk.Menu: The associated menu.
+            :obj:`tk.Menu`: The associated menu.
         """
         return self.__menu
 
@@ -136,25 +137,25 @@ class BaseFrame(tk.Frame):
         Displays the associated menu.
 
         Args:
-        - event: The event that triggered the menu.
+            event: The event that triggered the menu.
         """
         self.__menu.tk_popup(event.x_root, event.y_root)
 
-    def change_component_type(self, component_type):
+    def change_component_type(self, component_type: str):
         """
         Changes the type of the associated component.
 
         Args:
-        - component_type: The new type of the component.
+            component_type (str): The new type of the component.
         """
-        self.__controller.change_component_type(
+        self.__controller.change_component_form(
             self.__component.get_internal_id(), component_type
         )
         self.trigger_re_render()
 
     def add_delete_button(self):
         """
-        Adds a delete button to the menu.
+        Adds a delete button to the frame's menu.
         """
         self.__menu.add_command(label="Delete", command=self.destruct)
 

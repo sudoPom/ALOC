@@ -13,16 +13,16 @@ class Model:
     Wraps the Contract class, exposing commonly used contract operations.
 
     Methods:
-    - __init__(component_collections, component_spec_pairs): Initializes a Model object.
-    - change_component_type(component, component_type): Changes the type of the component.
-    - update_component(component, update_dict): Updates a component's attributes.
-    - delete_component(component_id): Deletes a component from the contract.
-    - add_component(component_spec): Adds a component to the contract.
-    - extend_chain_component(component): Extends a chain component in the contract.
-    - get_contract(): Retrieves the current contract.
-    - save_contract_file(path): Saves the current contract to a file.
-    - open_contract_file(path): Loads a contract from a file.
-    - create_new_contract(): Creates a new contract.
+        __init__(component_collections, component_spec_pairs): Initializes a Model object.
+        change_component_type(component, component_type): Changes the type of the component.
+        update_component(component, update_dict): Updates a component's attributes.
+        delete_component(component_id): Deletes a component from the contract.
+        add_component(component_spec): Adds a component to the contract.
+        extend_chain_component(component): Extends a chain component in the contract.
+        get_contract(): Retrieves the current contract.
+        save_contract_file(path): Saves the current contract to a file.
+        open_contract_file(path): Loads a contract from a file.
+        create_new_contract(): Creates a new contract.
     """
 
     def __init__(
@@ -34,23 +34,23 @@ class Model:
         Initializes a Model object.
 
         Args:
-        - component_collections (List[ComponentCollection]): A list of component collections.
-        - component_spec_pairs (List[ComponentSpecPair]): A list of component specification pairs.
+            component_collections (List[ComponentCollection]): A list of component collections.
+            component_spec_pairs (List[ComponentSpecPair]): A list of component specification pairs.
         """
         self.__component_collections: List[ComponentCollection] = component_collections
         self.__component_spec_pairs: Dict[str, Type[Component]] = component_spec_pairs
         self.create_new_contract()
 
-    def change_component_type(self, component_id, component_type):
+    def change_component_form(self, component_id, component_form):
         """
         Changes the type of the component.
 
         Args:
-        - component: The component whose type will be changed.
-        - component_type: The new type of the component.
+            component: The component whose type will be changed.
+            component_type: The new type of the component.
         """
         component = self.__contract.get_component(component_id)
-        component.set_form(component_type)
+        component.set_form(component_form)
         self.reset_ids()
 
     def update_component(self, component_id, update_dict):
@@ -58,8 +58,8 @@ class Model:
         Updates a component's attributes.
 
         Args:
-        - component: The component to be updated.
-        - update_dict: A dictionary containing the updated attributes.
+            component: The component to be updated.
+            update_dict: A dictionary containing the updated attributes.
         """
         component = self.__contract.get_component(component_id)
         assert isinstance(component, SimpleComponent)
@@ -71,7 +71,7 @@ class Model:
         Deletes a component from the contract.
 
         Args:
-        - component_id: The ID of the component to be deleted.
+            component_id: The ID of the component to be deleted.
         """
         self.__contract.delete_component(component_id)
         self.__contract.reset_ids()
@@ -81,7 +81,7 @@ class Model:
         Adds a component to the contract.
 
         Args:
-        - component_spec: The component specification to be added.
+            component_spec: The component specification to be added.
         """
         self.__contract.add_component(component_spec)
         self.__contract.reset_ids()
@@ -91,7 +91,7 @@ class Model:
         Extends a chain component in the contract.
 
         Args:
-        - component: The chain component to be extended.
+            component: The chain component to be extended.
         """
         component = self.__contract.get_component(component_id)
         assert isinstance(component, ChainComponent)
@@ -103,7 +103,7 @@ class Model:
         Retrieves the current contract.
 
         Returns:
-        - Contract: The current contract.
+            Contract: The current contract.
         """
         return self.__contract
 
@@ -112,7 +112,7 @@ class Model:
         Saves the current contract to a file.
 
         Args:
-        - path (str): The file path where the contract should be saved.
+            path (str): The file path where the contract should be saved.
         """
         contract_data = pickle.dumps(self.__contract, protocol=pickle.HIGHEST_PROTOCOL)
         with open(path, "wb") as file:
@@ -124,7 +124,7 @@ class Model:
         Loads a contract from a file.
 
         Args:
-        - path (str): The file path to load the contract from.
+            path (str): The file path to load the contract from.
         """
         try:
             with open(path, "rb") as file:
@@ -138,7 +138,7 @@ class Model:
         Creates a new contract.
 
         Returns:
-        - Contract: The newly created contract.
+            Contract: The newly created contract.
         """
         for component_collection in self.__component_collections:
             component_collection.clear()
@@ -152,7 +152,7 @@ class Model:
         Exports the contract to CoLa and saves it.
 
         Args:
-        - path (str): The file path to save the CoLa to.
+            path (str): The file path to save the CoLa to.
         """
         try:
             cola = self.__contract.to_cola()

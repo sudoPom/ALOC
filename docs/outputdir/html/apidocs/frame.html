@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; ALOC: A Logical Outline Creator 0.1 documentation</title>
+  <title>Frame Classes &mdash; ALOC: A Logical Outline Creator 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
 
@@ -21,7 +21,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="component.html" /> 
+    <link rel="prev" title="Component Classes" href="components.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,11 +48,56 @@
 <li class="toctree-l1"><a class="reference internal" href="../markdown/components.html">Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../markdown/the_aloc_spec.html">The ALOC Specification</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/development.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/development.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/development.html#code-style">Code Style</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="contract.html"><code class="docutils literal notranslate"><span class="pre">Contract</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="component.html"><code class="docutils literal notranslate"><span class="pre">Component</span></code></a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">BaseFrame</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="contract.html">Contract Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Component Classes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Frame Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame"><code class="docutils literal notranslate"><span class="pre">BaseFrame</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.add_delete_button"><code class="docutils literal notranslate"><span class="pre">BaseFrame.add_delete_button()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.add_type_submenu"><code class="docutils literal notranslate"><span class="pre">BaseFrame.add_type_submenu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.change_component_type"><code class="docutils literal notranslate"><span class="pre">BaseFrame.change_component_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.create_widget"><code class="docutils literal notranslate"><span class="pre">BaseFrame.create_widget()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.destruct"><code class="docutils literal notranslate"><span class="pre">BaseFrame.destruct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.get_component"><code class="docutils literal notranslate"><span class="pre">BaseFrame.get_component()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.get_controller"><code class="docutils literal notranslate"><span class="pre">BaseFrame.get_controller()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.get_display_text"><code class="docutils literal notranslate"><span class="pre">BaseFrame.get_display_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.get_menu"><code class="docutils literal notranslate"><span class="pre">BaseFrame.get_menu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.get_parent"><code class="docutils literal notranslate"><span class="pre">BaseFrame.get_parent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.get_re_render_func"><code class="docutils literal notranslate"><span class="pre">BaseFrame.get_re_render_func()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.render"><code class="docutils literal notranslate"><span class="pre">BaseFrame.render()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.show_menu"><code class="docutils literal notranslate"><span class="pre">BaseFrame.show_menu()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.base_frame.BaseFrame.trigger_re_render"><code class="docutils literal notranslate"><span class="pre">BaseFrame.trigger_re_render()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.frames.simple_frame.SimpleFrame"><code class="docutils literal notranslate"><span class="pre">SimpleFrame</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.simple_frame.SimpleFrame.add_update_button"><code class="docutils literal notranslate"><span class="pre">SimpleFrame.add_update_button()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.simple_frame.SimpleFrame.create_widget"><code class="docutils literal notranslate"><span class="pre">SimpleFrame.create_widget()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.simple_frame.SimpleFrame.render"><code class="docutils literal notranslate"><span class="pre">SimpleFrame.render()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.frames.chain_frame.ChainFrame"><code class="docutils literal notranslate"><span class="pre">ChainFrame</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.chain_frame.ChainFrame.add_chain_options"><code class="docutils literal notranslate"><span class="pre">ChainFrame.add_chain_options()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.chain_frame.ChainFrame.create_widget"><code class="docutils literal notranslate"><span class="pre">ChainFrame.create_widget()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.chain_frame.ChainFrame.destruct"><code class="docutils literal notranslate"><span class="pre">ChainFrame.destruct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.chain_frame.ChainFrame.extend_component"><code class="docutils literal notranslate"><span class="pre">ChainFrame.extend_component()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.chain_frame.ChainFrame.render"><code class="docutils literal notranslate"><span class="pre">ChainFrame.render()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#src.view.frames.conditional_frame.ConditionalFrame"><code class="docutils literal notranslate"><span class="pre">ConditionalFrame</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.conditional_frame.ConditionalFrame.create_text_and_get_height"><code class="docutils literal notranslate"><span class="pre">ConditionalFrame.create_text_and_get_height()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.conditional_frame.ConditionalFrame.create_widget"><code class="docutils literal notranslate"><span class="pre">ConditionalFrame.create_widget()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.view.frames.conditional_frame.ConditionalFrame.render"><code class="docutils literal notranslate"><span class="pre">ConditionalFrame.render()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -69,7 +114,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="breadcrumb-item active">Frame Classes</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/apidocs/frame.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -79,17 +124,364 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <dl class="py class">
+  <section id="frame-classes">
+<h1>Frame Classes<a class="headerlink" href="#frame-classes" title="Link to this heading"></a></h1>
+<dl class="py class">
 <dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.view.frames.base_frame.</span></span><span class="sig-name descname"><span class="pre">BaseFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Controller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">re_render_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="component.html#src.model.components.component.Component" title="src.model.components.component.Component"><span class="pre">Component</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.view.frames.base_frame.</span></span><span class="sig-name descname"><span class="pre">BaseFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Controller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">re_render_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="components.html#src.model.components.component.Component" title="src.model.components.component.Component"><span class="pre">Component</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></p>
+<p>Parent class for all Component Frame classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (<em>tk.Widget</em>) – The parent widget.</p></li>
+<li><p><strong>controller</strong> (<em>Controller</em>) – The controller managing component actions.</p></li>
+<li><p><strong>re_render_func</strong> (<em>Callable</em>) – The function for re-rendering.</p></li>
+<li><p><strong>component</strong> (<a class="reference internal" href="components.html#src.model.components.component.Component" title="src.model.components.component.Component"><em>Component</em></a>) – The component associated with the frame.</p></li>
+<li><p><strong>render_settings</strong> (<em>set</em>) – The settings for rendering the frame.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.add_delete_button">
+<span class="sig-name descname"><span class="pre">add_delete_button</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.add_delete_button" title="Link to this definition"></a></dt>
+<dd><p>Adds a delete button to the frame’s menu.</p>
+</dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.add_type_submenu">
+<span class="sig-name descname"><span class="pre">add_type_submenu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.add_type_submenu" title="Link to this definition"></a></dt>
+<dd><p>Adds a submenu for changing the component type.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.change_component_type">
+<span class="sig-name descname"><span class="pre">change_component_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.change_component_type" title="Link to this definition"></a></dt>
+<dd><p>Changes the type of the associated component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>component_type</strong> (<em>str</em>) – The new type of the component.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.create_widget">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_widget</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.create_widget" title="Link to this definition"></a></dt>
+<dd><p>Creates the widget for this frame.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.destruct">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">destruct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.destruct" title="Link to this definition"></a></dt>
+<dd><p>Deletes the associated component.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.get_component">
+<span class="sig-name descname"><span class="pre">get_component</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="components.html#src.model.components.component.Component" title="src.model.components.component.Component"><span class="pre">Component</span></a></span></span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.get_component" title="Link to this definition"></a></dt>
+<dd><p>Returns the component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The component associated with the frame.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Component</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.get_controller">
+<span class="sig-name descname"><span class="pre">get_controller</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Controller</span></span></span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.get_controller" title="Link to this definition"></a></dt>
+<dd><p>Returns the controller.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The controller managing component actions.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Controller</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.get_display_text">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_display_text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.get_display_text" title="Link to this definition"></a></dt>
+<dd><p>Returns the display text of the associated component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The display text.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.get_menu">
+<span class="sig-name descname"><span class="pre">get_menu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Menu</span></span></span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.get_menu" title="Link to this definition"></a></dt>
+<dd><p>Returns the associated menu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The associated menu.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tk.Menu</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.get_parent">
+<span class="sig-name descname"><span class="pre">get_parent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Canvas</span></span></span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.get_parent" title="Link to this definition"></a></dt>
+<dd><p>Returns the parent widget.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The parent widget.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tk.Widget</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.get_re_render_func">
+<span class="sig-name descname"><span class="pre">get_re_render_func</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.get_re_render_func" title="Link to this definition"></a></dt>
+<dd><p>Returns the re-render function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The function for re-rendering.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Callable</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.render">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.render" title="Link to this definition"></a></dt>
+<dd><p>Renders the frame at the specified coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – The x-coordinate to render the widget on the canvas.</p></li>
+<li><p><strong>y</strong> – The y-coordinate to render the widget on the canvas.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The height of the frame on the canvas.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.show_menu">
+<span class="sig-name descname"><span class="pre">show_menu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.show_menu" title="Link to this definition"></a></dt>
+<dd><p>Displays the associated menu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>event</strong> – The event that triggered the menu.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.base_frame.BaseFrame.trigger_re_render">
+<span class="sig-name descname"><span class="pre">trigger_re_render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.base_frame.BaseFrame.trigger_re_render" title="Link to this definition"></a></dt>
+<dd><p>Triggers re-rendering of the frame.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.view.frames.simple_frame.SimpleFrame">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.view.frames.simple_frame.</span></span><span class="sig-name descname"><span class="pre">SimpleFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Controller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">re_render_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="components.html#src.model.components.simple_component.SimpleComponent" title="src.model.components.simple_component.SimpleComponent"><span class="pre">SimpleComponent</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.simple_frame.SimpleFrame" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.view.frames.base_frame.BaseFrame" title="src.view.frames.base_frame.BaseFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseFrame</span></code></a></p>
+<p>Widget for interacting with a SimpleFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">tk.Canvas</span></code>) – The parent canvas.</p></li>
+<li><p><strong>controller</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">Controller</span></code>) – The controller managing component actions.</p></li>
+<li><p><strong>re_render_func</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">Callable</span></code>) – The function for re-rendering.</p></li>
+<li><p><strong>component</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">SimpleComponent</span></code>) – The component associated with the frame.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.simple_frame.SimpleFrame.add_update_button">
+<span class="sig-name descname"><span class="pre">add_update_button</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.simple_frame.SimpleFrame.add_update_button" title="Link to this definition"></a></dt>
+<dd><p>Adds an update button to the menu.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.simple_frame.SimpleFrame.create_widget">
+<span class="sig-name descname"><span class="pre">create_widget</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.simple_frame.SimpleFrame.create_widget" title="Link to this definition"></a></dt>
+<dd><p>Creates the widget for this frame.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.simple_frame.SimpleFrame.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#src.view.frames.simple_frame.SimpleFrame.render" title="Link to this definition"></a></dt>
+<dd><p>Renders the frame at the specified coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – The x-coordinate to render the widget on the canvas.</p></li>
+<li><p><strong>y</strong> – The y-coordinate to render the widget on the canvas.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The height of the frame on the canvas.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.view.frames.chain_frame.ChainFrame">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.view.frames.chain_frame.</span></span><span class="sig-name descname"><span class="pre">ChainFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Controller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">re_render_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="components.html#src.model.components.chain_component.ChainComponent" title="src.model.components.chain_component.ChainComponent"><span class="pre">ChainComponent</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.chain_frame.ChainFrame" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.view.frames.simple_frame.SimpleFrame" title="src.view.frames.simple_frame.SimpleFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleFrame</span></code></a></p>
+<p>Widget for interacting with a SimpleFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">tk.Canvas</span></code>) – The parent canvas.</p></li>
+<li><p><strong>controller</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">Controller</span></code>) – The controller managing component actions.</p></li>
+<li><p><strong>re_render_func</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">Callable</span></code>) – The function for re-rendering.</p></li>
+<li><p><strong>component</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">ChainComponent</span></code>) – The component associated with the frame.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.chain_frame.ChainFrame.add_chain_options">
+<span class="sig-name descname"><span class="pre">add_chain_options</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.chain_frame.ChainFrame.add_chain_options" title="Link to this definition"></a></dt>
+<dd><p>Adds options for chain components to the menu.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.chain_frame.ChainFrame.create_widget">
+<span class="sig-name descname"><span class="pre">create_widget</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.chain_frame.ChainFrame.create_widget" title="Link to this definition"></a></dt>
+<dd><p>Creates widgets for the frame.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.chain_frame.ChainFrame.destruct">
+<span class="sig-name descname"><span class="pre">destruct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.chain_frame.ChainFrame.destruct" title="Link to this definition"></a></dt>
+<dd><p>Deletes the associated component.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.chain_frame.ChainFrame.extend_component">
+<span class="sig-name descname"><span class="pre">extend_component</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.chain_frame.ChainFrame.extend_component" title="Link to this definition"></a></dt>
+<dd><p>Extends the associated component.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.chain_frame.ChainFrame.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#src.view.frames.chain_frame.ChainFrame.render" title="Link to this definition"></a></dt>
+<dd><p>Renders the frame at the specified coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – The x-coordinate to render the widget on the canvas.</p></li>
+<li><p><strong>y</strong> – The y-coordinate to render the widget on the canvas.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The height of the frame on the canvas.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.view.frames.conditional_frame.ConditionalFrame">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.view.frames.conditional_frame.</span></span><span class="sig-name descname"><span class="pre">ConditionalFrame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">re_render_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.conditional_frame.ConditionalFrame" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.view.frames.base_frame.BaseFrame" title="src.view.frames.base_frame.BaseFrame"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseFrame</span></code></a></p>
+<p>Widget for interacting with a ConditionalComponent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">tk.Canvas</span></code>) – The parent canvas.</p></li>
+<li><p><strong>controller</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">Controller</span></code>) – The controller managing component actions.</p></li>
+<li><p><strong>re_render_func</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">Callable</span></code>) – The function for re-rendering.</p></li>
+<li><p><strong>component</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">ConditionalComponent</span></code>) – The component associated with the frame.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.conditional_frame.ConditionalFrame.create_text_and_get_height">
+<span class="sig-name descname"><span class="pre">create_text_and_get_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.conditional_frame.ConditionalFrame.create_text_and_get_height" title="Link to this definition"></a></dt>
+<dd><p>Renders text at the specified coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – The text to render.</p></li>
+<li><p><strong>x</strong> (<em>int</em>) – The x-coordinate to render the text on the canvas.</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – The y-coordinate to render the text on the canvas.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The height of the frame on the canvas.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.conditional_frame.ConditionalFrame.create_widget">
+<span class="sig-name descname"><span class="pre">create_widget</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.conditional_frame.ConditionalFrame.create_widget" title="Link to this definition"></a></dt>
+<dd><p>Creates widgets for the frame.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.view.frames.conditional_frame.ConditionalFrame.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.view.frames.conditional_frame.ConditionalFrame.render" title="Link to this definition"></a></dt>
+<dd><p>Renders the frame at the specified coordinates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>int</em>) – The x-coordinate to render the widget.</p></li>
+<li><p><strong>y</strong> (<em>int</em>) – The y-coordinate to render the widget.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The y-coordinate after rendering.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="component.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="components.html" class="btn btn-neutral float-left" title="Component Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

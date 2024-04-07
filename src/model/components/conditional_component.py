@@ -11,25 +11,14 @@ class ConditionalComponent(Component, ChainParent):
     """
     ConditionalComponent class represents a conditional component.
 
-    This class inherits from Component.
-
-    Methods:
-    - __init__(conditional_component_spec): Initializes a ConditionalComponent object.
-    - get_result(): Retrieves the result component.
-    - get_condition(): Retrieves the condition component.
-    - get_display_text(): Retrieves the display text of the component.
-    - reset_id(id): Resets the ID of the component and its subsequent components.
-
-    Attributes:
-    - Inherits all attributes from the Component class.
+    Args:
+        conditional_component_spec (ConditionalComponentSpec): The specification of the conditional component.
     """
 
     def __init__(self, conditional_component_spec: ConditionalComponentSpec) -> None:
         """
         Initializes a ConditionalComponent object.
 
-        Args:
-        - conditional_component_spec (ConditionalComponentSpec): The specification of the conditional component.
         """
         Component.__init__(self, conditional_component_spec)
         ChainParent.__init__(self, False)
@@ -44,15 +33,25 @@ class ConditionalComponent(Component, ChainParent):
         self.add_child(self.__result_component)
 
     def get_result(self) -> ChainComponent:
-        """Retrieves the result component."""
+        """
+        Gets the result component.
+
+        Returns:
+            :obj:`ChainComponent`: The component that represents the result in the conditional component.
+        """
         return self.__result_component
 
     def get_condition(self) -> ChainComponent:
-        """Retrieves the condition component."""
+        """
+        Gets the condition component.
+
+        Returns:
+            :obj:`ChainComponent`: The component that represents the condition in the conditional component.
+        """
         return self.__condition_component
 
     def get_display_text(self) -> str:
-        """Retrieves the display text of the component."""
+        """Returns nothing as this component has no display text."""
         return ""
 
     def reset_id(self, id: int, internal_id: int) -> Tuple[int, int]:
@@ -60,10 +59,10 @@ class ConditionalComponent(Component, ChainParent):
         Resets the ID of the component and its subsequent components in the chain.
 
         Args:
-        - id (int): The new ID to be set.
+            id (int): The new ID to be set.
 
         Returns:
-        - int: The updated ID.
+            int: The updated ID.
         """
         self.set_internal_id(internal_id)
         internal_id += 1
@@ -80,6 +79,12 @@ class ConditionalComponent(Component, ChainParent):
         super().delete_chain_component(id)
 
     def to_cola(self) -> str:
+        """
+        Converts this component to its textual CoLa form.
+
+        Returns:
+            str: The CoLa representation of the component.
+        """
         current_type = self.get_form().get_name()
         result_text = self.__result_component.to_cola()
         condition_text = self.__condition_component.to_cola()

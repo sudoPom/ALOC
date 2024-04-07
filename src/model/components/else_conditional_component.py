@@ -13,14 +13,14 @@ class ElseConditionalComponent(ConditionalComponent):
     This class inherits from Component.
 
     Methods:
-    - __init__(conditional_component_spec): Initializes a ConditionalComponent object.
-    - get_result(): Retrieves the result component.
-    - get_condition(): Retrieves the condition component.
-    - get_display_text(): Retrieves the display text of the component.
-    - reset_id(id): Resets the ID of the component and its subsequent components.
+        __init__(conditional_component_spec): Initializes a ConditionalComponent object.
+        get_result(): Retrieves the result component.
+        get_condition(): Retrieves the condition component.
+        get_display_text(): Retrieves the display text of the component.
+        reset_id(id): Resets the ID of the component and its subsequent components.
 
     Attributes:
-    - Inherits all attributes from the Component class.
+        Inherits all attributes from the Component class.
     """
 
     def __init__(
@@ -30,7 +30,7 @@ class ElseConditionalComponent(ConditionalComponent):
         Initializes a ConditionalComponent object.
 
         Args:
-        - conditional_component_spec (ConditionalComponentSpec): The specification of the conditional component.
+            conditional_component_spec (ConditionalComponentSpec): The specification of the conditional component.
         """
         super().__init__(conditional_component_spec)
 
@@ -48,10 +48,10 @@ class ElseConditionalComponent(ConditionalComponent):
         Resets the ID of the component and its subsequent components in the chain.
 
         Args:
-        - id (int): The new ID to be set.
+            id (int): The new ID to be set.
 
         Returns:
-        - int: The updated ID.
+            int: The updated ID.
         """
         id, internal_id = super().reset_id(id, internal_id)
         return self.__else_component.reset_id(id, internal_id)

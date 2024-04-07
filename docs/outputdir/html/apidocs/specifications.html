@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Specification Classes &mdash; ALOC: A Logical Outline Creator 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ALOC Specific Specification Classes" href="aloc_specifications.html" />
+    <link rel="prev" title="Frame Classes" href="frame.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ALOC: A Logical Outline Creator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Features</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/components.html">Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/the_aloc_spec.html">The ALOC Specification</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/development.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/development.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/development.html#code-style">Code Style</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="contract.html">Contract Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Component Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="frame.html">Frame Classes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Specification Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#src.model.component_specifications.component_spec.ComponentSpec"><code class="docutils literal notranslate"><span class="pre">ComponentSpec</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.component_spec.ComponentSpec.from_json"><code class="docutils literal notranslate"><span class="pre">ComponentSpec.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.component_spec.ComponentSpec.get_component_type"><code class="docutils literal notranslate"><span class="pre">ComponentSpec.get_component_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.component_spec.ComponentSpec.get_contract_location"><code class="docutils literal notranslate"><span class="pre">ComponentSpec.get_contract_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.component_spec.ComponentSpec.get_forms"><code class="docutils literal notranslate"><span class="pre">ComponentSpec.get_forms()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.component_spec.ComponentSpec.get_location"><code class="docutils literal notranslate"><span class="pre">ComponentSpec.get_location()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.component_spec.ComponentSpec.get_name"><code class="docutils literal notranslate"><span class="pre">ComponentSpec.get_name()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec"><code class="docutils literal notranslate"><span class="pre">SimpleComponentSpec</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec.attributes_from_json"><code class="docutils literal notranslate"><span class="pre">SimpleComponentSpec.attributes_from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec.form_specs_from_json"><code class="docutils literal notranslate"><span class="pre">SimpleComponentSpec.form_specs_from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec.from_json"><code class="docutils literal notranslate"><span class="pre">SimpleComponentSpec.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec.get_attribute"><code class="docutils literal notranslate"><span class="pre">SimpleComponentSpec.get_attribute()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec.get_attributes"><code class="docutils literal notranslate"><span class="pre">SimpleComponentSpec.get_attributes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#src.model.component_specifications.chain_component_spec.ChainComponentSpec"><code class="docutils literal notranslate"><span class="pre">ChainComponentSpec</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.chain_component_spec.ChainComponentSpec.create_blank"><code class="docutils literal notranslate"><span class="pre">ChainComponentSpec.create_blank()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.chain_component_spec.ChainComponentSpec.from_json"><code class="docutils literal notranslate"><span class="pre">ChainComponentSpec.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.chain_component_spec.ChainComponentSpec.get_linking_attribute"><code class="docutils literal notranslate"><span class="pre">ChainComponentSpec.get_linking_attribute()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec"><code class="docutils literal notranslate"><span class="pre">ConditionalComponentSpec</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec.from_json"><code class="docutils literal notranslate"><span class="pre">ConditionalComponentSpec.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec.get_condition_spec"><code class="docutils literal notranslate"><span class="pre">ConditionalComponentSpec.get_condition_spec()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec.get_result_spec"><code class="docutils literal notranslate"><span class="pre">ConditionalComponentSpec.get_result_spec()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="aloc_specifications.html">ALOC Specific Specification Classes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ALOC: A Logical Outline Creator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Specification Classes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/apidocs/specifications.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="specification-classes">
+<h1>Specification Classes<a class="headerlink" href="#specification-classes" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.model.component_specifications.component_spec.ComponentSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.component_specifications.component_spec.</span></span><span class="sig-name descname"><span class="pre">ComponentSpec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="aloc_specifications.html#src.model.form_spec.FormSpec" title="src.model.form_spec.FormSpec"><span class="pre">FormSpec</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.model.component_specifications.component_spec.ComponentSpec" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Base class of all Component Specification Classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the component specification.</p></li>
+<li><p><strong>forms</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FormSpec</span></code>) – The list of form specifications associated with the component.</p></li>
+<li><p><strong>location</strong> (<em>str</em>) – The location of the component in the contract.</p></li>
+<li><p><strong>component_type</strong> (<em>str</em>) – The name of the type of the component.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.component_spec.ComponentSpec.from_json">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constructed_component_specs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terminals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.model.component_specifications.component_spec.ComponentSpec" title="src.model.component_specifications.component_spec.ComponentSpec"><span class="pre">ComponentSpec</span></a></span></span><a class="headerlink" href="#src.model.component_specifications.component_spec.ComponentSpec.from_json" title="Link to this definition"></a></dt>
+<dd><p>Creates An Instance of this Component Specification from JSON data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict</span></code>) – The JSON data representing the Component Specification.</p></li>
+<li><p><strong>constructed_component_specs</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict</span></code>) – All component specifications that have already been constructed.</p></li>
+<li><p><strong>terminals</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict</span></code>) – All the availble terminal types.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.component_spec.ComponentSpec.get_component_type">
+<span class="sig-name descname"><span class="pre">get_component_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#src.model.component_specifications.component_spec.ComponentSpec.get_component_type" title="Link to this definition"></a></dt>
+<dd><p>Returns the type of the component.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.component_spec.ComponentSpec.get_contract_location">
+<span class="sig-name descname"><span class="pre">get_contract_location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#src.model.component_specifications.component_spec.ComponentSpec.get_contract_location" title="Link to this definition"></a></dt>
+<dd><p>Returns the location of the component in the contract.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.component_spec.ComponentSpec.get_forms">
+<span class="sig-name descname"><span class="pre">get_forms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="aloc_specifications.html#src.model.form_spec.FormSpec" title="src.model.form_spec.FormSpec"><span class="pre">FormSpec</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.model.component_specifications.component_spec.ComponentSpec.get_forms" title="Link to this definition"></a></dt>
+<dd><p>Returns the list of type specifications associated with the component.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.component_spec.ComponentSpec.get_location">
+<span class="sig-name descname"><span class="pre">get_location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#src.model.component_specifications.component_spec.ComponentSpec.get_location" title="Link to this definition"></a></dt>
+<dd><p>Returns the location of the component.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.component_spec.ComponentSpec.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#src.model.component_specifications.component_spec.ComponentSpec.get_name" title="Link to this definition"></a></dt>
+<dd><p>Returns the name of the component specification.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.model.component_specifications.simple_component_spec.SimpleComponentSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.component_specifications.simple_component_spec.</span></span><span class="sig-name descname"><span class="pre">SimpleComponentSpec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ComponentAttribute</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.model.component_specifications.component_spec.ComponentSpec" title="src.model.component_specifications.component_spec.ComponentSpec"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComponentSpec</span></code></a></p>
+<p>SimpleComponentSpec class represents the specifications for a simple component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the simple component.</p></li>
+<li><p><strong>forms</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FormSpec</span></code>) – The types associated with the simple component.</p></li>
+<li><p><strong>attributes</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">ComponentAttribute</span></code>) – The attributes of the simple component.</p></li>
+<li><p><strong>location</strong> (<em>str</em>) – The location of the simple component.</p></li>
+<li><p><strong>component_type</strong> (<em>str</em>) – The name of the type of the component.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.simple_component_spec.SimpleComponentSpec.attributes_from_json">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes_from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terminals</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ComponentAttribute</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec.attributes_from_json" title="Link to this definition"></a></dt>
+<dd><p>Parses JSON data to create ComponentAttribute objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>) – The JSON data representing the attributes.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of ComponentAttribute objects parsed from the JSON data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.simple_component_spec.SimpleComponentSpec.form_specs_from_json">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">form_specs_from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="aloc_specifications.html#src.model.simple_form_spec.SimpleFormSpec" title="src.model.simple_form_spec.SimpleFormSpec"><span class="pre">SimpleFormSpec</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec.form_specs_from_json" title="Link to this definition"></a></dt>
+<dd><p>Parses JSON data to create SimpleFormSpec objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json</strong> – The JSON data representing the type specifications.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of SimpleTypeSpec objects parsed from the JSON data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[SimpleTypeSpec]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.simple_component_spec.SimpleComponentSpec.from_json">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constructed_component_specs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terminals</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec" title="src.model.component_specifications.simple_component_spec.SimpleComponentSpec"><span class="pre">SimpleComponentSpec</span></a></span></span><a class="headerlink" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec.from_json" title="Link to this definition"></a></dt>
+<dd><p>Constructs a SimpleComponentSpec object from JSON data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>) – The JSON data representing the simple component specification.</p></li>
+<li><p><strong>constructed_component_specs</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>) – Component specs that have already been created.</p></li>
+<li><p><strong>terminals</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">Terminal</span></code>) – All defined terminal types.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A SimpleComponentSpec object constructed from the JSON data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.simple_component_spec.SimpleComponentSpec.get_attribute">
+<span class="sig-name descname"><span class="pre">get_attribute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attribute_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ComponentAttribute</span></span></span><a class="headerlink" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec.get_attribute" title="Link to this definition"></a></dt>
+<dd><p>Retrieves a specific attribute of the simple component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>attribute_name</strong> (<em>str</em>) – The name of the attribute to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The attribute with the specified name.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the specified attribute name doesn’t exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.simple_component_spec.SimpleComponentSpec.get_attributes">
+<span class="sig-name descname"><span class="pre">get_attributes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ComponentAttribute</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec.get_attributes" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the attributes of the simple component.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.model.component_specifications.chain_component_spec.ChainComponentSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.component_specifications.chain_component_spec.</span></span><span class="sig-name descname"><span class="pre">ChainComponentSpec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ComponentAttribute</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linking_attribute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.model.component_specifications.chain_component_spec.ChainComponentSpec" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.model.component_specifications.simple_component_spec.SimpleComponentSpec" title="src.model.component_specifications.simple_component_spec.SimpleComponentSpec"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleComponentSpec</span></code></a></p>
+<p>ChainComponentSpec class represents the specifications for a chain component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the component.</p></li>
+<li><p><strong>forms</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">SimpleFormSpec</span></code>) – The forms associated with the chain component.</p></li>
+<li><p><strong>attributes</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">ComponentAttribute</span></code>) – The attributes of the chain component.</p></li>
+<li><p><strong>location</strong> (<em>str</em>) – The location of the chain component within the contract.</p></li>
+<li><p><strong>linking_attribute</strong> – (str) The name of the attribute that links together chain components.</p></li>
+<li><p><strong>component_type</strong> – (str) The name of the type of the component.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.chain_component_spec.ChainComponentSpec.create_blank">
+<span class="sig-name descname"><span class="pre">create_blank</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.model.component_specifications.chain_component_spec.ChainComponentSpec.create_blank" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.chain_component_spec.ChainComponentSpec.from_json">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constructed_component_specs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terminals</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.model.component_specifications.chain_component_spec.ChainComponentSpec" title="src.model.component_specifications.chain_component_spec.ChainComponentSpec"><span class="pre">ChainComponentSpec</span></a></span></span><a class="headerlink" href="#src.model.component_specifications.chain_component_spec.ChainComponentSpec.from_json" title="Link to this definition"></a></dt>
+<dd><p>Constructs a ChainComponentSpec object from JSON data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>) – The JSON data representing the chain component specification.</p></li>
+<li><p><strong>constructed_component_specs</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>) – Component specs that have already been created.</p></li>
+<li><p><strong>terminals</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">Terminal</span></code>) – All defined terminal types.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A ChainComponentSpec object constructed from the JSON data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.chain_component_spec.ChainComponentSpec.get_linking_attribute">
+<span class="sig-name descname"><span class="pre">get_linking_attribute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.model.component_specifications.chain_component_spec.ChainComponentSpec.get_linking_attribute" title="Link to this definition"></a></dt>
+<dd><p>Gets the linking attribute of the component spec.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.component_specifications.conditional_component_spec.</span></span><span class="sig-name descname"><span class="pre">ConditionalComponentSpec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="aloc_specifications.html#src.model.form_spec.FormSpec" title="src.model.form_spec.FormSpec"><span class="pre">FormSpec</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.model.component_specifications.chain_component_spec.ChainComponentSpec" title="src.model.component_specifications.chain_component_spec.ChainComponentSpec"><span class="pre">ChainComponentSpec</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.model.component_specifications.chain_component_spec.ChainComponentSpec" title="src.model.component_specifications.chain_component_spec.ChainComponentSpec"><span class="pre">ChainComponentSpec</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.model.component_specifications.component_spec.ComponentSpec" title="src.model.component_specifications.component_spec.ComponentSpec"><code class="xref py py-class docutils literal notranslate"><span class="pre">ComponentSpec</span></code></a></p>
+<p>ConditionalComponentSpec class represents the specifications for a conditional component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the component.</p></li>
+<li><p><strong>forms</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">SimpleFormSpec</span></code>) – The forms associated with the component.</p></li>
+<li><p><strong>location</strong> (<em>str</em>) – The location of the chain component within the contract.</p></li>
+<li><p><strong>component_type</strong> (<em>str</em>) – The name of the type of the component.</p></li>
+<li><p><strong>condition_spec</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">ChainComponentSpec</span></code>) – The component specification describing the condition of the component.</p></li>
+<li><p><strong>result_spec</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">ChainComponentSpec</span></code>) – The component specification describing the result of the component.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec.from_json">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">constructed_component_specs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">terminals</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec" title="src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec"><span class="pre">ConditionalComponentSpec</span></a></span></span><a class="headerlink" href="#src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec.from_json" title="Link to this definition"></a></dt>
+<dd><p>Constructs a ConditionalComponentSpec object from JSON data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>) – The JSON data representing the conditional component specification.</p></li>
+<li><p><strong>constructed_component_specs</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>) – Component specs that have already been created.</p></li>
+<li><p><strong>terminals</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">Terminal</span></code>) – All defined terminal types.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A ConditionalComponentSpec object constructed from the JSON data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec.get_condition_spec">
+<span class="sig-name descname"><span class="pre">get_condition_spec</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.model.component_specifications.chain_component_spec.ChainComponentSpec" title="src.model.component_specifications.chain_component_spec.ChainComponentSpec"><span class="pre">ChainComponentSpec</span></a></span></span><a class="headerlink" href="#src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec.get_condition_spec" title="Link to this definition"></a></dt>
+<dd><p>Returns the specification of the condition Component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The specification of the condition component.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChainComponentSpec</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec.get_result_spec">
+<span class="sig-name descname"><span class="pre">get_result_spec</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.model.component_specifications.chain_component_spec.ChainComponentSpec" title="src.model.component_specifications.chain_component_spec.ChainComponentSpec"><span class="pre">ChainComponentSpec</span></a></span></span><a class="headerlink" href="#src.model.component_specifications.conditional_component_spec.ConditionalComponentSpec.get_result_spec" title="Link to this definition"></a></dt>
+<dd><p>Returns the specification of the result Component.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The specification of the result component.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChainComponentSpec</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="frame.html" class="btn btn-neutral float-left" title="Frame Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="aloc_specifications.html" class="btn btn-neutral float-right" title="ALOC Specific Specification Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Oluwaponmile Femi-Sunmaila.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -14,12 +14,12 @@ class UpdateFormEntry:
     UpdateFormEntry class represents an entry in the update form.
 
     Methods:
-    - __init__(entry_name, entry_type): Initializes an UpdateFormEntry object.
-    - set_value(entry_value): Sets the value of the entry.
-    - get_var(): Returns the variable of the entry.
-    - get_value(): Returns the value of the entry.
-    - get_type(): Returns the type of the entry.
-    - get_name(): Returns the name of the entry.
+        __init__(entry_name, entry_type): Initializes an UpdateFormEntry object.
+        set_value(entry_value): Sets the value of the entry.
+        get_var(): Returns the variable of the entry.
+        get_value(): Returns the value of the entry.
+        get_type(): Returns the type of the entry.
+        get_name(): Returns the name of the entry.
     """
 
     def __init__(self, entry_name: str, terminal):
@@ -27,8 +27,8 @@ class UpdateFormEntry:
         Initializes an UpdateFormEntry object.
 
         Args:
-        - entry_name (str): The name of the entry.
-        - entry_type: The type of the entry.
+            entry_name (str): The name of the entry.
+            entry_type: The type of the entry.
         """
         self.__name = entry_name
         self.__terminal = terminal
@@ -39,7 +39,7 @@ class UpdateFormEntry:
         Sets the value of the entry.
 
         Args:
-        - entry_value (str): The value to set.
+            entry_value (str): The value to set.
         """
         self.__var.set(entry_value)
 
@@ -65,18 +65,18 @@ class UpdateFormHandler:
     UpdateFormHandler class manages the creation and handling of update forms for components.
 
     Methods:
-    - create_update_form(root, component, re_render_func, controller): Creates an update form.
-    - _create_submit_button(parent, entries, component, re_render_func, controller): Creates the submit button.
-    - _create_entry_widgets(update_form, current_attributes): Creates entry widgets for attributes.
-    - create_error_text(parent, row): Creates an error label widget.
-    - _create_entry_method(parent, entry, row, entries): Creates entry widgets based on attribute types.
-    - _create_entry_label(parent, text, row): Creates entry label widgets.
-    - _create_entry_widget(parent, entry, row): Creates a basic text entry widget.
-    - _create_option_widget(parent, entry, row): Creates a dropdown menu widget.
-    - _create_date_widgets(parent, entry, row, custom_var): Creates date selection widgets.
-    - update_button_state(button, entries, error_variable): Updates the state of the submit button.
-    - _update(entries, update_form, component, controller, re_render_func): Updates the component.
-    - _handle_hybrid(entry_name, entry_var, date_dict): Handles date entry values.
+        create_update_form(root, component, re_render_func, controller): Creates an update form.
+        _create_submit_button(parent, entries, component, re_render_func, controller): Creates the submit button.
+        _create_entry_widgets(update_form, current_attributes): Creates entry widgets for attributes.
+        create_error_text(parent, row): Creates an error label widget.
+        _create_entry_method(parent, entry, row, entries): Creates entry widgets based on attribute types.
+        _create_entry_label(parent, text, row): Creates entry label widgets.
+        _create_entry_widget(parent, entry, row): Creates a basic text entry widget.
+        _create_option_widget(parent, entry, row): Creates a dropdown menu widget.
+        _create_date_widgets(parent, entry, row, custom_var): Creates date selection widgets.
+        update_button_state(button, entries, error_variable): Updates the state of the submit button.
+        _update(entries, update_form, component, controller, re_render_func): Updates the component.
+        _handle_hybrid(entry_name, entry_var, date_dict): Handles date entry values.
     """
 
     def create_update_form(
@@ -89,10 +89,10 @@ class UpdateFormHandler:
         Creates an update form.
 
         Args:
-        - root (tk.Tk): The root Tkinter window.
-        - component (Component): The component to update.
-        - re_render_func (Callable): The function to call for re-rendering.
-        - controller (Controller): The controller for managing component actions.
+            root (tk.Tk): The root Tkinter window.
+            component (Component): The component to update.
+            re_render_func (Callable): The function to call for re-rendering.
+            controller (Controller): The controller for managing component actions.
         """
         update_form = tk.Toplevel()
         update_form.geometry("1000x600")
@@ -122,9 +122,9 @@ class UpdateFormHandler:
         Updates the state of the submit button.
 
         Args:
-        - button (tk.Button): The submit button.
-        - entries (list): The list of entry widgets.
-        - error_variable (tk.StringVar): The variable for error messages.
+            button (tk.Button): The submit button.
+            entries (list): The list of entry widgets.
+            error_variable (tk.StringVar): The variable for error messages.
         """
         for entry in entries:
             terminal = entry.get_terminal()
@@ -149,14 +149,14 @@ class UpdateFormHandler:
         Creates the submit button.
 
         Args:
-        - parent (tk.Toplevel): The parent window for the button.
-        - entries (list): The list of entry widgets.
-        - component (Component): The component to update.
-        - re_render_func (Callable): The function to call for re-rendering.
-        - controller (Controller): The controller for managing component actions.
+            parent (tk.Toplevel): The parent window for the button.
+            entries (list): The list of entry widgets.
+            component (Component): The component to update.
+            re_render_func (Callable): The function to call for re-rendering.
+            controller (Controller): The controller for managing component actions.
 
         Returns:
-        - tk.Button: The submit button.
+            tk.Button: The submit button.
         """
         submit_button = tk.Button(
             parent,
@@ -174,11 +174,11 @@ class UpdateFormHandler:
         Creates entry widgets for attributes.
 
         Args:
-        - update_form (tk.Toplevel): The update form window.
-        - current_attributes (list): The list of current attributes.
+            update_form (tk.Toplevel): The update form window.
+            current_attributes (list): The list of current attributes.
 
         Returns:
-        - list: The list of entry widgets.
+            list: The list of entry widgets.
         """
         entries = []
 
@@ -215,11 +215,11 @@ class UpdateFormHandler:
         Creates an error label widget.
 
         Args:
-        - parent (tk.Toplevel): The parent window for the error label.
-        - row (int): The row number for placing the label.
+            parent (tk.Toplevel): The parent window for the error label.
+            row (int): The row number for placing the label.
 
         Returns:
-        - tk.StringVar: The error label widget.
+            tk.StringVar: The error label widget.
         """
         error_val = tk.StringVar()
         error_label = tk.Label(
@@ -243,10 +243,10 @@ class UpdateFormHandler:
         Creates entry widgets based on attribute types.
 
         Args:
-        - parent (tk.Toplevel): The parent window for the entry widget.
-        - entry (UpdateFormEntry): The entry to create.
-        - row (int): The row number for placing the entry.
-        - entries (list): The list of entry widgets.
+            parent (tk.Toplevel): The parent window for the entry widget.
+            entry (UpdateFormEntry): The entry to create.
+            row (int): The row number for placing the entry.
+            entries (list): The list of entry widgets.
         """
         terminal = entry.get_terminal()
         terminal_type = terminal.get_type()
@@ -267,9 +267,9 @@ class UpdateFormHandler:
         Creates entry label widgets.
 
         Args:
-        - parent (tk.Toplevel): The parent window for the label.
-        - text (str): The text of the label.
-        - row (int): The row number for placing the label.
+            parent (tk.Toplevel): The parent window for the label.
+            text (str): The text of the label.
+            row (int): The row number for placing the label.
         """
         entry_label = tk.Label(parent, text=f"{text}:", justify=tk.RIGHT)
         entry_label.grid(row=row, column=0)
@@ -282,12 +282,12 @@ class UpdateFormHandler:
         Creates a basic text entry widget.
 
         Args:
-        - parent (tk.Toplevel): The parent window for the entry widget.
-        - entry (UpdateFormEntry): The entry to create.
-        - row (int): The row number for placing the entry.
+            parent (tk.Toplevel): The parent window for the entry widget.
+            entry (UpdateFormEntry): The entry to create.
+            row (int): The row number for placing the entry.
 
         Returns:
-        - tk.Entry: The entry widget.
+            tk.Entry: The entry widget.
         """
         entry_widget = tk.Entry(parent, textvariable=entry.get_var())
         entry_widget.grid(row=row, column=1)

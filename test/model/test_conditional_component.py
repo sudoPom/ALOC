@@ -59,8 +59,8 @@ class TestConditionalComponent:
             simple_type_specs,
             attributes,
             "components",
-            "chain_component",
             "logical_operator",
+            "chain_component",
         )
 
     @pytest.fixture

@@ -2,46 +2,30 @@ from typing import Dict, List
 
 from src.model.component_attribute import ComponentAttribute
 from src.model.component_specifications.component_spec import ComponentSpec
-from src.model.simple_type_spec import SimpleFormSpec
+from src.model.simple_form_spec import SimpleFormSpec
 
 
 class SimpleComponentSpec(ComponentSpec):
     """
     SimpleComponentSpec class represents the specifications for a simple component.
 
-    This class inherits from ComponentSpec.
-
-    Methods:
-    - __init__(name, types, attributes, location, component_type): Initializes a SimpleComponentSpec object.
-    - get_attributes(): Retrieves the attributes of the simple component.
-    - get_attribute(attribute_name): Retrieves a specific attribute of the simple component.
-    - from_json(json, _): Constructs a SimpleComponentSpec object from JSON data.
-    - attributes_from_json(json): Parses JSON data to create ComponentAttribute objects.
-    - type_specs_from_json(json): Parses JSON data to create SimpleTypeSpec objects.
-
-    Attributes:
-    - Inherits all attributes from the ComponentSpec class.
+    Args:
+        name (str): The name of the simple component.
+        forms (:obj:`list` of :obj:`FormSpec`): The types associated with the simple component.
+        attributes (:obj:`list` of :obj:`ComponentAttribute`): The attributes of the simple component.
+        location (str): The location of the simple component.
+        component_type (str): The name of the type of the component.
     """
 
     def __init__(
         self,
         name: str,
-        types: List,
+        forms: List,
         attributes: List[ComponentAttribute],
         location: str,
         component_type: str,
     ) -> None:
-        """
-        Initializes a SimpleComponentSpec object.
-
-        Args:
-        - name: The name of the simple component.
-        - types: The types associated with the simple component.
-        - attributes: The attributes of the simple component.
-        - location: The location of the simple component.
-        - component_type: The type of the component.
-        """
-        super().__init__(name, types, location, component_type)
+        super().__init__(name, forms, location, component_type)
         self.__attributes = attributes
 
     def get_attributes(self) -> List[ComponentAttribute]:
@@ -53,13 +37,13 @@ class SimpleComponentSpec(ComponentSpec):
         Retrieves a specific attribute of the simple component.
 
         Args:
-        - attribute_name: The name of the attribute to retrieve.
+            attribute_name(str): The name of the attribute to retrieve.
 
         Returns:
-        - ComponentAttribute: The attribute with the specified name.
+            The attribute with the specified name.
 
         Raises:
-        - ValueError: If the specified attribute name is invalid.
+            ValueError: If the specified attribute name doesn't exist.
         """
         for attribute in self.__attributes:
             if attribute.get_name() == attribute_name:
@@ -74,11 +58,12 @@ class SimpleComponentSpec(ComponentSpec):
         Constructs a SimpleComponentSpec object from JSON data.
 
         Args:
-        - json: The JSON data representing the simple component.
-        - _: Placeholder argument.
+            json (:obj:`dict`): The JSON data representing the simple component specification.
+            constructed_component_specs (:obj:`dict`): Component specs that have already been created.
+            terminals (:obj:`list` of :obj:`Terminal`): All defined terminal types.
 
         Returns:
-        - SimpleComponentSpec: A SimpleComponentSpec object constructed from the JSON data.
+            A SimpleComponentSpec object constructed from the JSON data.
         """
         attributes = cls.attributes_from_json(json, terminals)
         type_specs = cls.form_specs_from_json(json)
@@ -99,10 +84,10 @@ class SimpleComponentSpec(ComponentSpec):
         Parses JSON data to create ComponentAttribute objects.
 
         Args:
-        - json: The JSON data representing the attributes.
+            json(:obj:`dict`): The JSON data representing the attributes.
 
         Returns:
-        - List[ComponentAttribute]: A list of ComponentAttribute objects parsed from the JSON data.
+            A list of ComponentAttribute objects parsed from the JSON data.
         """
         return [
             ComponentAttribute.from_json(attribute, terminals)
@@ -112,12 +97,12 @@ class SimpleComponentSpec(ComponentSpec):
     @staticmethod
     def form_specs_from_json(json) -> List[SimpleFormSpec]:
         """
-        Parses JSON data to create SimpleTypeSpec objects.
+        Parses JSON data to create SimpleFormSpec objects.
 
         Args:
-        - json: The JSON data representing the type specifications.
+            json: The JSON data representing the type specifications.
 
         Returns:
-        - List[SimpleTypeSpec]: A list of SimpleTypeSpec objects parsed from the JSON data.
+            List[SimpleTypeSpec]: A list of SimpleTypeSpec objects parsed from the JSON data.
         """
         return [SimpleFormSpec.from_json(type_spec) for type_spec in json["form_specs"]]

@@ -9,7 +9,7 @@ from test.model.fixtures import *
 from src.model.component_specifications.simple_component_spec import \
     SimpleComponentSpec
 from src.model.components.simple_component import SimpleComponent
-from src.model.simple_type_spec import SimpleFormSpec
+from src.model.simple_form_spec import SimpleFormSpec
 
 
 class TestSimpleComponent:

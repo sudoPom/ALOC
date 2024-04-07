@@ -9,7 +9,7 @@ from src.model.component_attribute import ComponentAttribute
 from src.model.component_specifications.chain_component_spec import \
     ChainComponentSpec
 from src.model.components.chain_component import ChainComponent
-from src.model.simple_type_spec import SimpleFormSpec
+from src.model.simple_form_spec import SimpleFormSpec
 from src.model.terminal_types.hybrid_terminal import HybridTerminal
 from src.model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
 from src.model.terminal_types.text_terminal import TextTerminal
@@ -92,8 +92,8 @@ def chain_component_spec(simple_type_specs, attributes):
         simple_type_specs,
         attributes,
         "components",
-        "chain_component",
         "and",
+        "chain_component",
     )
 
 

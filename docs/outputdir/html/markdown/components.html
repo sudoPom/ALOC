@@ -54,11 +54,20 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="the_aloc_spec.html">The ALOC Specification</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html#code-style">Code Style</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../apidocs/contract.html"><code class="docutils literal notranslate"><span class="pre">Contract</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../apidocs/component.html"><code class="docutils literal notranslate"><span class="pre">Component</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../apidocs/frame.html"><code class="docutils literal notranslate"><span class="pre">BaseFrame</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/contract.html">Contract Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/components.html">Component Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/frame.html">Frame Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/specifications.html">Specification Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/aloc_specifications.html">ALOC Specific Specification Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/terminals.html">Terminal Classes</a></li>
 </ul>
 
         </div>
@@ -87,15 +96,30 @@
              
   <section id="components">
 <h1>Components<a class="headerlink" href="#components" title="Link to this heading"></a></h1>
-<p>Here I will talk about components.</p>
+<p>This page covers all the components currently supported by ALOC. Components represent a phrase in the target language. There are currently three components supported by ALOC.</p>
 <section id="simple-components">
 <h2>Simple Components<a class="headerlink" href="#simple-components" title="Link to this heading"></a></h2>
+<p>A simple component is a component used to represent simple phrases that are made up of attributes that the user can modify.</p>
 </section>
 <section id="chain-components">
 <h2>Chain Components<a class="headerlink" href="#chain-components" title="Link to this heading"></a></h2>
+<p>Chain components are similar to simple components but can be chained together like the name suggests. A chained component could look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="n">ONE</span> <span class="n">IS</span> <span class="n">ODD</span> <span class="n">AND</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">TWO</span> <span class="n">IS</span> <span class="n">EVEN</span> <span class="n">AND</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="n">THREE</span> <span class="n">IS</span> <span class="n">ODD</span>
+</pre></div>
+</div>
+<p>Each statement is ended with a <code class="docutils literal notranslate"><span class="pre">linking</span> <span class="pre">attribute</span></code>, except the last. The <code class="docutils literal notranslate"><span class="pre">linking</span> <span class="pre">attribute</span></code> does not need to be the same for every (or any) element in the chain.</p>
 </section>
 <section id="conditional-components">
 <h2>Conditional Components<a class="headerlink" href="#conditional-components" title="Link to this heading"></a></h2>
+<p>Conditional Components are a type of composite component - they themselves contain other componenst. Conditional components consist of two Chain components, one <code class="docutils literal notranslate"><span class="pre">condition</span></code> and one <code class="docutils literal notranslate"><span class="pre">result</span></code>. A conditional component could look something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">IF</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="n">BABA</span> <span class="n">IS</span> <span class="n">YOU</span>
+<span class="n">THEN</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">FLAG</span> <span class="n">IS</span> <span class="n">WIN</span>
+</pre></div>
+</div>
 </section>
 </section>
 

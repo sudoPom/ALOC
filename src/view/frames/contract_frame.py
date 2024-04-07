@@ -9,19 +9,19 @@ class ContractFrame(tk.Frame):
     ContractFrame class represents the frame for displaying contract components in the GUI.
 
     Attributes:
-    - __parent (tk.Frame): The parent frame.
-    - __controller: The controller managing component actions.
-    - __re_render_func: The function for re-rendering.
-    - __menu (tk.Menu): The menu for adding components.
-    - __components (list): The list of component names.
+        __parent (tk.Frame): The parent frame.
+        __controller: The controller managing component actions.
+        __re_render_func: The function for re-rendering.
+        __menu (tk.Menu): The menu for adding components.
+        __components (list): The list of component names.
 
     Methods:
-    - __init__(parent, controller, re_render_func, components, **kwargs): Initializes a ContractFrame object.
-    - create_widgets(): Creates the widgets for the frame.
-    - show_menu(event): Displays the context menu.
-    - add_menu_command(component_name): Adds a menu command for adding a new component.
-    - add_new_component(component_name): Adds a new component.
-    - render(x, y): Renders the frame at the specified coordinates.
+        __init__(parent, controller, re_render_func, components, **kwargs): Initializes a ContractFrame object.
+        create_widgets(): Creates the widgets for the frame.
+        show_menu(event): Displays the context menu.
+        add_menu_command(component_name): Adds a menu command for adding a new component.
+        add_new_component(component_name): Adds a new component.
+        render(x, y): Renders the frame at the specified coordinates.
     """
 
     def __init__(
@@ -36,11 +36,11 @@ class ContractFrame(tk.Frame):
         Initializes a ContractFrame object.
 
         Args:
-        - parent (tk.Frame): The parent frame.
-        - controller (Callable): The controller managing component actions.
-        - re_render_func (Callable): The function for re-rendering.
-        - components (list): The list of component names.
-        - **kwargs: Additional keyword arguments.
+            parent (tk.Frame): The parent frame.
+            controller (Callable): The controller managing component actions.
+            re_render_func (Callable): The function for re-rendering.
+            components (list): The list of component names.
+            **kwargs: Additional keyword arguments.
         """
         super().__init__(parent, **kwargs)
         self.__parent = parent
@@ -68,7 +68,7 @@ class ContractFrame(tk.Frame):
         Adds a menu command for adding a new component.
 
         Args:
-        - component_name (str): The name of the component.
+            component_name (str): The name of the component.
         """
         self.__menu.add_command(
             label=f"Add {component_name.capitalize().replace('_', ' ')}",
@@ -80,7 +80,7 @@ class ContractFrame(tk.Frame):
         Adds a new component.
 
         Args:
-        - component_name (str): The name of the component.
+            component_name (str): The name of the component.
         """
         self.__controller.add_new_component(component_name)
         self.__re_render_func()
@@ -90,11 +90,11 @@ class ContractFrame(tk.Frame):
         Renders the frame at the specified coordinates.
 
         Args:
-        - x (int): The x-coordinate.
-        - y (int): The y-coordinate.
+            x: The x-coordinate to render the widget on the canvas.
+            y: The y-coordinate to render the widget on the canvas.
 
         Returns:
-        - int: The y-coordinate after rendering.
+            int: The height of the frame on the canvas.
         """
         self.__parent.create_window(x, y, anchor=tk.NW, window=self)
         self.__parent.update()

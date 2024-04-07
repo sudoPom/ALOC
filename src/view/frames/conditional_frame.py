@@ -8,16 +8,13 @@ from src.view.frames.chain_frame import ChainFrame
 
 class ConditionalFrame(BaseFrame):
     """
-    ConditionalFrame class represents the frame for conditional components in the GUI.
+    Widget for interacting with a ConditionalComponent
 
-    Attributes:
-    - __result (ChainFrame): The frame representing the result of the conditional.
-    - __condition (ChainFrame): The frame representing the condition of the conditional.
-
-    Methods:
-    - __init__(parent, controller, re_render_func, conditional, **kwargs): Initializes a ConditionalFrame object.
-    - render(x, y): Renders the frame at the specified coordinates.
-    - create_text_and_get_height(text, x, y): Creates a text label and returns its height.
+    Args:
+        parent (:obj:`tk.Canvas`): The parent canvas.
+        controller (:obj:`Controller`): The controller managing component actions.
+        re_render_func (:obj:`Callable`): The function for re-rendering.
+        component (:obj:`ConditionalComponent`): The component associated with the frame.
     """
 
     def __init__(
@@ -25,27 +22,14 @@ class ConditionalFrame(BaseFrame):
         parent: tk.Canvas,
         controller,
         re_render_func,
-        conditional,
-        **kwargs,
+        component,
     ):
-        """
-        Initializes a ConditionalFrame object.
-
-        Args:
-        - parent (tk.Canvas): The parent canvas.
-        - controller: The controller managing component actions.
-        - re_render_func: The function for re-rendering.
-        - conditional: The conditional component associated with the frame.
-        - **kwargs: Additional keyword arguments.
-        """
         super().__init__(
             parent,
             controller,
             re_render_func,
-            conditional,
-            **kwargs,
+            component,
         )
-        component = self.get_component()
         assert isinstance(component, ConditionalComponent)
         self.__result = ChainFrame(
             parent, controller, re_render_func, component.get_result()
@@ -73,11 +57,11 @@ class ConditionalFrame(BaseFrame):
         Renders the frame at the specified coordinates.
 
         Args:
-        - x: The x-coordinate.
-        - y: The y-coordinate.
+            x (int): The x-coordinate to render the widget.
+            y (int): The y-coordinate to render the widget.
 
         Returns:
-        - int: The y-coordinate after rendering.
+            int: The y-coordinate after rendering.
         """
         y += super().render(x, y)
         x += Constants.PADDING_PX
@@ -95,17 +79,17 @@ class ConditionalFrame(BaseFrame):
             return y
         raise ValueError("Invalid conditional type")
 
-    def create_text_and_get_height(self, text, x, y):
+    def create_text_and_get_height(self, text: str, x: int, y: int):
         """
-        Creates a text label and returns its height.
+        Renders text at the specified coordinates.
 
         Args:
-        - text (str): The text to display.
-        - x: The x-coordinate.
-        - y: The y-coordinate.
+            text (str): The text to render.
+            x (int): The x-coordinate to render the text on the canvas.
+            y (int): The y-coordinate to render the text on the canvas.
 
         Returns:
-        - int: The height of the text label.
+            int: The height of the frame on the canvas.
         """
         parent = self.get_parent()
         label = tk.Message(parent, font=("Arial", 10), text=text, width=500)

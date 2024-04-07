@@ -29,6 +29,17 @@ class ElseConditionalComponentSpec(ConditionalComponentSpec):
     def from_json(
         cls, json: Dict, constructed_component_specs, terminals
     ) -> "ElseConditionalComponentSpec":
+        """
+        Constructs a ElseConditionalComponentSpec object from JSON data.
+
+        Args:
+            json (:obj:`dict`): The JSON data representing the else conditional component specification.
+            constructed_component_specs (:obj:`dict`): Component specs that have already been created.
+            terminals (:obj:`list` of :obj:`Terminal`): All defined terminal types.
+
+        Returns:
+            A ElseConditionalComponentSpec object constructed from the JSON data.
+        """
         type_specs = [FormSpec.from_json(type_spec) for type_spec in json["form_specs"]]
         result_spec = constructed_component_specs[json["result"]]
         condition_spec = constructed_component_specs[json["condition"]]

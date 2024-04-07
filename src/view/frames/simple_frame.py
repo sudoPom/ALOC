@@ -8,26 +8,24 @@ from src.view.update_menu_handler import UpdateFormHandler
 
 
 class SimpleFrame(BaseFrame):
+    """
+    Widget for interacting with a SimpleFrame
+
+    Args:
+        parent (:obj:`tk.Canvas`): The parent canvas.
+        controller (:obj:`Controller`): The controller managing component actions.
+        re_render_func (:obj:`Callable`): The function for re-rendering.
+        component (:obj:`SimpleComponent`): The component associated with the frame.
+    """
+
     def __init__(
         self,
         parent: tk.Canvas,
         controller: Controller,
         re_render_func: Callable,
         component: SimpleComponent,
-        **kwargs,
     ):
-        """
-        Initializes a BaseFrame object.
-
-        Args:
-        - parent (tk.Widget): The parent widget.
-        - controller (Controller): The controller managing component actions.
-        - re_render_func (Callable): The function for re-rendering.
-        - component (Component): The component associated with the frame.
-        - render_settings (set): The settings for rendering the frame.
-        - **kwargs: Additional keyword arguments.
-        """
-        super().__init__(parent, controller, re_render_func, component, **kwargs)
+        super().__init__(parent, controller, re_render_func, component)
         self.__widget_handler = UpdateFormHandler()
 
     def create_widget(self):
@@ -66,11 +64,11 @@ class SimpleFrame(BaseFrame):
         Renders the frame at the specified coordinates.
 
         Args:
-        - x: The x-coordinate.
-        - y: The y-coordinate.
+            x: The x-coordinate to render the widget on the canvas.
+            y: The y-coordinate to render the widget on the canvas.
 
         Returns:
-        - int: The required height of the frame.
+            int: The height of the frame on the canvas.
         """
         display_text = self.get_display_text()
         parent = self.get_parent()

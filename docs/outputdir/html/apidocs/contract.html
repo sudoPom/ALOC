@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; ALOC: A Logical Outline Creator 0.1 documentation</title>
+  <title>Contract Class &mdash; ALOC: A Logical Outline Creator 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
 
@@ -21,8 +21,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="component.html" />
-    <link rel="prev" title="The ALOC Specification" href="../markdown/the_aloc_spec.html" /> 
+    <link rel="next" title="Component Classes" href="components.html" />
+    <link rel="prev" title="Architecture" href="../markdown/development.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,11 +49,32 @@
 <li class="toctree-l1"><a class="reference internal" href="../markdown/components.html">Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../markdown/the_aloc_spec.html">The ALOC Specification</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/development.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/development.html#testing">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../markdown/development.html#code-style">Code Style</a></li>
+</ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">Contract</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="component.html"><code class="docutils literal notranslate"><span class="pre">Component</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="frame.html"><code class="docutils literal notranslate"><span class="pre">BaseFrame</span></code></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contract Class</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#src.model.components.contract.Contract"><code class="docutils literal notranslate"><span class="pre">Contract</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.components.contract.Contract.add_component"><code class="docutils literal notranslate"><span class="pre">Contract.add_component()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.components.contract.Contract.delete_chain_component"><code class="docutils literal notranslate"><span class="pre">Contract.delete_chain_component()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.components.contract.Contract.delete_component"><code class="docutils literal notranslate"><span class="pre">Contract.delete_component()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.components.contract.Contract.get_component"><code class="docutils literal notranslate"><span class="pre">Contract.get_component()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.components.contract.Contract.get_component_collections"><code class="docutils literal notranslate"><span class="pre">Contract.get_component_collections()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.components.contract.Contract.get_path"><code class="docutils literal notranslate"><span class="pre">Contract.get_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.components.contract.Contract.reset_ids"><code class="docutils literal notranslate"><span class="pre">Contract.reset_ids()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.components.contract.Contract.set_path"><code class="docutils literal notranslate"><span class="pre">Contract.set_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.components.contract.Contract.to_cola"><code class="docutils literal notranslate"><span class="pre">Contract.to_cola()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.model.components.contract.Contract.update_component"><code class="docutils literal notranslate"><span class="pre">Contract.update_component()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Component Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="frame.html">Frame Class</a></li>
 </ul>
 
         </div>
@@ -70,7 +91,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="breadcrumb-item active">Contract Class</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/apidocs/contract.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -80,28 +101,164 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <dl class="py class">
+  <section id="contract-class">
+<h1>Contract Class<a class="headerlink" href="#contract-class" title="Link to this heading"></a></h1>
+<p>The Contract class is the main backend data-structure of ALOC, housing all of the components that makes up the contract.</p>
+<dl class="py class">
 <dt class="sig sig-object py" id="src.model.components.contract.Contract">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.components.contract.</span></span><span class="sig-name descname"><span class="pre">Contract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_collections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ComponentCollection</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="component.html#src.model.components.component.Component" title="src.model.components.component.Component"><span class="pre">Component</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.model.components.contract.Contract" title="Link to this definition"></a></dt>
-<dd><p>Represents a contract in the AST.</p>
-<p>Methods:
-- __init__(component_collections, component_types): Initialize a Contract object.
-- delete_component(component_id): Delete a component from the contract.
-- update_component(component_id, <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs): Update the attributes of a component in the contract.
-- add_component(component_spec): Add a new component to the contract.
-- get_component_collections(): Get the list of component collections in the contract.
-- get_path(): Get the path of the contract.
-- set_path(path): Set the path of the contract.
-- reset_ids(): Reset the IDs of all components in the contract.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.components.contract.</span></span><span class="sig-name descname"><span class="pre">Contract</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_collections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ComponentCollection</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">component_types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="components.html#src.model.components.component.Component" title="src.model.components.component.Component"><span class="pre">Component</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.model.components.contract.Contract" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ChainParent</span></code></p>
+<p>Represents the Contract Tree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>component_collections</strong> (<em>List</em><em>[</em><em>ComponentCollection</em><em>]</em>) – List of component collections in the contract.</p></li>
+<li><p><strong>component_types</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>ComponentType</em><em>]</em>) – Dictionary of component types.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.components.contract.Contract.add_component">
+<span class="sig-name descname"><span class="pre">add_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ComponentSpec</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#src.model.components.contract.Contract.add_component" title="Link to this definition"></a></dt>
+<dd><p>Add a new component to the contract.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>component_spec</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">ComponentSpec</span></code>) – The component specification describing the component to be added to the contract.</p>
+</dd>
+</dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.components.contract.Contract.delete_chain_component">
+<span class="sig-name descname"><span class="pre">delete_chain_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.model.components.contract.Contract.delete_chain_component" title="Link to this definition"></a></dt>
+<dd><p>Deletes a chain component from its chain.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> – The id of the component to be deleted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.components.contract.Contract.delete_component">
+<span class="sig-name descname"><span class="pre">delete_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#src.model.components.contract.Contract.delete_component" title="Link to this definition"></a></dt>
+<dd><p>Delete a component from the contract.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>component_id</strong> (<em>int</em>) – The id of the component to delete.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If there doesn’t exist a component with id <code class="xref py py-obj docutils literal notranslate"><span class="pre">component_id</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.components.contract.Contract.get_component">
+<span class="sig-name descname"><span class="pre">get_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="components.html#src.model.components.component.Component" title="src.model.components.component.Component"><span class="pre">Component</span></a></span></span><a class="headerlink" href="#src.model.components.contract.Contract.get_component" title="Link to this definition"></a></dt>
+<dd><p>Gets a component from the contract.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>component_id</strong> (<em>int</em>) – The id of the component to get.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The component with id <code class="xref py py-obj docutils literal notranslate"><span class="pre">component_id</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Component</span></code></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If there doesn’t exist a component with id <code class="xref py py-obj docutils literal notranslate"><span class="pre">component_id</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.components.contract.Contract.get_component_collections">
+<span class="sig-name descname"><span class="pre">get_component_collections</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ComponentCollection</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.model.components.contract.Contract.get_component_collections" title="Link to this definition"></a></dt>
+<dd><p>Get the list of component collections in the contract.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>All component collections in the contract.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">List[ComponentCollection]</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.components.contract.Contract.get_path">
+<span class="sig-name descname"><span class="pre">get_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#src.model.components.contract.Contract.get_path" title="Link to this definition"></a></dt>
+<dd><p>Get the path of the contract.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The path of where the contract is saved.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.components.contract.Contract.reset_ids">
+<span class="sig-name descname"><span class="pre">reset_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#src.model.components.contract.Contract.reset_ids" title="Link to this definition"></a></dt>
+<dd><p>Reset the IDs of all components in the contract.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.components.contract.Contract.set_path">
+<span class="sig-name descname"><span class="pre">set_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#src.model.components.contract.Contract.set_path" title="Link to this definition"></a></dt>
+<dd><p>Set the path of the contract.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – The new path that the contract should be saved to.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.components.contract.Contract.to_cola">
+<span class="sig-name descname"><span class="pre">to_cola</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#src.model.components.contract.Contract.to_cola" title="Link to this definition"></a></dt>
+<dd><p>Converts all the components of the contract to their CoLa forms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The CoLa form of the contract.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.model.components.contract.Contract.update_component">
+<span class="sig-name descname"><span class="pre">update_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#src.model.components.contract.Contract.update_component" title="Link to this definition"></a></dt>
+<dd><p>Update the attributes of a component in the contract.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>component_id</strong> (<em>int</em>) – The id of the component to update.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>AssertionError</strong> – If the component did not have attributes to update - it isn’t an instance of <code class="xref py py-obj docutils literal notranslate"><span class="pre">SimpleComponent</span></code>.</p></li>
+<li><p><strong>ValueError</strong> – If there doesn’t exist a component with id <code class="xref py py-obj docutils literal notranslate"><span class="pre">component_id</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../markdown/the_aloc_spec.html" class="btn btn-neutral float-left" title="The ALOC Specification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="component.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../markdown/development.html" class="btn btn-neutral float-left" title="Architecture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="components.html" class="btn btn-neutral float-right" title="Component Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

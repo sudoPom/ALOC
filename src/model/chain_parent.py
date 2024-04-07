@@ -10,7 +10,7 @@ class ChainParent:
         Deletes a chain component from one of the child chains.
 
         Args:
-         - id (int): The id of the component to be deleted.
+             id (int): The id of the component to be deleted.
         """
         for child in self.__children:
             prev_component, to_delete = child.get_chain_component(id)

@@ -7,34 +7,34 @@ from src.model.components.component import Component
 
 class ComponentCollection:
     """
-    Represents a collection of components.
+    ComponentCollection class represents a collection of components.
 
-    Methods:
-    - __init__(name): Initializes a ComponentCollection object.
-    - add_component(component): Adds a component to the collection.
-    - delete_component(component_id): Deletes a component from the collection.
-    - get_name(): Retrieves the name of the collection.
-    - contains_component(component_id): Checks if the collection contains a component with the given ID.
-    - get_component(component_id): Retrieves a component from the collection by its ID.
-    - get_components(): Retrieves all components in the collection.
+    Args:
+        name (str): The name of the collection.
+
     """
 
     def __init__(self, name: str) -> None:
-        """
-        Initializes a ComponentCollection object.
-
-        Args:
-        - name (str): The name of the collection.
-        """
         self.__name: str = name
         self.__components: List[Component] = []
 
     def add_component(self, component: Component) -> None:
-        """Adds a component to the collection."""
+        """Adds a component to the collection.
+
+        Args:
+            component (:obj:`Component`): The component to add to the collection.
+        """
         self.__components.append(component)
 
     def delete_component(self, component_id: int) -> None:
-        """Deletes a component from the collection."""
+        """Deletes a component from the collection.
+
+        Args:
+            component_id (int): The id of the component to delete from the collection.
+
+        Note:
+            If the component is not in this collection, nothing happens.
+        """
         self.__components = [
             component
             for component in self.__components
@@ -42,9 +42,26 @@ class ComponentCollection:
         ]
 
     def clear(self):
+        """
+        Deletes all the components from this collection.
+        """
         self.__components = []
 
-    def replace_component(self, component_to_replace_with, replace_id):
+    def replace_component(self, component_to_replace_with: Component, replace_id):
+        """
+        Replaces a component with another.
+
+        Args:
+            component_to_replace_with (:obj:`Component`): The component to replace with.
+            replace_id (int): The id of the component to be replaced.
+
+        Raises:
+            ValueError: If there is no such component with :obj:`replace_id`
+        """
+        if not self.contains_component(replace_id):
+            raise ValueError(
+                "Treid to replace component with id {replace_id} but it doesn't exist."
+            )
         self.__components = [
             component
             if component.get_internal_id() != replace_id
@@ -53,11 +70,24 @@ class ComponentCollection:
         ]
 
     def get_name(self) -> str:
-        """Retrieves the name of the collection."""
+        """
+        Returns the name of the collection.
+
+        Returns:
+            str: The name of the collection.
+        """
         return self.__name
 
     def contains_component(self, component_id: int) -> bool:
-        """Checks if the collection contains a component with the given ID."""
+        """
+        Checks if the collection contains a component with the given ID.
+
+        Args:
+            component_id (int): The id of the component to check for.
+
+        Returns:
+            bool: True if the component is in the collection, false otherwise.
+        """
         try:
             self.get_component(component_id)
             return True
@@ -65,26 +95,42 @@ class ComponentCollection:
             return False
 
     def get_component(self, component_id: int) -> Component:
-        """Retrieves a component from the collection by its ID."""
+        """
+        Returns a component from the collection by its ID.
+
+        Args:
+            component_id (int): The id of the component to get from the collection.
+
+        Returns:
+            :obj:`Component`: The component requested for.
+
+        Raises:
+            ValueError: If the component is not in the collection.
+        """
         for component in self.__components:
             if component.get_internal_id() == component_id:
                 return component
             if isinstance(component, ChainComponent):
-                found_component = self.search_chain_component(component, component_id)
+                found_component = self._search_chain_component(component, component_id)
                 if found_component is not None:
                     return found_component
             if isinstance(component, ChainParent):
                 for child in component.get_children():
-                    found_component = self.search_chain_component(child, component_id)
+                    found_component = self._search_chain_component(child, component_id)
                     if found_component is not None:
                         return found_component
         raise ValueError(f"Component with id {component_id} not found")
 
     def get_components(self) -> List[Component]:
-        """Retrieves all components in the collection."""
+        """
+        Returns all components in the collection.
+
+        Returns:
+            :obj:`List[Component]`: All the components in the collection.
+        """
         return self.__components
 
-    def search_chain_component(self, component, component_id):
+    def _search_chain_component(self, component, component_id):
         current_component = component
         while current_component and current_component.get_internal_id() != component_id:
             current_component = current_component.get_next()
