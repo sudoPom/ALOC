@@ -37,13 +37,13 @@ To install, first you'll need to clone this repository to your system using git:
 
 .. code:: bash
 
-   $ git clone git@github.com:sudoPom/aloc-final-year-project.git
+   $ git clone git@github.com:sudoPom/ALOC.git
 
 Then enter the repository you just cloned and install all the requirements from the provided ``requirements.txt`` file.
 
 .. code:: bash
 
-   $ cd aloc-final-year-project
+   $ cd ALOC
    $ pip install -r requirements.txt
 
 You are then free to run ALOC as follows:
