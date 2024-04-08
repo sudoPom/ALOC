@@ -14,6 +14,13 @@ class HybridTerminal(Terminal):
         parse_string (str): Where in the :obj:`BaseParser` grammar to verify this terminal.
         explanation (str): The error text to show if the user enters an invalid value for this terminal.
         choices (:obj:`List[str]`): The possible choices the user can select from for this terminal.
+    Note:
+        The JSON representation of this class requires:
+            :obj:`name` attribute of type str.
+            :obj:`default_text` attribute of type str (This should be a valid value for this terminal.).
+            :obj:`default_option` attribute of type str (This should be in the choices list.).
+            :obj:`choices` attribute of type :obj:`List[str]`.
+            :obj:`explanation` of type str.
     """
 
     CUSTOM_OPTION = "CUSTOM"

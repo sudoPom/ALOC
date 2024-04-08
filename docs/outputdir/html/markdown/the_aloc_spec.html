@@ -47,7 +47,13 @@
               <p class="caption" role="heading"><span class="caption-text">Features</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="components.html">Components</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">The ALOC Specification</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">The ALOC Specification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#contract">Contract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#components">Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#terminal-types">Terminal Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#attributes">Attributes</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
 <ul>
@@ -57,8 +63,12 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../apidocs/contract.html"><code class="docutils literal notranslate"><span class="pre">Contract</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../apidocs/frame.html"><code class="docutils literal notranslate"><span class="pre">BaseFrame</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/contract.html">Contract Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/components.html">Component Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/frame.html">Frame Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/specifications.html">Specification Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/aloc_specifications.html">ALOC Specific Specification Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidocs/terminals.html">Terminal Classes</a></li>
 </ul>
 
         </div>
@@ -87,7 +97,84 @@
              
   <section id="the-aloc-specification">
 <h1>The ALOC Specification<a class="headerlink" href="#the-aloc-specification" title="Link to this heading"></a></h1>
-<p>Here I will talk about the ALOC Spec.</p>
+<p>The ALOC specification is a JSON file that determines the specifics of the components that the user can add to the contract. The ALOC specification has an object for specifying component collection ordering, a list of component specfications for each component type, and an object defining all of the terminal types.  The overall format looks something like this:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;contract&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">  </span><span class="nt">&quot;simple_components&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;chain_components&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;conditional_components&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;else_conditional_components&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">  </span><span class="nt">&quot;terminal_types&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"> </span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This page will tell you all you need to know about modifying this specification for your specific use case.</p>
+<section id="contract">
+<h2>Contract<a class="headerlink" href="#contract" title="Link to this heading"></a></h2>
+<p>The contract object in the ALOC specification defines the ordering of the component collections of the contract. If ordering of components does not matter, then you can have a single component collection and set all the <code class="docutils literal notranslate"><span class="pre">component_location</span></code> fields of component objects to that component location. A contract must consist of at least one component collection. For example you may have something like this:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;contract&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;collections&quot;</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;definitions&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;other_components&quot;</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="components">
+<h2>Components<a class="headerlink" href="#components" title="Link to this heading"></a></h2>
+<p>Components that can be used in ALOC are each defined as a list of component specifications. The fields required in a component specification can be found by looking at the documentation of the  corresponding <code class="docutils literal notranslate"><span class="pre">ComponentSpec</span></code> class’ <code class="docutils literal notranslate"><span class="pre">from_json</span></code> method.</p>
+<p>For example, a chain component specification would look like this:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;chain_components&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;component_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;definition&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;linking_attribute&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logical_operator&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;form_specs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;form_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;subject pair&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;format_string&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{} IS {}&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;Name&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">&quot;Definition&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="nt">&quot;display_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Subject-Pair Definition&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;colour&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;skyblue&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;attributes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Name&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;subject&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Definition&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;subject&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logical_operator&quot;</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logical_and&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;collection_location&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;definitions&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+</pre></div>
+</div>
+<p>For Components that reference other components (such as the <code class="docutils literal notranslate"><span class="pre">ConditionalComponent</span></code>) you must define the referenced components first. All defined ALOC components must be present, however if they are not required they can just be empty lists.</p>
+</section>
+<section id="terminal-types">
+<h2>Terminal Types<a class="headerlink" href="#terminal-types" title="Link to this heading"></a></h2>
+<p>The terminal type object currently consists of a list of each of the defined terminal types: <code class="docutils literal notranslate"><span class="pre">multi_choice</span></code>, <code class="docutils literal notranslate"><span class="pre">text</span></code> and <code class="docutils literal notranslate"><span class="pre">hybrid</span></code>. Similarly to component specifications, the fields required for a terminal can be seen in the documentation for the respective <code class="docutils literal notranslate"><span class="pre">Terminal</span></code> class.</p>
+</section>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<p>When specifying attributes you need to specify the following:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the attribute.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: The name of the terminal type of the attribute.
+and optionally:</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prefix</span></code>: The prefix of the attribute. (Does not effect the mu part of non terminals.).</p></li>
+</ul>
+</section>
 </section>
 
 

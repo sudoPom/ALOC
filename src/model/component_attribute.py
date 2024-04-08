@@ -49,7 +49,6 @@ class ComponentAttribute:
         """
         if type(self.__value) == str:
             return f"{self.__prefix}{self.__value}"
-        print(self.__value[0])
         return (self.__value[0], f"{self.__prefix}{self.__value[1]}")
 
     def create_blank(self) -> "ComponentAttribute":

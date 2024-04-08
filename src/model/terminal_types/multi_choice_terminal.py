@@ -13,6 +13,13 @@ class MultiChoiceTerminal(Terminal):
         default (str): The default multiple choice option selected for this terminal.
         choices (:obj:`List[str]`): The possible choices the user can select from for this terminal.
         allow_empty (bool): Whether or not the empty string is a valid option.
+    Note:
+        The JSON representation of this class requires:
+            :obj:`name` attribute of type str.
+            :obj:`default` attribute of type str (This should be a valid value for this terminal.).
+            :obj:`choices` attribute of type :obj:`List[str]`.
+        and Optionally:
+            :obj:`allow_empty` attribute of type bool.
     """
 
     EMPTY_CHOICE = "EMPTY"

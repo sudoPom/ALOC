@@ -193,6 +193,16 @@
 </ul>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<dl class="simple">
+<dt>The JSON representation of this class requires:</dt><dd><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code> attribute of type str.
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code> attribute of type str (This should be a valid value for this terminal.).
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">parser_root</span></code> attribute of type str (This should be a valid LHS of the <code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseParser</span></code>’s grammar.).
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">explanation</span></code> of type str.</p>
+</dd>
+</dl>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.model.terminal_types.text_terminal.TextTerminal.get_explanation">
 <span class="sig-name descname"><span class="pre">get_explanation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.model.terminal_types.text_terminal.TextTerminal.get_explanation" title="Link to this definition"></a></dt>
@@ -266,6 +276,17 @@
 </ul>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<dl class="simple">
+<dt>The JSON representation of this class requires:</dt><dd><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code> attribute of type str.
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code> attribute of type str (This should be a valid value for this terminal.).
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">choices</span></code> attribute of type <code class="xref py py-obj docutils literal notranslate"><span class="pre">List[str]</span></code>.</p>
+</dd>
+<dt>and Optionally:</dt><dd><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">allow_empty</span></code> attribute of type bool.</p>
+</dd>
+</dl>
+</div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.model.terminal_types.multi_choice_terminal.MultiChoiceTerminal.EMPTY_CHOICE">
 <span class="sig-name descname"><span class="pre">EMPTY_CHOICE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'EMPTY'</span></em><a class="headerlink" href="#src.model.terminal_types.multi_choice_terminal.MultiChoiceTerminal.EMPTY_CHOICE" title="Link to this definition"></a></dt>
@@ -304,6 +325,17 @@
 </ul>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<dl class="simple">
+<dt>The JSON representation of this class requires:</dt><dd><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code> attribute of type str.
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">default_text</span></code> attribute of type str (This should be a valid value for this terminal.).
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">default_option</span></code> attribute of type str (This should be in the choices list.).
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">choices</span></code> attribute of type <code class="xref py py-obj docutils literal notranslate"><span class="pre">List[str]</span></code>.
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">explanation</span></code> of type str.</p>
+</dd>
+</dl>
+</div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.model.terminal_types.hybrid_terminal.HybridTerminal.CUSTOM_OPTION">
 <span class="sig-name descname"><span class="pre">CUSTOM_OPTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CUSTOM'</span></em><a class="headerlink" href="#src.model.terminal_types.hybrid_terminal.HybridTerminal.CUSTOM_OPTION" title="Link to this definition"></a></dt>

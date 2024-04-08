@@ -61,6 +61,13 @@ class ConditionalComponentSpec(ComponentSpec):
             json (:obj:`dict`): The JSON data representing the conditional component specification.
             constructed_component_specs (:obj:`dict`): Component specs that have already been created.
             terminals (:obj:`list` of :obj:`Terminal`): All defined terminal types.
+        Note:
+            The JSON object must contain the following attributes:
+                component_name of type str.
+                form_specs of type list of :obj:`FormSpec` JSON.
+                result of type :obj:`ChainComponentSpec` JSON.
+                condition of type :obj:`ChainComponentSpec` JSON.
+                collection_location of type str.
 
         Returns:
             A ConditionalComponentSpec object constructed from the JSON data.
