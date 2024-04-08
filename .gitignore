@@ -1,6 +1,7 @@
 # Cola files generated as a test
 *.cola
 *.aloc
+docs/outputdir
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

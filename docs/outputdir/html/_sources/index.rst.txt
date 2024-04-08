@@ -81,7 +81,7 @@ The exported file will then contain the **pure** CoLa of the contract you have d
    C-AND
    [3] BABA IS YOU
 
-This contract only makes use of "simple components" but base ALOC also has "conditional" and "chain" components, which you can read about :ref:`here <Components>`.
+This contract only makes use of "simple components" but base ALOC also has "conditional" and "chain" components, which you can read about on the Components page.
 
 Customising ALOC
 ----------------

@@ -27,7 +27,7 @@ The contract object in the ALOC specification defines the ordering of the compon
     ]
 }
 ```
-## Components
+## Components Specifications
 
 Components that can be used in ALOC are each defined as a list of component specifications. The fields required in a component specification can be found by looking at the documentation of the  corresponding `ComponentSpec` class' `from_json` method. 
 
