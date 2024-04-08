@@ -79,6 +79,7 @@ The terminal type object currently consists of a list of each of the defined ter
 When specifying attributes you need to specify the following:
 * `name`: The name of the attribute.
 * `type`: The name of the terminal type of the attribute.
+
 and optionally:
 * `prefix`: The prefix of the attribute. (Does not effect the mu part of non terminals.).
 
