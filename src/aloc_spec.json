@@ -3,7 +3,8 @@
     "collections": [
       "definitions",
       "other_components"
-    ]
+    ],
+    "grammar_path": "./src/grammar.txt"
   },
   "simple_components": [],
   "chain_components": [

@@ -2,6 +2,8 @@ import sys
 
 import pytest
 
+from src.parser.base_parser import BaseParser
+
 sys.path.append("../..")
 
 from src.model.chain_parent import ChainParent
@@ -24,15 +26,29 @@ def terminals():
 
 
 @pytest.fixture
-def date_terminal():
+def date_parser():
+    with open("./test/model/grammar.txt", "r") as file:
+        grammar = file.read()
+    return BaseParser("date", grammar)
+
+
+@pytest.fixture
+def subject_parser():
+    with open("./test/model/grammar.txt", "r") as file:
+        grammar = file.read()
+    return BaseParser("date", grammar)
+
+
+@pytest.fixture
+def date_terminal(parser):
     return HybridTerminal(
-        "date", "ADATE", "27 January 2002", "date", "", ["ADATE", "custom date"]
+        "date", "ADATE", "27 January 2002", parser, "", ["ADATE", "custom date"]
     )
 
 
 @pytest.fixture
-def text_terminal():
-    return TextTerminal("subject", "TEXT", "subject", "")
+def text_terminal(parser):
+    return TextTerminal("subject", "TEXT", parser, "")
 
 
 @pytest.fixture

@@ -1,5 +1,5 @@
 from src.model.terminal_types.terminal import Terminal, TerminalTypeNames
-from src.parsers.base_parser import BaseParser
+from src.parser.base_parser import BaseParser
 
 
 class TextTerminal(Terminal):
@@ -10,7 +10,7 @@ class TextTerminal(Terminal):
     Args:
         name (str): The name of the terminal.
         default (str): The default text for this terminal.
-        parse_string (str): Where in the :obj:`BaseParser` grammar to verify this terminal.
+        parser (:obj:`BaseParser`): Parser responsible for validating textual input.
         explanation (str): The error text to show if the user enters an invalid value for this terminal.
     Note:
         The JSON representation of this class requires:
@@ -21,21 +21,14 @@ class TextTerminal(Terminal):
     """
 
     def __init__(
-        self, name: str, default: str, parse_root: str, explanation: str
+        self, name: str, default: str, parser: BaseParser, explanation: str
     ) -> None:
         super().__init__(name, default, TerminalTypeNames.TEXT)
-        self.__parse_root = parse_root
         self.__explanation = explanation
-        self.__parser = BaseParser(self.__parse_root)
-
-    def get_parse_root(self):
-        """
-        Returns the parser root for validating this terminal.
-
-        Returns:
-            str: The parser root for validating this terminal.
-        """
-        return self.__parse_root
+        self.__parser = parser
+        assert self.__parser.parse(
+            default
+        ), f"The default of a text terminal must be valid. {default} is not a valid {name} terminal according to the grammar."
 
     def get_explanation(self):
         """

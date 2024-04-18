@@ -104,6 +104,15 @@ class Controller:
             if self.__component_specs[component].get_location() != "none"
         ]
 
+    def get_contract_as_cola(self) -> str:
+        """
+        Gets the textual representation of the contract.
+
+        Returns:
+            str: The textual representation of the contract.
+        """
+        return self.__model.get_contract().to_cola()
+
     def change_component_form(self, component_id: int, component_form) -> None:
         """
         Changes the form of a component.

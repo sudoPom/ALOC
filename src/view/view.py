@@ -1,5 +1,7 @@
 import tkinter as tk
-from tkinter import filedialog
+from tkinter import filedialog, simpledialog
+
+from fpdf import FPDF
 
 from src.model.components.contract import Contract
 from src.view.constants import Constants
@@ -48,9 +50,18 @@ class View(tk.Tk):
         )
         load_button.pack(side="left")
         export_button = tk.Button(
-            toolbar, text="Export Contract", command=self._export_to_cola
+            toolbar,
+            text="Export Contract",
+        )
+        self.__export_menu = tk.Menu(export_button, tearoff=0)
+        self.__export_menu.add_command(
+            label="Export to cola", command=self._export_to_cola
+        )
+        self.__export_menu.add_command(
+            label="Export to PDF", command=self._export_to_pdf
         )
         export_button.pack(side="left")
+        export_button.bind("<Button-1>", self._show_export_menu)
         self.__tree_frame = ScrollCanvas(self)
         self.__tree_frame.pack(fill=tk.BOTH, expand=True)
         self.__renderer = Renderer(self.__tree_frame, controller, self.update_display)
@@ -105,11 +116,39 @@ class View(tk.Tk):
         self.__controller.create_new_contract()
         self.update_display()
 
+    def _show_export_menu(self, event) -> None:
+        self.__export_menu.tk_popup(event.x_root, event.y_root)
+
     def _export_to_cola(self) -> None:
         file_path = filedialog.asksaveasfilename(
             defaultextension=f".{Constants.TEXT_EXT}",
-            filetypes=[(f"{Constants.TEXT_EXT} files", f"*.{Constants.TEXT_EXT}")],
+            filetypes=[
+                (f"{Constants.TEXT_EXPORT_NAME} files", f"*.{Constants.TEXT_EXT}")
+            ],
         )
         if file_path:
             self.__controller.export_to_cola(file_path)
             print(f"Contract exported to: {file_path}")
+
+    def _export_to_pdf(self) -> None:
+        contract_title = simpledialog.askstring(
+            "Input", "What should the title of the contract be?", parent=self
+        )
+        if contract_title is None:
+            contract_title = "Contract"
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=f".{Constants.PDF_EXT}",
+            filetypes=[
+                (f"{Constants.PDF_EXPORT_NAME} files", f"*.{Constants.PDF_EXT}")
+            ],
+        )
+        pdf = FPDF()
+
+        pdf.add_page()
+        pdf.set_font(Constants.PDF_FONT, size=Constants.PDF_TITLE_SIZE)
+        pdf.cell(200, 10, text=f"{contract_title}\n", ln=1, align="C", markdown=True)
+        pdf.set_font(Constants.PDF_FONT, size=Constants.PDF_CONTRACT_SIZE)
+        pdf.write(
+            h=Constants.PDF_LINE_SPACING, text=self.__controller.get_contract_as_cola()
+        )
+        pdf.output(file_path)

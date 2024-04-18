@@ -1,6 +1,3 @@
-from lark import Lark, exceptions
-
-COLA_GRAMMAR = """
     start: contract
 
     contract: component
@@ -122,18 +119,4 @@ COLA_GRAMMAR = """
         | "TIMES"
     divide: "/"
         | "DIVIDE"
-"""
 
-
-class BaseParser:
-    def __init__(self, start_from: str):
-        self.__start_from = start_from
-
-    def parse(self, input_string: str):
-        parser = Lark(COLA_GRAMMAR, start=self.__start_from)
-        try:
-            parser.parse(input_string)
-            return True
-        except exceptions.LarkError as e:
-            print(e)
-            return False

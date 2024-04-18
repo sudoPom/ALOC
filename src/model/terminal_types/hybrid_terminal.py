@@ -1,5 +1,7 @@
+from typing import List
+
 from src.model.terminal_types.terminal import Terminal, TerminalTypeNames
-from src.parsers.base_parser import BaseParser
+from src.parser.base_parser import BaseParser
 
 
 class HybridTerminal(Terminal):
@@ -11,7 +13,7 @@ class HybridTerminal(Terminal):
         name (str): The name of the terminal.
         default_option (str): The default multiple choice option selected for this terminal.
         default_text (str): The default text for this terminal.
-        parse_string (str): Where in the :obj:`BaseParser` grammar to verify this terminal.
+        parser (:obj:`BaseParser`): Parser responsible for validating textual input.
         explanation (str): The error text to show if the user enters an invalid value for this terminal.
         choices (:obj:`List[str]`): The possible choices the user can select from for this terminal.
     Note:
@@ -26,23 +28,19 @@ class HybridTerminal(Terminal):
     CUSTOM_OPTION = "CUSTOM"
 
     def __init__(
-        self, name, default_option, default_text, parse_string, explanation, choices
+        self,
+        name: str,
+        default_option: str,
+        default_text: str,
+        parser: BaseParser,
+        explanation: str,
+        choices: List[str],
     ):
         super().__init__(name, (default_option, default_text), TerminalTypeNames.HYBRID)
-        self.__parse_root = parse_string
         self.__explanation = explanation
         self.__choices = choices
         self.__choices.append(self.CUSTOM_OPTION)
-        self.__parser = BaseParser(self.__parse_root)
-
-    def get_parse_root(self) -> str:
-        """
-        Returns the parser root for validating this terminal.
-
-        Returns:
-            str: The parser root for validating this terminal.
-        """
-        return self.__parse_root
+        self.__parser = parser
 
     def get_explanation(self):
         """

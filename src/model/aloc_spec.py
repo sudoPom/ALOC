@@ -21,6 +21,7 @@ from src.model.terminal_types.hybrid_terminal import HybridTerminal
 from src.model.terminal_types.multi_choice_terminal import MultiChoiceTerminal
 from src.model.terminal_types.terminal import TerminalTypeNames
 from src.model.terminal_types.text_terminal import TextTerminal
+from src.parser.base_parser import BaseParser
 
 
 class ALOCSpec:
@@ -51,6 +52,8 @@ class ALOCSpec:
         ]
         self.__terminal_types_to_objects = dict()
         self.__contract_collections = []
+        with open(self.__data["contract"]["grammar_path"]) as grammar_file:
+            self.__grammar = grammar_file.read()
         self.__component_specs = dict()
         self._initialise_spec()
 
@@ -78,10 +81,11 @@ class ALOCSpec:
     def _initialise_terminal(self, terminal, terminal_type: str):
         match (terminal_type):
             case TerminalTypeNames.TEXT.value:
+                parser = BaseParser(terminal["parse_root"], self.__grammar)
                 return TextTerminal(
                     terminal["name"],
                     terminal["default"],
-                    terminal["parse_root"],
+                    parser,
                     terminal["explanation"],
                 )
             case TerminalTypeNames.MULTI_CHOICE.value:
@@ -96,11 +100,12 @@ class ALOCSpec:
                     allow_empty,
                 )
             case TerminalTypeNames.HYBRID.value:
+                parser = BaseParser(terminal["parse_root"], self.__grammar)
                 return HybridTerminal(
                     terminal["name"],
                     terminal["default_option"],
                     terminal["default_text"],
-                    terminal["parse_root"],
+                    parser,
                     terminal["explanation"],
                     terminal["choices"],
                 )
