@@ -152,3 +152,4 @@ class View(tk.Tk):
             h=Constants.PDF_LINE_SPACING, text=self.__controller.get_contract_as_cola()
         )
         pdf.output(file_path)
+        print(f"Contract exported to: {file_path}")

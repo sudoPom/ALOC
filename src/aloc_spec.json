@@ -360,7 +360,7 @@
         "name": "subject",
         "default": "SUBJECT",
         "parse_root": "subject",
-        "explanation": "Subject attributes should contain only alphanumeric characters and spaces."
+        "explanation": "Subject attributes should contain only alphabetical characters and spaces."
       },
       {
         "name": "numerical_expression",

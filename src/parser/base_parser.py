@@ -14,6 +14,5 @@ class BaseParser:
         try:
             parser.parse(input_string)
             return True
-        except exceptions.LarkError as e:
-            print(e)
+        except exceptions.LarkError:
             return False

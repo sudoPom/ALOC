@@ -73,7 +73,6 @@ class Renderer:
         for component_collection in contract.get_component_collections():
             components = component_collection.get_components()
             for component in components:
-                print(component)
                 y = self.render_component(x, y, component)
 
     def render_component(self, x: int, y: int, component: Component) -> int:

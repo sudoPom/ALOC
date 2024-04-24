@@ -319,7 +319,6 @@ class UpdateFormHandler:
 
         def handle_option_change(_):
             selected_option = entry.get_value()
-            print(selected_option)
             if selected_option == HybridTerminal.CUSTOM_OPTION:
                 custom_entry.grid(row=row, column=2)
             else:
