@@ -4,7 +4,7 @@
       "definitions",
       "other_components"
     ],
-    "grammar_path": "./src/grammar.txt"
+    "grammar_path": "./test/grammar.txt"
   },
   "simple_components": [],
   "chain_components": [

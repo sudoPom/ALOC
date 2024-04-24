@@ -8,8 +8,7 @@ sys.path.append("../..")
 
 from src.model.chain_parent import ChainParent
 from src.model.component_attribute import ComponentAttribute
-from src.model.component_specifications.chain_component_spec import \
-    ChainComponentSpec
+from src.model.component_specifications.chain_component_spec import ChainComponentSpec
 from src.model.components.chain_component import ChainComponent
 from src.model.simple_form_spec import SimpleFormSpec
 from src.model.terminal_types.hybrid_terminal import HybridTerminal
@@ -27,28 +26,28 @@ def terminals():
 
 @pytest.fixture
 def date_parser():
-    with open("./test/model/grammar.txt", "r") as file:
+    with open("./test/grammar.txt", "r") as file:
         grammar = file.read()
     return BaseParser("date", grammar)
 
 
 @pytest.fixture
 def subject_parser():
-    with open("./test/model/grammar.txt", "r") as file:
+    with open("./test/grammar.txt", "r") as file:
         grammar = file.read()
-    return BaseParser("date", grammar)
+    return BaseParser("subject", grammar)
 
 
 @pytest.fixture
-def date_terminal(parser):
+def date_terminal(date_parser):
     return HybridTerminal(
-        "date", "ADATE", "27 January 2002", parser, "", ["ADATE", "custom date"]
+        "date", "ADATE", "27 January 2002", date_parser, "", ["ADATE", "custom date"]
     )
 
 
 @pytest.fixture
-def text_terminal(parser):
-    return TextTerminal("subject", "TEXT", parser, "")
+def text_terminal(subject_parser):
+    return TextTerminal("subject", "TEXT", subject_parser, "")
 
 
 @pytest.fixture
