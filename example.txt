@@ -1,9 +1,0 @@
-[0] Party A IS X Corporation of Market Street San Francisco 
-C-AND
-[1] Party B IS Meta Platforms UK Limited of Breck Street
-C-AND
-[2] it is the case that Party A shall pay GBP 1000000 on the 1 March 2024
-C-AND
-[3] Party B shall deliver NAMEDOBJECT "Employee" on THEDATE
-IF
-[4] Party A delivered GBP 1000000 on THEDATE
